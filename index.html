@@ -5,41 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marta Rived</title>
   <style>
-    @font-face {
-      font-family: 'Foun';
-      src: url('Foun.ttf') format('truetype');
-      font-weight: 400;
-    }
-    @font-face {
-      font-family: 'Kross';
-      src: url('KrossNeueGrotesk-Light.ttf') format('truetype');
-      font-weight: 300;
-    }
-    @font-face {
-      font-family: 'Kross';
-      src: url('KrossNeueGrotesk-Regular.ttf') format('truetype');
-      font-weight: 400;
-    }
-    @font-face {
-      font-family: 'Kross';
-      src: url('KrossNeueGrotesk-Bold.ttf') format('truetype');
-      font-weight: 700;
-    }
+    @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Bold.ttf') format('truetype'); font-weight: 700; }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-      background: #f2ede3;
-      font-family: 'Kross', 'Helvetica Neue', sans-serif;
-      font-weight: 400;
+    :root {
+      --cream: #f2ede3;
+      --ink: #0d0a1e;
+      --blue: #0057FF;
+      --muted: rgba(13,10,30,0.35);
     }
 
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      font-family: 'Kross', 'Helvetica Neue', sans-serif;
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    /* NAV */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 56px;
+      transition: background 0.3s, backdrop-filter 0.3s;
+    }
+
+    #nav.scrolled {
+      background: rgba(242,237,227,0.92);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: 'Kross', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+
+    .nav-links a {
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--blue); }
+
+    /* HERO */
     #hero {
       position: relative;
       width: 100%;
       height: 100vh;
       overflow: hidden;
-      background: #f2ede3;
+      background: var(--cream);
       display: flex;
       align-items: center;
     }
@@ -54,65 +91,22 @@
       opacity: 0.28;
     }
 
-    .row { display: flex; gap: 10px; flex-shrink: 0; will-change: transform; }
-
-    .cell { flex-shrink: 0; width: 150px; height: 100px; border-radius: 6px; }
-
-    .a { background: #0057FF; }
-    .b { background: #1a1a1a; }
-    .c { background: #ddd5be; }
-    .d { background: #1A6BFF; }
-    .e { background: #e8e0cc; }
-    .f { background: #003ecc; }
-    .g { background: #c9bfa6; }
-    .h { background: #0047d9; }
-    .i { background: #2a2a2a; }
-    .j { background: #f5f0e4; border: 1px solid #ddd5be; }
+    .g-row { display: flex; gap: 10px; flex-shrink: 0; will-change: transform; }
+    .g-cell { flex-shrink: 0; width: 150px; height: 100px; border-radius: 6px; }
+    .ca{background:#0057FF} .cb{background:#1a1a1a} .cc{background:#ddd5be}
+    .cd{background:#1A6BFF} .ce{background:#e8e0cc} .cf{background:#003ecc}
+    .cg{background:#c9bfa6} .ch{background:#0047d9} .ci{background:#2a2a2a}
+    .cj{background:#f5f0e4;border:1px solid #ddd5be}
 
     #overlay {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background:
-        linear-gradient(to right, #f2ede3 0%, rgba(242,237,227,0.15) 60%, rgba(242,237,227,0.9) 100%),
-        linear-gradient(to bottom, rgba(242,237,227,0.5) 0%, transparent 25%, transparent 75%, rgba(242,237,227,0.5) 100%);
+        linear-gradient(to right, var(--cream) 0%, rgba(242,237,227,0.05) 55%, rgba(242,237,227,0.9) 100%),
+        linear-gradient(to bottom, rgba(242,237,227,0.4) 0%, transparent 30%, transparent 65%, var(--cream) 100%);
       z-index: 5;
     }
 
-    #nav {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      z-index: 20;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 28px 56px;
-    }
-
-    .nav-logo {
-      font-family: 'Kross', sans-serif;
-      font-weight: 400;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(15,10,30,0.5);
-    }
-
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-
-    .nav-links a {
-      font-family: 'Kross', sans-serif;
-      font-weight: 300;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(15,10,30,0.38);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: #0057FF; }
-
-    #content {
+    #hero-content {
       position: relative;
       z-index: 10;
       padding: 0 56px;
@@ -125,7 +119,7 @@
       font-size: 11px;
       letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: rgba(15,10,30,0.35);
+      color: var(--muted);
       margin-bottom: 22px;
       opacity: 0;
       animation: up 0.6s ease forwards 0.3s;
@@ -137,7 +131,7 @@
       font-size: clamp(64px, 10vw, 116px);
       line-height: 0.9;
       letter-spacing: -0.01em;
-      color: #0d0a1e;
+      color: var(--ink);
       text-transform: uppercase;
       opacity: 0;
       animation: up 0.9s ease forwards 0.55s;
@@ -167,8 +161,7 @@
 
     #scroll-hint {
       position: absolute;
-      bottom: 28px;
-      right: 56px;
+      bottom: 28px; right: 56px;
       z-index: 20;
       font-family: 'Kross', sans-serif;
       font-weight: 300;
@@ -181,6 +174,129 @@
       writing-mode: vertical-rl;
     }
 
+    /* WORK */
+    #work {
+      padding: 0 56px 120px;
+      background: var(--cream);
+    }
+
+    .section-label {
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 80px 0 56px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .section-label::after {
+      content: '';
+      width: 28px;
+      height: 0.5px;
+      background: var(--muted);
+      display: block;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 40px 20px;
+    }
+
+    .proj:nth-child(1)  { grid-column: span 7; }
+    .proj:nth-child(2)  { grid-column: span 5; }
+    .proj:nth-child(3)  { grid-column: span 4; }
+    .proj:nth-child(4)  { grid-column: span 8; }
+    .proj:nth-child(5)  { grid-column: span 6; }
+    .proj:nth-child(6)  { grid-column: span 6; }
+    .proj:nth-child(7)  { grid-column: span 8; }
+    .proj:nth-child(8)  { grid-column: span 4; }
+    .proj:nth-child(9)  { grid-column: span 5; }
+    .proj:nth-child(10) { grid-column: span 7; }
+
+    .proj {
+      position: relative;
+      overflow: hidden;
+      border-radius: 3px;
+      cursor: none;
+    }
+
+    .proj-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      display: block;
+      transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+      object-fit: cover;
+    }
+
+    .proj:nth-child(1) .proj-img,
+    .proj:nth-child(4) .proj-img,
+    .proj:nth-child(7) .proj-img { aspect-ratio: 16/9; }
+
+    .proj:nth-child(2) .proj-img,
+    .proj:nth-child(8) .proj-img { aspect-ratio: 3/4; }
+
+    .proj:hover .proj-img { transform: scale(1.03); }
+
+    .proj-cursor-label {
+      position: absolute;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 10;
+      font-family: 'Foun', 'Arial Narrow', sans-serif;
+      font-weight: 400;
+      font-size: clamp(28px, 4vw, 56px);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 0.9;
+      color: #f2ede3;
+      white-space: nowrap;
+      mix-blend-mode: difference;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.18s ease;
+      will-change: transform;
+    }
+
+    .proj:hover .proj-cursor-label { opacity: 1; }
+
+    /* placeholder colors */
+    .proj:nth-child(1)  .proj-img { background: #a8a098; }
+    .proj:nth-child(2)  .proj-img { background: #b8b0a4; }
+    .proj:nth-child(3)  .proj-img { background: #a0998e; }
+    .proj:nth-child(4)  .proj-img { background: #b0a898; }
+    .proj:nth-child(5)  .proj-img { background: #bcb4a8; }
+    .proj:nth-child(6)  .proj-img { background: #a8a099; }
+    .proj:nth-child(7)  .proj-img { background: #b0a89c; }
+    .proj:nth-child(8)  .proj-img { background: #c0b8ac; }
+    .proj:nth-child(9)  .proj-img { background: #b4aea4; }
+    .proj:nth-child(10) .proj-img { background: #aca6a0; }
+
+    /* PLACEHOLDERS secciones */
+    .placeholder-section {
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      padding: 0 56px;
+      border-top: 0.5px solid rgba(13,10,30,0.08);
+    }
+
+    /* FADE UP */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     @keyframes up {
       from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -189,21 +305,23 @@
 </head>
 <body>
 
-<div id="hero">
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#hero">Marta Rived</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About me</a></li>
+    <li><a href="#typing">Typing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
   <div id="grid-wrap"></div>
   <div id="overlay"></div>
 
-  <nav id="nav">
-    <div class="nav-logo">Marta Rived</div>
-    <ul class="nav-links">
-      <li><a href="#">Work</a></li>
-      <li><a href="#">About me</a></li>
-      <li><a href="#">Typing</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
-
-  <div id="content">
+  <div id="hero-content">
     <p class="label">Creative Director · Barna</p>
     <h1 class="hero-title">
       Creative<br>
@@ -221,39 +339,158 @@
   </div>
 
   <div id="scroll-hint">Scroll</div>
-</div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <p class="section-label fade-up">Work</p>
+
+  <div class="work-grid">
+
+    <div class="proj fade-up">
+      <div class="proj-img"></div>
+      <div class="proj-cursor-label">Cliente 01</div>
+    </div>
+
+    <div class="proj fade-up">
+      <div class="proj-img"></div>
+      <div class="proj-cursor-label">Cliente 02</div>
+    </div>
+
+    <div class="proj fade-up">
+      <div class="proj-img"></div>
+      <div class="proj-cursor-label">Cliente 03</div>
+    </div>
+
+    <div class="proj fade-up">
+      <div class="proj-img"></div>
+      <div class="proj-cursor-label">Cliente 04</div>
+    </div>
+
+    <div class="proj fade-up">
+      <div class="proj-img"></div>
+      <div class="proj-cursor-label">Cliente 05</div>
+    </div>
+
+    <div class="proj fade-up">
+      <div class="proj-img"></div>
+      <div class="proj-cursor-label">Cliente 06</div>
+    </div>
+
+    <div class="proj fade-up">
+      <div class="proj-img"></div>
+      <div class="proj-cursor-label">Cliente 07</div>
+    </div>
+
+    <div class="proj fade-up">
+      <div class="proj-img"></div>
+      <div class="proj-cursor-label">Cliente 08</div>
+    </div>
+
+    <div class="proj fade-up">
+      <div class="proj-img"></div>
+      <div class="proj-cursor-label">Cliente 09</div>
+    </div>
+
+    <div class="proj fade-up">
+      <div class="proj-img"></div>
+      <div class="proj-cursor-label">Cliente 10</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="placeholder-section">
+  <p class="section-label fade-up">About me</p>
+</section>
+
+<!-- TYPING -->
+<section id="typing" class="placeholder-section">
+  <p class="section-label fade-up">Typing</p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="placeholder-section">
+  <p class="section-label fade-up">Contact</p>
+</section>
 
 <script>
-  const PALETTE = ['a','a','b','c','c','d','e','e','f','g','g','h','i','j','j','j','c','e','g','j'];
+  /* GRID ANIMATION */
+  const PALETTE = ['ca','ca','cb','cc','cc','cd','ce','ce','cf','cg','cg','ch','ci','cj','cj','cj','cc','ce','cg','cj'];
   const ROWS = 6, COLS = 11;
   const SPEEDS = [0.28, -0.19, 0.22, -0.15, 0.25, -0.17];
   const offsets = [0, 75, 20, 55, 10, 40];
   const wrap = document.getElementById('grid-wrap');
-  const rows = [];
+  const gridRows = [];
 
   for (let r = 0; r < ROWS; r++) {
     const row = document.createElement('div');
-    row.className = 'row';
+    row.className = 'g-row';
     for (let c = 0; c < COLS * 2; c++) {
       const cell = document.createElement('div');
-      cell.className = 'cell ' + PALETTE[Math.floor(Math.random() * PALETTE.length)];
+      cell.className = 'g-cell ' + PALETTE[Math.floor(Math.random() * PALETTE.length)];
       row.appendChild(cell);
     }
     wrap.appendChild(row);
-    rows.push(row);
+    gridRows.push(row);
   }
 
-  function animate() {
-    rows.forEach((row, i) => {
+  function animateGrid() {
+    gridRows.forEach((row, i) => {
       offsets[i] += SPEEDS[i];
       const total = COLS * 160;
       if (offsets[i] > total) offsets[i] -= total;
       if (offsets[i] < -total) offsets[i] += total;
       row.style.transform = 'translateX(' + offsets[i] + 'px)';
     });
-    requestAnimationFrame(animate);
+    requestAnimationFrame(animateGrid);
   }
-  requestAnimationFrame(animate);
+  requestAnimationFrame(animateGrid);
+
+  /* NAV SCROLL */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* FADE UP */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  /* CURSOR FOLLOW */
+  document.querySelectorAll('.proj').forEach(proj => {
+    const label = proj.querySelector('.proj-cursor-label');
+    let cx = 0, cy = 0, tx = 0, ty = 0, raf;
+
+    proj.addEventListener('mouseenter', e => {
+      const r = proj.getBoundingClientRect();
+      cx = tx = e.clientX - r.left;
+      cy = ty = e.clientY - r.top;
+      label.style.opacity = '1';
+      raf = requestAnimationFrame(loop);
+    });
+
+    proj.addEventListener('mouseleave', () => {
+      label.style.opacity = '0';
+      cancelAnimationFrame(raf);
+    });
+
+    proj.addEventListener('mousemove', e => {
+      const r = proj.getBoundingClientRect();
+      tx = e.clientX - r.left;
+      ty = e.clientY - r.top;
+    });
+
+    function loop() {
+      cx += (tx - cx) * 0.1;
+      cy += (ty - cy) * 0.1;
+      label.style.transform = 'translate(calc(' + cx + 'px - 50%), calc(' + cy + 'px - 50%))';
+      raf = requestAnimationFrame(loop);
+    }
+  });
 </script>
 
 </body>
