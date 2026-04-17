@@ -307,54 +307,92 @@
     .exp-desc { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.75; color: rgba(13,10,30,0.5); margin-bottom: 8px; }
     .exp-brands { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.06em; color: rgba(13,10,30,0.3); line-height: 1.7; }
 
-    /* ── CARRUSEL AFICIONES ── */
-    #interests-strip {
+    /* ── MAZO AFICIONES ── */
+    #interests-stage {
       width: 100%;
-      overflow: hidden;
-      padding: 48px 0 80px;
       border-top: 0.5px solid rgba(13,10,30,0.06);
-    }
-
-    .interests-track {
+      padding: 64px 56px 80px;
       display: flex;
-      gap: 20px;
-      width: max-content;
-      animation: slide 20s linear infinite;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
     }
 
-    .interests-track:hover { animation-play-state: paused; }
-
-    @keyframes slide {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+    .icard-wrap {
+      position: relative;
+      width: 300px;
+      height: 420px;
     }
 
-    .interest-card { flex-shrink: 0; width: 280px; cursor: default; }
-
-    .interest-img {
-      width: 100%;
-      aspect-ratio: 3/4;
-      border-radius: 3px;
-      overflow: hidden;
-      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+    .icard {
+      position: absolute;
+      inset: 0;
+      border-radius: 4px;
       background-size: cover;
       background-position: center;
+      box-shadow: 0 8px 32px rgba(13,10,30,0.12);
+      transition: transform 0.7s cubic-bezier(0.34,1.2,0.64,1), opacity 0.5s ease;
+      cursor: pointer;
+      will-change: transform;
     }
 
-    .interest-card:hover .interest-img { transform: scale(1.02); }
+    /* rotaciones iniciales del mazo */
+    .icard:nth-child(1) { transform: rotate(-6deg) translateY(0px);   z-index: 4; }
+    .icard:nth-child(2) { transform: rotate(3deg)  translateY(-8px);  z-index: 3; }
+    .icard:nth-child(3) { transform: rotate(-2deg) translateY(-16px); z-index: 2; }
+    .icard:nth-child(4) { transform: rotate(5deg)  translateY(-24px); z-index: 1; }
 
-    .interest-label {
-      display: block;
-      margin-top: 12px;
-      font-family: 'Foun', 'Arial Narrow', sans-serif;
-      font-size: 18px;
+    /* estado desplegado — en línea horizontal */
+    #interests-stage.spread .icard-wrap {
+      width: 100%;
+      height: 380px;
+    }
+
+    #interests-stage.spread .icard {
+      position: relative;
+      inset: unset;
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      transform: rotate(0deg) translateY(0) !important;
+    }
+
+    #interests-stage.spread .icard-wrap {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      width: 100%;
+      height: auto;
+    }
+
+    /* CTA */
+    .interests-cta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: none;
+      border: 0.5px solid rgba(13,10,30,0.2);
+      border-radius: 2px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      letter-spacing: -0.01em;
-      color: rgba(13,10,30,0.2);
-      transition: color 0.2s;
+      color: rgba(13,10,30,0.45);
+      transition: color 0.2s, border-color 0.2s;
     }
 
-    .interest-card:hover .interest-label { color: var(--ink); }
+    .interests-cta:hover { color: var(--ink); border-color: rgba(13,10,30,0.5); }
+
+    .interests-cta .arrow {
+      display: inline-block;
+      transition: transform 0.4s ease;
+      font-size: 14px;
+    }
+
+    #interests-stage.spread .interests-cta .arrow { transform: rotate(180deg); }
 
     /* ── TYPING ── */
     #typing { border-top: 0.5px solid rgba(13,10,30,0.08); padding-bottom: 120px; }
@@ -622,19 +660,19 @@
     </div>
   </div>
 
-  <!-- CARRUSEL AFICIONES -->
-  <div id="interests-strip">
-    <div class="interests-track" id="interests-track">
-      <!-- duplicado para loop infinito -->
-      <div class="interest-card"><div class="interest-img" style="background:#b0a898;"></div><span class="interest-label">Tenis</span></div>
-      <div class="interest-card"><div class="interest-img" style="background:#a8a090;"></div><span class="interest-label">Ciclismo</span></div>
-      <div class="interest-card"><div class="interest-img" style="background:#b8b0a4;"></div><span class="interest-label">Barça</span></div>
-      <div class="interest-card"><div class="interest-img" style="background:#a4a098;"></div><span class="interest-label">Cine</span></div>
-      <div class="interest-card"><div class="interest-img" style="background:#b0a898;"></div><span class="interest-label">Tenis</span></div>
-      <div class="interest-card"><div class="interest-img" style="background:#a8a090;"></div><span class="interest-label">Ciclismo</span></div>
-      <div class="interest-card"><div class="interest-img" style="background:#b8b0a4;"></div><span class="interest-label">Barça</span></div>
-      <div class="interest-card"><div class="interest-img" style="background:#a4a098;"></div><span class="interest-label">Cine</span></div>
+  <!-- MAZO AFICIONES -->
+  <div id="interests-stage">
+    <div class="icard-wrap" id="icard-wrap">
+      <!-- Sustituye los background por tus 4 fotos: style="background-image:url('foto.jpg')" -->
+      <div class="icard" style="background:#b8b0a4;"></div>
+      <div class="icard" style="background:#a8a098;"></div>
+      <div class="icard" style="background:#c0b8ac;"></div>
+      <div class="icard" style="background:#b0a898;"></div>
     </div>
+    <button class="interests-cta" id="interests-cta">
+      <span>Desplegar</span>
+      <span class="arrow">↓</span>
+    </button>
   </div>
 
 </section>
@@ -822,7 +860,16 @@ window.addEventListener('scroll', () => {
   }
   requestAnimationFrame(loop);
 })();
+/* ── MAZO AFICIONES ── */
+const interestsStage = document.getElementById('interests-stage');
+const interestsCta   = document.getElementById('interests-cta');
+let isSpread = false;
 
+interestsCta.addEventListener('click', () => {
+  isSpread = !isSpread;
+  interestsStage.classList.toggle('spread', isSpread);
+  interestsCta.querySelector('span:first-child').textContent = isSpread ? 'Apilar' : 'Desplegar';
+});
 
 /* ── FADE UP ── */
 const observer = new IntersectionObserver(entries => {
