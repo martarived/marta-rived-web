@@ -15,62 +15,223 @@
     html { scroll-behavior: smooth; }
     body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
 
-    /* NAV */
-    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; transition: background 0.3s; }
-    #nav.scrolled { background: rgba(242,237,227,0.92); backdrop-filter: blur(8px); }
-    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--blue); }
+    /* ── NAV — solo logo + hamburguesa, no sticky ── */
+    #nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 56px;
+    }
 
-    /* HERO */
-    #hero { position: relative; width: 100%; height: 100vh; overflow: hidden; background: var(--cream); display: flex; align-items: center; }
-    #splash-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.55; }
+    .nav-logo {
+      font-family: 'Kross', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      position: relative;
+      z-index: 300;
+    }
+
+    .burger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 300;
+      position: relative;
+      background: none;
+      border: none;
+    }
+
+    .burger span {
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--ink);
+      transition: transform 0.35s ease, opacity 0.25s ease, background 0.3s;
+      transform-origin: center;
+    }
+
+    .burger.open span { background: var(--cream); }
+    .burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* ── OVERLAY ── */
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--ink);
+      z-index: 250;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 56px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+
+    #overlay.open { opacity: 1; pointer-events: all; }
+
+    .overlay-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .overlay-links a {
+      font-family: 'Foun', 'Arial Narrow', sans-serif;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 400;
+      text-transform: uppercase;
+      color: rgba(242,237,227,0.12);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      display: block;
+      transition: color 0.2s ease;
+    }
+
+    .overlay-links a:hover { color: var(--cream); }
+
+    .overlay-bottom {
+      position: absolute;
+      bottom: 40px;
+      left: 56px;
+      right: 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .overlay-tagline {
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      color: rgba(242,237,227,0.28);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+    }
+
+    #splash-canvas {
+      position: absolute;
+      inset: 0; width: 100%; height: 100%;
+      z-index: 1;
+      opacity: 0.6;
+    }
 
     #hero-content {
-      position: relative; z-index: 10; padding: 0 56px; max-width: 900px;
+      position: relative;
+      z-index: 10;
+      padding: 0 56px;
+      max-width: 960px;
       transform-origin: left center;
       will-change: transform, opacity;
     }
 
-    .label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); margin-bottom: 22px; opacity: 0; animation: up 0.6s ease forwards 0.3s; }
+    .label {
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: up 0.6s ease forwards 0.3s;
+    }
 
     /* título más grande */
     .hero-title {
       font-family: 'Foun', 'Arial Narrow', sans-serif;
       font-weight: 400;
-      font-size: clamp(80px, 13vw, 148px);
-      line-height: 0.88;
-      letter-spacing: -0.02em;
+      font-size: clamp(88px, 14vw, 160px);
+      line-height: 0.87;
+      letter-spacing: -0.025em;
       color: var(--ink);
       text-transform: uppercase;
       opacity: 0;
       animation: up 0.9s ease forwards 0.55s;
     }
-    .hero-title .dim { color: rgba(13,10,30,0.15); }
 
-    .hero-sub { margin-top: 32px; display: flex; align-items: center; gap: 14px; opacity: 0; animation: up 0.7s ease forwards 1.05s; }
-    .hero-sub span { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(15,10,30,0.3); }
+    .hero-title .dim { color: rgba(13,10,30,0.14); }
+
+    .hero-sub {
+      margin-top: 32px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      opacity: 0;
+      animation: up 0.7s ease forwards 1.05s;
+    }
+
+    .hero-sub span {
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(15,10,30,0.3);
+    }
+
     .hero-sub .sep { width: 14px; height: 0.5px; background: rgba(15,10,30,0.18); }
 
-    #scroll-hint { position: absolute; bottom: 28px; right: 56px; z-index: 20; font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(15,10,30,0.2); opacity: 0; animation: up 0.6s ease forwards 1.5s; writing-mode: vertical-rl; }
-
-    /* gradiente de transición hero→work — suave, sin corte */
-    #hero-fade {
-      position: relative;
-      height: 120px;
-      margin-top: -120px;
-      background: linear-gradient(to bottom, transparent, var(--cream));
-      z-index: 20;
+    /* gradiente de salida suave del hero — orgánico */
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 280px;
+      background: linear-gradient(to bottom, transparent 0%, var(--cream) 100%);
+      z-index: 15;
       pointer-events: none;
     }
 
-    /* WORK — menos padding top */
-    #work { padding: 0 56px 100px; background: var(--cream); }
-    .section-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); padding: 32px 0 40px; display: flex; align-items: center; gap: 16px; }
+    /* ── WORK — menos espacio arriba ── */
+    #work { padding: 0 56px 120px; background: var(--cream); }
+
+    .section-label {
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 40px 0 48px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
     .section-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
 
-    .work-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 40px 20px; }
+    /* más aire entre proyectos */
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 56px 24px;
+    }
+
     .proj:nth-child(1)  { grid-column: span 7; }
     .proj:nth-child(2)  { grid-column: span 5; }
     .proj:nth-child(3)  { grid-column: span 4; }
@@ -88,7 +249,22 @@
     .proj:nth-child(1) .proj-img, .proj:nth-child(4) .proj-img, .proj:nth-child(7) .proj-img { aspect-ratio: 16/9; }
     .proj:nth-child(2) .proj-img, .proj:nth-child(8) .proj-img { aspect-ratio: 3/4; }
     .proj:hover .proj-img { transform: scale(1.03); }
-    .proj-cursor-label { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10; font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(28px, 4vw, 56px); text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.9; color: #f2ede3; white-space: nowrap; mix-blend-mode: difference; opacity: 0; transform: translate(-50%, -50%); transition: opacity 0.18s ease; will-change: transform; }
+
+    .proj-cursor-label {
+      position: absolute; top: 0; left: 0;
+      pointer-events: none; z-index: 10;
+      font-family: 'Foun', 'Arial Narrow', sans-serif;
+      font-weight: 400;
+      font-size: clamp(28px, 4vw, 56px);
+      text-transform: uppercase;
+      letter-spacing: -0.01em; line-height: 0.9;
+      color: #f2ede3; white-space: nowrap;
+      mix-blend-mode: difference;
+      opacity: 0; transform: translate(-50%, -50%);
+      transition: opacity 0.18s ease;
+      will-change: transform;
+    }
+
     .proj:hover .proj-cursor-label { opacity: 1; }
 
     .proj:nth-child(1)  .proj-img { background: #a8a098; }
@@ -103,7 +279,7 @@
     .proj:nth-child(10) .proj-img { background: #aca6a0; }
     .proj:nth-child(11) .proj-img { background: #b8b2a8; }
 
-    /* ABOUT */
+    /* ── ABOUT ── */
     #about { border-top: 0.5px solid rgba(13,10,30,0.08); }
     .about-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
     .about-photo-col { overflow: hidden; }
@@ -116,7 +292,7 @@
     .about-name .n2 { text-align: right; margin-top: -10px; }
     .about-bio { margin-top: 36px; font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
 
-    /* EXPERIENCIA */
+    /* ── EXPERIENCIA ── */
     .exp-section { padding: 48px 56px 40px; }
     .exp-cols { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 0.5px solid rgba(13,10,30,0.12); }
     .exp-col-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,10,30,0.28); }
@@ -131,35 +307,21 @@
     .exp-desc { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.75; color: rgba(13,10,30,0.5); margin-bottom: 8px; }
     .exp-brands { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.06em; color: rgba(13,10,30,0.3); line-height: 1.7; }
 
-    /* FLYING POSTERS — justo debajo del CV, menos margen */
+    /* ── FLYING POSTERS ── */
     #flying-posters {
       width: 100%;
-      height: 560px;
+      height: 580px;
       position: relative;
       overflow: hidden;
       margin-top: 24px;
-      cursor: pointer;
-    }
-    #flying-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-    #flying-hint {
-      position: absolute;
-      bottom: 20px; left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Kross', sans-serif;
-      font-weight: 300;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(13,10,30,0.25);
-      z-index: 10;
-      transition: opacity 0.3s;
-      pointer-events: none;
     }
 
-    /* PLACEHOLDERS */
+    #flying-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    /* ── PLACEHOLDERS ── */
     .placeholder-section { min-height: 50vh; display: flex; align-items: center; padding: 0 56px; border-top: 0.5px solid rgba(13,10,30,0.08); }
 
-    /* FADE UP */
+    /* ── FADE UP ── */
     .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
 
@@ -171,16 +333,28 @@
 </head>
 <body>
 
+<!-- NAV -->
 <nav id="nav">
   <a class="nav-logo" href="#hero">Marta Rived</a>
-  <ul class="nav-links">
-    <li><a href="#work">Work</a></li>
-    <li><a href="#about">About me</a></li>
-    <li><a href="#typing">Typing</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <button class="burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
+<!-- OVERLAY -->
+<div id="overlay">
+  <ul class="overlay-links">
+    <li><a href="#work" class="overlay-link">Work</a></li>
+    <li><a href="#about" class="overlay-link">About me</a></li>
+    <li><a href="#typing" class="overlay-link">Typing</a></li>
+    <li><a href="#contact" class="overlay-link">Contact</a></li>
+  </ul>
+  <div class="overlay-bottom">
+    <span class="overlay-tagline">Somewhere between WIP and OOO.</span>
+  </div>
+</div>
+
+<!-- HERO -->
 <section id="hero">
   <canvas id="splash-canvas"></canvas>
   <div id="hero-content">
@@ -197,12 +371,9 @@
       <span>Content</span>
     </div>
   </div>
-  <div id="scroll-hint">Scroll</div>
 </section>
 
-<!-- gradiente suave de transición -->
-<div id="hero-fade"></div>
-
+<!-- WORK -->
 <section id="work">
   <p class="section-label fade-up">Work</p>
   <div class="work-grid">
@@ -220,6 +391,7 @@
   </div>
 </section>
 
+<!-- ABOUT -->
 <section id="about">
   <div class="about-hero">
     <div class="about-photo-col">
@@ -293,7 +465,6 @@
   <!-- FLYING POSTERS -->
   <div id="flying-posters">
     <canvas id="flying-canvas"></canvas>
-    <div id="flying-hint">Click para pausar</div>
   </div>
 
 </section>
@@ -308,52 +479,65 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-/* ══════════════════════════════════
-   HERO SCROLL SHRINK suave
-══════════════════════════════════ */
+
+/* ── HAMBURGUESA ── */
+const burger = document.getElementById('burger');
+const overlay = document.getElementById('overlay');
+
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  overlay.classList.toggle('open');
+});
+
+document.querySelectorAll('.overlay-link').forEach(link => {
+  link.addEventListener('click', () => {
+    burger.classList.remove('open');
+    overlay.classList.remove('open');
+  });
+});
+
+/* ── HERO SCROLL SHRINK — orgánico ── */
 const heroContent = document.getElementById('hero-content');
 const heroSection = document.getElementById('hero');
 
 window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  const heroH = heroSection.offsetHeight;
-  const progress = Math.min(scrollY / (heroH * 0.7), 1);
-  // escala más suave, no tan drástica
-  const scale = 1 - progress * 0.3;
-  const opacity = 1 - progress * 1.2;
-  heroContent.style.transform = `scale(${Math.max(scale, 0.7)})`;
-  heroContent.style.opacity = Math.max(opacity, 0);
+  const p = Math.min(window.scrollY / (heroSection.offsetHeight * 0.8), 1);
+  heroContent.style.transform = `scale(${1 - p * 0.28})`;
+  heroContent.style.opacity = 1 - p * 1.1;
 }, { passive: true });
 
-/* ══════════════════════════════════
-   SPLASH CURSOR WebGL
-══════════════════════════════════ */
+/* ── SPLASH CURSOR WebGL — azul Mesura ── */
 (function() {
   const canvas = document.getElementById('splash-canvas');
   const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
   if (!gl) return;
+
   function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
   resize();
   window.addEventListener('resize', resize);
+
   const vs = `attribute vec2 a_pos; void main(){gl_Position=vec4(a_pos,0,1);}`;
   const fs = `
     precision mediump float;
     uniform vec2 u_res; uniform float u_time;
     uniform vec2 u_splats[8]; uniform float u_ages[8];
     float blob(vec2 uv,vec2 c,float age){
-      float d=length(uv-c); float r=0.08+age*0.25;
-      return exp(-d*d/(r*r*0.5))*max(0.0,1.0-age*0.7);
+      float d=length(uv-c);float r=0.09+age*0.28;
+      return exp(-d*d/(r*r*0.5))*max(0.0,1.0-age*0.65);
     }
     void main(){
       vec2 uv=gl_FragCoord.xy/u_res; float acc=0.0;
       for(int i=0;i<8;i++) acc+=blob(uv,u_splats[i],u_ages[i]);
       acc=clamp(acc,0.0,1.0);
+      /* azul Mesura — #1B4FD8 frío y elegante */
       vec3 cream=vec3(0.949,0.929,0.890);
-      vec3 blue=vec3(0.0,0.341,1.0);
+      vec3 blue=vec3(0.106,0.310,0.847);
       vec3 dark=vec3(0.051,0.039,0.118);
-      gl_FragColor=vec4(mix(cream,mix(blue,dark,acc*0.4),acc*0.6),acc*0.5);
+      vec3 col=mix(cream,mix(blue,dark,acc*0.35),acc*0.65);
+      gl_FragColor=vec4(col,acc*0.55);
     }
   `;
+
   function mkShader(t,s){const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh;}
   const prog=gl.createProgram();
   gl.attachShader(prog,mkShader(gl.VERTEX_SHADER,vs));
@@ -373,16 +557,18 @@ window.addEventListener('scroll', () => {
   const splats=Array.from({length:N},()=>[0.5,0.5]);
   const ages=Array.from({length:N},()=>999);
   let head=0,lastSplat=0;
+
   document.getElementById('hero').addEventListener('mousemove',e=>{
     const r=canvas.getBoundingClientRect();
     const mx=(e.clientX-r.left)/r.width,my=1-(e.clientY-r.top)/r.height;
     const now=performance.now();
-    if(now-lastSplat>60){splats[head]=[mx,my];ages[head]=0;head=(head+1)%N;lastSplat=now;}
+    if(now-lastSplat>55){splats[head]=[mx,my];ages[head]=0;head=(head+1)%N;lastSplat=now;}
   });
+
   let last=0;
   function loop(ts){
     const dt=(ts-last)/1000;last=ts;
-    for(let i=0;i<N;i++)ages[i]+=dt*0.6;
+    for(let i=0;i<N;i++)ages[i]+=dt*0.55;
     gl.viewport(0,0,canvas.width,canvas.height);
     gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
     gl.uniform2f(uRes,canvas.width,canvas.height);
@@ -395,14 +581,10 @@ window.addEventListener('scroll', () => {
   requestAnimationFrame(loop);
 })();
 
-/* ══════════════════════════════════
-   FLYING POSTERS — movimiento continuo
-   pausa/reanuda al click
-══════════════════════════════════ */
+/* ── FLYING POSTERS — 6 pósters, loop continuo, hover para ver ── */
 (function() {
   const container = document.getElementById('flying-posters');
   const canvas = document.getElementById('flying-canvas');
-  const hint = document.getElementById('flying-hint');
   const W = container.offsetWidth;
   const H = container.offsetHeight;
 
@@ -415,18 +597,19 @@ window.addEventListener('scroll', () => {
   const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 100);
   camera.position.z = 18;
 
-  // Reemplaza estas URLs con tus imágenes reales
+  // 6 pósters — reemplaza con tus imágenes reales
   const URLS = [
     'https://picsum.photos/500/700?grayscale&random=10',
     'https://picsum.photos/500/700?grayscale&random=20',
     'https://picsum.photos/500/700?grayscale&random=30',
     'https://picsum.photos/500/700?grayscale&random=40',
+    'https://picsum.photos/500/700?grayscale&random=50',
+    'https://picsum.photos/500/700?grayscale&random=60',
   ];
 
   const loader = new THREE.TextureLoader();
-  // pósters más juntos: gap reducido
-  const PW = 5.5, PH = 7.8;
-  const GAP = 5;
+  const PW = 5, PH = 7.2;
+  const GAP = 4.5;
   const TOTAL = URLS.length;
   const SPAN = (PW + GAP) * TOTAL;
 
@@ -437,15 +620,20 @@ window.addEventListener('scroll', () => {
     void main() {
       vUv = uv;
       vec3 pos = position;
-      float wave = sin(pos.y * 1.2 + uOffset) * uDistortion;
+      float wave = sin(pos.y * 1.4 + uOffset) * uDistortion;
       pos.z += wave;
       gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
     }
   `;
+
   const fShader = `
     uniform sampler2D uTex;
+    uniform float uBrightness;
     varying vec2 vUv;
-    void main() { gl_FragColor = texture2D(uTex, vUv); }
+    void main() {
+      vec4 col = texture2D(uTex, vUv);
+      gl_FragColor = vec4(col.rgb * uBrightness, col.a);
+    }
   `;
 
   const meshes = [];
@@ -455,15 +643,17 @@ window.addEventListener('scroll', () => {
     const tex = loader.load(url);
     const mat = new THREE.ShaderMaterial({
       uniforms: {
-        uTex: { value: tex },
-        uDistortion: { value: 0.0 },
-        uOffset: { value: 0.0 },
+        uTex:        { value: tex },
+        uDistortion: { value: 0.25 },
+        uOffset:     { value: 0.0 },
+        uBrightness: { value: 0.55 }, // oscuro por defecto
       },
       vertexShader: vShader,
       fragmentShader: fShader,
       side: THREE.DoubleSide,
+      transparent: true,
     });
-    const geo = new THREE.PlaneGeometry(PW, PH, 1, 20);
+    const geo = new THREE.PlaneGeometry(PW, PH, 1, 24);
     const mesh = new THREE.Mesh(geo, mat);
     const x = (i - TOTAL / 2 + 0.5) * (PW + GAP);
     mesh.position.x = x;
@@ -472,30 +662,47 @@ window.addEventListener('scroll', () => {
     meshes.push(mesh);
   });
 
-  let autoScroll = 0;       // movimiento autónomo continuo
-  let paused = false;
-  const AUTO_SPEED = 0.025; // velocidad base continua
+  let autoScroll = 0;
+  const AUTO_SPEED = 0.022;
+  let hoveredIndex = -1;
 
-  // click pausa/reanuda
-  container.addEventListener('click', () => {
-    paused = !paused;
-    hint.textContent = paused ? 'Click para reanudar' : 'Click para pausar';
+  // raycaster para hover
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+
+  container.addEventListener('mousemove', e => {
+    const r = container.getBoundingClientRect();
+    mouse.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+    mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObjects(meshes);
+    hoveredIndex = hits.length > 0 ? meshes.indexOf(hits[0].object) : -1;
   });
+
+  container.addEventListener('mouseleave', () => { hoveredIndex = -1; });
 
   function loop() {
     requestAnimationFrame(loop);
-    if (!paused) autoScroll += AUTO_SPEED;
+    autoScroll += AUTO_SPEED;
 
     meshes.forEach((mesh, i) => {
       let x = baseX[i] - autoScroll;
-      // loop infinito
       const half = SPAN / 2;
       while (x > half) x -= SPAN;
       while (x < -half) x += SPAN;
       mesh.position.x = x;
-      // distorsión suave continua
-      mesh.material.uniforms.uDistortion.value = paused ? 0.0 : 0.3;
-      mesh.material.uniforms.uOffset.value = autoScroll * 0.5;
+
+      // hover: brillo al 100%, sin hover: 55%
+      const targetBrightness = hoveredIndex === i ? 1.0 : 0.55;
+      const cur = mesh.material.uniforms.uBrightness.value;
+      mesh.material.uniforms.uBrightness.value += (targetBrightness - cur) * 0.08;
+
+      // distorsión suave continua, se aplana en hover
+      const targetDist = hoveredIndex === i ? 0.05 : 0.25;
+      const curDist = mesh.material.uniforms.uDistortion.value;
+      mesh.material.uniforms.uDistortion.value += (targetDist - curDist) * 0.08;
+
+      mesh.material.uniforms.uOffset.value = autoScroll * 0.6;
     });
 
     renderer.render(scene, camera);
@@ -510,19 +717,13 @@ window.addEventListener('scroll', () => {
   });
 })();
 
-/* ══════════════════════════════════
-   NAV + FADE UP + CURSOR
-══════════════════════════════════ */
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-}, { passive: true });
-
+/* ── FADE UP ── */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.08 });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
+/* ── CURSOR FOLLOW ── */
 document.querySelectorAll('.proj').forEach(proj => {
   const label = proj.querySelector('.proj-cursor-label');
   let cx=0,cy=0,tx=0,ty=0,raf;
