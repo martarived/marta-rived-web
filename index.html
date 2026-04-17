@@ -681,14 +681,19 @@ window.addEventListener('scroll', () => {
   const vShader = `
     uniform float uDistortion;
     uniform float uOffset;
+    uniform float uTime;
     varying vec2 vUv;
     void main() {
       vUv = uv;
       vec3 pos = position;
-      float waveZ = sin(pos.y * 2.2 + uOffset) * uDistortion;
-      float waveX = cos(pos.y * 1.8 + uOffset * 0.7) * uDistortion * 0.5;
-      pos.z += waveZ;
-      pos.x += waveX;
+      float freq = 3.5;
+      float speed = uOffset;
+      float bendZ = sin(pos.x * freq + speed) * cos(pos.y * 2.0 + speed * 0.6) * uDistortion;
+      float bendX = cos(pos.y * freq * 0.8 + speed * 1.2) * uDistortion * 0.4;
+      float bendY = sin(pos.x * 2.0 + speed * 0.9) * uDistortion * 0.2;
+      pos.z += bendZ;
+      pos.x += bendX;
+      pos.y += bendY;
       gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
     }
   `;
@@ -713,14 +718,15 @@ window.addEventListener('scroll', () => {
         uTex:        { value: tex },
         uDistortion: { value: 0.9 },
         uOffset:     { value: 0.0 },
-        uBrightness: { value: 0.55 }, // oscuro por defecto
+        uTime:       { value: 0.0 },
+        uBrightness: { value: 0.55 },
       },
       vertexShader: vShader,
       fragmentShader: fShader,
       side: THREE.DoubleSide,
       transparent: true,
     });
-    const geo = new THREE.PlaneGeometry(PW, PH, 1, 24);
+    const geo = new THREE.PlaneGeometry(PW, PH, 20, 20);
     const mesh = new THREE.Mesh(geo, mat);
     const x = (i - TOTAL / 2 + 0.5) * (PW + GAP);
     mesh.position.x = x;
@@ -785,42 +791,59 @@ window.addEventListener('scroll', () => {
   });
 })();
 
-/* ── TYPING — Substack RSS ── */
+/* ── TYPING — Substack RSS via allorigins proxy ── */
 (async function() {
-  const SUBSTACK = 'aquelveranodel92.substack.com';
-  const RSS = `https://api.rss2json.com/v1/api.json?rss_url=https://${SUBSTACK}/feed`;
+  const FEED = 'https://aquelveranodel92.substack.com/feed';
+  const PROXY = `https://api.allorigins.win/get?url=${encodeURIComponent(FEED)}`;
   const grid = document.getElementById('typing-grid');
+
   try {
-    const res = await fetch(RSS);
+    const res = await fetch(PROXY);
     const data = await res.json();
-    const posts = (data.items || []).slice(0, 6);
-    posts.forEach((post) => {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(data.contents, 'text/xml');
+    const items = Array.from(xml.querySelectorAll('item')).slice(0, 6);
+
+    items.forEach(item => {
+      const title = item.querySelector('title')?.textContent || '';
+      const link  = item.querySelector('link')?.textContent || '#';
+      const pubDate = item.querySelector('pubDate')?.textContent || '';
+      const enclosure = item.querySelector('enclosure');
+      const mediaThumbnail = item.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'thumbnail')[0];
+      const imgUrl = enclosure?.getAttribute('url') || mediaThumbnail?.getAttribute('url') || '';
+
       const a = document.createElement('a');
       a.className = 'typing-post fade-up';
-      a.href = post.link;
+      a.href = link;
       a.target = '_blank';
       a.rel = 'noopener';
+
       const img = document.createElement('div');
       img.className = 'typing-post-img';
-      if (post.thumbnail) {
-        img.style.backgroundImage = `url(${post.thumbnail})`;
+      if (imgUrl) {
+        img.style.backgroundImage = `url(${imgUrl})`;
         img.style.backgroundSize = 'cover';
         img.style.backgroundPosition = 'center';
       }
-      const title = document.createElement('div');
-      title.className = 'typing-post-title';
-      title.textContent = post.title;
-      const date = document.createElement('div');
-      date.className = 'typing-post-date';
-      date.textContent = new Date(post.pubDate).toLocaleDateString('es-ES', { year:'numeric', month:'long', day:'numeric' });
+
+      const t = document.createElement('div');
+      t.className = 'typing-post-title';
+      t.textContent = title;
+
+      const d = document.createElement('div');
+      d.className = 'typing-post-date';
+      d.textContent = pubDate ? new Date(pubDate).toLocaleDateString('es-ES', { year:'numeric', month:'long', day:'numeric' }) : '';
+
       a.appendChild(img);
-      a.appendChild(title);
-      a.appendChild(date);
+      a.appendChild(t);
+      a.appendChild(d);
       grid.appendChild(a);
     });
+
     grid.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
   } catch(e) {
-    grid.innerHTML = `<div style="grid-column:span 12;padding:40px 0;font-family:Kross,sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(13,10,30,0.3);">Pronto.</div>`;
+    grid.innerHTML = `<div style="grid-column:span 12;padding:48px 0;font-family:'Kross',sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(13,10,30,0.3);">Pronto.</div>`;
   }
 })();
 
