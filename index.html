@@ -229,7 +229,7 @@
     .work-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 56px 24px;
+      gap: 96px 32px;
     }
 
     .proj:nth-child(1)  { grid-column: span 7; }
@@ -529,12 +529,12 @@ window.addEventListener('scroll', () => {
       vec2 uv=gl_FragCoord.xy/u_res; float acc=0.0;
       for(int i=0;i<8;i++) acc+=blob(uv,u_splats[i],u_ages[i]);
       acc=clamp(acc,0.0,1.0);
-      /* azul Mesura — #1B4FD8 frío y elegante */
+      /* base crema, trazo del cursor en azul Mesura */
       vec3 cream=vec3(0.949,0.929,0.890);
       vec3 blue=vec3(0.106,0.310,0.847);
-      vec3 dark=vec3(0.051,0.039,0.118);
-      vec3 col=mix(cream,mix(blue,dark,acc*0.35),acc*0.65);
-      gl_FragColor=vec4(col,acc*0.55);
+      vec3 lightBlue=vec3(0.55,0.72,0.98);
+      vec3 col=mix(blue,lightBlue,acc*0.4);
+      gl_FragColor=vec4(col,acc*0.7);
     }
   `;
 
@@ -609,7 +609,7 @@ window.addEventListener('scroll', () => {
 
   const loader = new THREE.TextureLoader();
   const PW = 5, PH = 7.2;
-  const GAP = 4.5;
+  const GAP = 1.8;
   const TOTAL = URLS.length;
   const SPAN = (PW + GAP) * TOTAL;
 
@@ -657,6 +657,7 @@ window.addEventListener('scroll', () => {
     const mesh = new THREE.Mesh(geo, mat);
     const x = (i - TOTAL / 2 + 0.5) * (PW + GAP);
     mesh.position.x = x;
+    mesh.position.y = 0.8;
     baseX.push(x);
     scene.add(mesh);
     meshes.push(mesh);
