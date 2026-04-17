@@ -41,7 +41,7 @@
     }
 
     #nav.scrolled {
-      background: rgba(242,237,227,0.92);
+      background: rgba(13,10,30,0.85);
       backdrop-filter: blur(8px);
     }
 
@@ -51,7 +51,7 @@
       font-size: 11px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--ink);
+      color: rgba(255,255,255,0.8);
       text-decoration: none;
     }
 
@@ -63,7 +63,7 @@
       font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: rgba(255,255,255,0.35);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -76,33 +76,25 @@
       width: 100%;
       height: 100vh;
       overflow: hidden;
-      background: var(--cream);
+      background: #0d0a1e;
       display: flex;
       align-items: center;
     }
 
-    #grid-wrap {
+    /* fluid canvas replaces grid */
+    #fluid-canvas {
       position: absolute;
-      inset: -60px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transform: rotate(-4deg) scale(1.14);
-      opacity: 0.28;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
     }
-
-    .g-row { display: flex; gap: 10px; flex-shrink: 0; will-change: transform; }
-    .g-cell { flex-shrink: 0; width: 150px; height: 100px; border-radius: 6px; }
-    .ca{background:#0057FF} .cb{background:#1a1a1a} .cc{background:#ddd5be}
-    .cd{background:#1A6BFF} .ce{background:#e8e0cc} .cf{background:#003ecc}
-    .cg{background:#c9bfa6} .ch{background:#0047d9} .ci{background:#2a2a2a}
-    .cj{background:#f5f0e4;border:1px solid #ddd5be}
 
     #overlay {
       position: absolute; inset: 0;
       background:
-        linear-gradient(to right, var(--cream) 0%, rgba(242,237,227,0.05) 55%, rgba(242,237,227,0.9) 100%),
-        linear-gradient(to bottom, rgba(242,237,227,0.4) 0%, transparent 30%, transparent 65%, var(--cream) 100%);
+        linear-gradient(to right, rgba(13,10,30,0.55) 0%, rgba(13,10,30,0.05) 55%, rgba(13,10,30,0.7) 100%),
+        linear-gradient(to bottom, rgba(13,10,30,0.4) 0%, transparent 30%, transparent 65%, rgba(13,10,30,0.6) 100%);
       z-index: 5;
     }
 
@@ -119,25 +111,36 @@
       font-size: 11px;
       letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: rgba(255,255,255,0.35);
       margin-bottom: 22px;
       opacity: 0;
       animation: up 0.6s ease forwards 0.3s;
     }
 
-    .hero-title {
+    /* word float container */
+    .hero-words {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      opacity: 0;
+      animation: up 0.9s ease forwards 0.55s;
+    }
+
+    .hero-word {
+      display: inline-block;
       font-family: 'Foun', 'Arial Narrow', sans-serif;
       font-weight: 400;
       font-size: clamp(64px, 10vw, 116px);
       line-height: 0.9;
       letter-spacing: -0.01em;
-      color: var(--ink);
+      color: #fff;
       text-transform: uppercase;
-      opacity: 0;
-      animation: up 0.9s ease forwards 0.55s;
+      will-change: transform;
+      cursor: default;
+      user-select: none;
     }
 
-    .hero-title .dim { color: rgba(13,10,30,0.15); }
+    .hero-word.dim { color: rgba(255,255,255,0.18); }
 
     .hero-sub {
       margin-top: 32px;
@@ -154,10 +157,10 @@
       font-size: 11px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(15,10,30,0.3);
+      color: rgba(255,255,255,0.28);
     }
 
-    .hero-sub .sep { width: 14px; height: 0.5px; background: rgba(15,10,30,0.18); }
+    .hero-sub .sep { width: 14px; height: 0.5px; background: rgba(255,255,255,0.15); }
 
     #scroll-hint {
       position: absolute;
@@ -168,7 +171,7 @@
       font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(15,10,30,0.2);
+      color: rgba(255,255,255,0.18);
       opacity: 0;
       animation: up 0.6s ease forwards 1.5s;
       writing-mode: vertical-rl;
@@ -472,16 +475,17 @@
 
 <!-- HERO -->
 <section id="hero">
-  <div id="grid-wrap"></div>
+  <canvas id="fluid-canvas"></canvas>
   <div id="overlay"></div>
+
   <div id="hero-content">
     <p class="label">Creative Director · Barna</p>
-    <h1 class="hero-title">
-      Creative<br>
-      <span class="dim">Playmaker</span><br>
-      &amp; Brand<br>
-      <span class="dim">Storyteller</span>
-    </h1>
+    <div class="hero-words">
+      <span class="hero-word" data-index="0">Creative</span>
+      <span class="hero-word dim" data-index="1">Playmaker</span>
+      <span class="hero-word" data-index="2">&amp; Brand</span>
+      <span class="hero-word dim" data-index="3">Storyteller</span>
+    </div>
     <div class="hero-sub">
       <span>Audiovisual</span>
       <div class="sep"></div>
@@ -490,6 +494,7 @@
       <span>Content</span>
     </div>
   </div>
+
   <div id="scroll-hint">Scroll</div>
 </section>
 
@@ -640,81 +645,322 @@
 </section>
 
 <script>
-  /* GRID */
-  const PALETTE = ['ca','ca','cb','cc','cc','cd','ce','ce','cf','cg','cg','ch','ci','cj','cj','cj'];
-  const ROWS = 6, COLS = 11;
-  const SPEEDS = [0.28,-0.19,0.22,-0.15,0.25,-0.17];
-  const offsets = [0,75,20,55,10,40];
-  const wrap = document.getElementById('grid-wrap');
-  const gridRows = [];
+/* ══════════════════════════════════════════
+   FLUID BACKGROUND (WebGL)
+══════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('fluid-canvas');
+  const gl = canvas.getContext('webgl', { alpha: false });
+  if (!gl) return;
 
-  for (let r = 0; r < ROWS; r++) {
-    const row = document.createElement('div');
-    row.className = 'g-row';
-    for (let c = 0; c < COLS * 2; c++) {
-      const cell = document.createElement('div');
-      cell.className = 'g-cell ' + PALETTE[Math.floor(Math.random() * PALETTE.length)];
-      row.appendChild(cell);
-    }
-    wrap.appendChild(row);
-    gridRows.push(row);
+  const SIM_RES  = 128;
+  const DYE_RES  = 512;
+  const VELOCITY_DISSIPATION = 0.97;
+  const DENSITY_DISSIPATION  = 0.975;
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* helpers */
+  function createFBO(res) {
+    const t = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, t);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, res, res, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    const fb = gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, t, 0);
+    return { tex: t, fb };
   }
 
-  function animateGrid() {
-    gridRows.forEach((row, i) => {
-      offsets[i] += SPEEDS[i];
-      const total = COLS * 160;
-      if (offsets[i] > total) offsets[i] -= total;
-      if (offsets[i] < -total) offsets[i] += total;
-      row.style.transform = 'translateX(' + offsets[i] + 'px)';
-    });
-    requestAnimationFrame(animateGrid);
+  function shader(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
   }
-  requestAnimationFrame(animateGrid);
 
-  /* NAV */
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
+  function program(vsrc, fsrc) {
+    const p = gl.createProgram();
+    gl.attachShader(p, shader(gl.VERTEX_SHADER,   vsrc));
+    gl.attachShader(p, shader(gl.FRAGMENT_SHADER, fsrc));
+    gl.linkProgram(p);
+    return p;
+  }
+
+  const vert = `attribute vec2 a;varying vec2 uv;void main(){uv=(a+1.)/2.;gl_Position=vec4(a,0,1);}`;
+
+  const splatFrag = `precision highp float;
+    varying vec2 uv;
+    uniform sampler2D u_tex;
+    uniform vec2 u_pos;
+    uniform vec3 u_col;
+    uniform float u_rad;
+    void main(){
+      vec2 d=uv-u_pos;
+      float s=exp(-dot(d,d)/(u_rad*u_rad));
+      gl_FragColor=texture2D(u_tex,uv)+vec4(u_col*s,s);
+    }`;
+
+  const advectFrag = `precision highp float;
+    varying vec2 uv;
+    uniform sampler2D u_vel;
+    uniform sampler2D u_src;
+    uniform float u_dt;
+    uniform float u_dis;
+    void main(){
+      vec2 v=texture2D(u_vel,uv).xy;
+      vec2 pos=uv-v*u_dt;
+      gl_FragColor=u_dis*texture2D(u_src,pos);
+    }`;
+
+  const displayFrag = `precision highp float;
+    varying vec2 uv;
+    uniform sampler2D u_tex;
+    void main(){
+      vec4 c=texture2D(u_tex,uv);
+      gl_FragColor=vec4(c.rgb,1);
+    }`;
+
+  const splatProg  = program(vert, splatFrag);
+  const advectProg = program(vert, advectFrag);
+  const dispProg   = program(vert, displayFrag);
+
+  const quad = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+
+  function bindQuad(prog) {
+    const a = gl.getAttribLocation(prog, 'a');
+    gl.enableVertexAttribArray(a);
+    gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+  }
+
+  let dye0 = createFBO(DYE_RES), dye1 = createFBO(DYE_RES);
+  let vel0 = createFBO(SIM_RES), vel1 = createFBO(SIM_RES);
+
+  const COLORS = [
+    [0.0,  0.22, 0.9],
+    [0.0,  0.34, 1.0],
+    [0.05, 0.15, 0.7],
+    [0.02, 0.4,  0.95],
+    [0.1,  0.08, 0.55],
+    [0.0,  0.28, 0.85],
+  ];
+
+  function splat(fbo, x, y, dx, dy, r, g, b, rad) {
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo.fb);
+    gl.useProgram(splatProg);
+    bindQuad(splatProg);
+    gl.uniform1i(gl.getUniformLocation(splatProg, 'u_tex'), 0);
+    gl.uniform2f(gl.getUniformLocation(splatProg, 'u_pos'), x, y);
+    gl.uniform3f(gl.getUniformLocation(splatProg, 'u_col'), dx !== undefined ? dx : r, dy !== undefined ? dy : g, b || 0);
+    gl.uniform1f(gl.getUniformLocation(splatProg, 'u_rad'), rad || 0.04);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, fbo.tex);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+
+  function advect(src, vel, dst, dt, dis) {
+    gl.bindFramebuffer(gl.FRAMEBUFFER, dst.fb);
+    gl.useProgram(advectProg);
+    bindQuad(advectProg);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, vel.tex);
+    gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, src.tex);
+    gl.uniform1i(gl.getUniformLocation(advectProg, 'u_vel'), 0);
+    gl.uniform1i(gl.getUniformLocation(advectProg, 'u_src'), 1);
+    gl.uniform1f(gl.getUniformLocation(advectProg, 'u_dt'),  dt);
+    gl.uniform1f(gl.getUniformLocation(advectProg, 'u_dis'), dis);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+
+  function doSplat(x, y, dx, dy) {
+    const col = COLORS[Math.floor(Math.random() * COLORS.length)];
+    const velTmp = createFBO(SIM_RES);
+    splat(velTmp, x, y, dx * 10, dy * 10, 0, 0, 0, 0.05);
+    advect(velTmp, vel0, vel1, 1, 1);
+    let sv = vel0; vel0 = vel1; vel1 = sv;
+
+    const dyeTmp = createFBO(DYE_RES);
+    splat(dyeTmp, x, y, col[0] * 0.4, col[1] * 0.4, col[2] * 0.4, 0, 0, 0.1);
+    advect(dyeTmp, vel0, dye1, 1, 1);
+    let sd = dye0; dye0 = dye1; dye1 = sd;
+  }
+
+  /* mouse interaction */
+  let mx = 0.5, my = 0.5, pmx = 0.5, pmy = 0.5, down = false;
+  canvas.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    pmx = mx; pmy = my;
+    mx = (e.clientX - r.left) / r.width;
+    my = 1 - (e.clientY - r.top) / r.height;
+    if (down) doSplat(mx, my, mx - pmx, my - pmy);
   });
+  canvas.addEventListener('mousedown', () => down = true);
+  window.addEventListener('mouseup',   () => down = false);
 
-  /* FADE UP */
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  /* touch */
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const r = canvas.getBoundingClientRect();
+    const t = e.touches[0];
+    const nx = (t.clientX - r.left) / r.width;
+    const ny = 1 - (t.clientY - r.top) / r.height;
+    doSplat(nx, ny, nx - mx, ny - my);
+    mx = nx; my = ny;
+  }, { passive: false });
 
-  /* CURSOR FOLLOW */
-  document.querySelectorAll('.proj').forEach(proj => {
-    const label = proj.querySelector('.proj-cursor-label');
-    let cx = 0, cy = 0, tx = 0, ty = 0, raf;
+  /* auto splats */
+  let lastAuto = 0;
+  const AUTO_PATHS = [
+    { x: 0.3, y: 0.5, dx:  0.003, dy:  0.001 },
+    { x: 0.7, y: 0.3, dx: -0.002, dy:  0.002 },
+    { x: 0.5, y: 0.7, dx:  0.001, dy: -0.003 },
+    { x: 0.6, y: 0.6, dx: -0.003, dy: -0.001 },
+    { x: 0.2, y: 0.4, dx:  0.002, dy:  0.002 },
+  ];
 
-    proj.addEventListener('mouseenter', e => {
-      const r = proj.getBoundingClientRect();
-      cx = tx = e.clientX - r.left;
-      cy = ty = e.clientY - r.top;
-      label.style.opacity = '1';
-      raf = requestAnimationFrame(loop);
-    });
+  function fluidLoop(t) {
+    requestAnimationFrame(fluidLoop);
 
-    proj.addEventListener('mouseleave', () => {
-      label.style.opacity = '0';
-      cancelAnimationFrame(raf);
-    });
-
-    proj.addEventListener('mousemove', e => {
-      const r = proj.getBoundingClientRect();
-      tx = e.clientX - r.left;
-      ty = e.clientY - r.top;
-    });
-
-    function loop() {
-      cx += (tx - cx) * 0.1;
-      cy += (ty - cy) * 0.1;
-      label.style.transform = 'translate(calc(' + cx + 'px - 50%), calc(' + cy + 'px - 50%))';
-      raf = requestAnimationFrame(loop);
+    if (t - lastAuto > 700) {
+      const p = AUTO_PATHS[Math.floor(Math.random() * AUTO_PATHS.length)];
+      const jx = p.x + (Math.random() - 0.5) * 0.3;
+      const jy = p.y + (Math.random() - 0.5) * 0.3;
+      doSplat(jx, jy, p.dx * (0.5 + Math.random()), p.dy * (0.5 + Math.random()));
+      lastAuto = t;
     }
+
+    advect(vel0, vel0, vel1, 0.016, VELOCITY_DISSIPATION);
+    let sv = vel0; vel0 = vel1; vel1 = sv;
+
+    advect(dye0, vel0, dye1, 0.016, DENSITY_DISSIPATION);
+    let sd = dye0; dye0 = dye1; dye1 = sd;
+
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.useProgram(dispProg);
+    bindQuad(dispProg);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, dye0.tex);
+    gl.uniform1i(gl.getUniformLocation(dispProg, 'u_tex'), 0);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+  requestAnimationFrame(fluidLoop);
+})();
+
+
+/* ══════════════════════════════════════════
+   WORD FLOAT ANIMATION (Mesura-style)
+══════════════════════════════════════════ */
+(function() {
+  const words = document.querySelectorAll('.hero-word');
+  const hero  = document.getElementById('hero');
+
+  const state = Array.from(words).map((el, i) => ({
+    el,
+    x: 0, y: 0,
+    phase:  i * 1.47 + Math.random() * 1.5,
+    ampX:   4 + Math.random() * 6,
+    ampY:   3 + Math.random() * 4,
+    freqX:  0.00025 + Math.random() * 0.00015,
+    freqY:  0.00035 + Math.random() * 0.0002,
+    skewAmp: 0.6 + Math.random() * 0.5,
+    skewFreq: 0.0002 + Math.random() * 0.0001,
+    skew: 0,
+  }));
+
+  let mouseX = 0.5, mouseY = 0.5;
+  hero.addEventListener('mousemove', e => {
+    const r = hero.getBoundingClientRect();
+    mouseX = (e.clientX - r.left) / r.width;
+    mouseY = (e.clientY - r.top)  / r.height;
   });
+
+  function wordLoop(t) {
+    requestAnimationFrame(wordLoop);
+    state.forEach((s, i) => {
+      const tx = Math.sin(t * s.freqX + s.phase) * s.ampX
+               + Math.sin(t * s.freqX * 1.6 + s.phase * 0.7) * s.ampX * 0.35;
+      const ty = Math.cos(t * s.freqY + s.phase * 1.1) * s.ampY
+               + Math.cos(t * s.freqY * 2.3 + s.phase) * s.ampY * 0.2;
+      const skewTarget = Math.sin(t * s.skewFreq + s.phase * 0.8) * s.skewAmp;
+
+      s.x    += (tx - s.x) * 0.035;
+      s.y    += (ty - s.y) * 0.035;
+      s.skew += (skewTarget - s.skew) * 0.035;
+
+      /* subtle mouse parallax — alternating direction per word */
+      const dir  = i % 2 === 0 ? 1 : -1;
+      const mOffX = (mouseX - 0.5) * dir * 10;
+      const mOffY = (mouseY - 0.5) * dir * -5;
+
+      s.el.style.transform = `translate(${s.x + mOffX}px, ${s.y + mOffY}px) skewX(${s.skew}deg)`;
+    });
+  }
+  requestAnimationFrame(wordLoop);
+})();
+
+
+/* ══════════════════════════════════════════
+   NAV SCROLL
+══════════════════════════════════════════ */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+
+/* ══════════════════════════════════════════
+   FADE UP (IntersectionObserver)
+══════════════════════════════════════════ */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+
+/* ══════════════════════════════════════════
+   CURSOR FOLLOW (project grid)
+══════════════════════════════════════════ */
+document.querySelectorAll('.proj').forEach(proj => {
+  const label = proj.querySelector('.proj-cursor-label');
+  let cx = 0, cy = 0, tx = 0, ty = 0, raf;
+
+  proj.addEventListener('mouseenter', e => {
+    const r = proj.getBoundingClientRect();
+    cx = tx = e.clientX - r.left;
+    cy = ty = e.clientY - r.top;
+    label.style.opacity = '1';
+    raf = requestAnimationFrame(loop);
+  });
+
+  proj.addEventListener('mouseleave', () => {
+    label.style.opacity = '0';
+    cancelAnimationFrame(raf);
+  });
+
+  proj.addEventListener('mousemove', e => {
+    const r = proj.getBoundingClientRect();
+    tx = e.clientX - r.left;
+    ty = e.clientY - r.top;
+  });
+
+  function loop() {
+    cx += (tx - cx) * 0.1;
+    cy += (ty - cy) * 0.1;
+    label.style.transform = `translate(calc(${cx}px - 50%), calc(${cy}px - 50%))`;
+    raf = requestAnimationFrame(loop);
+  }
+});
 </script>
 
 </body>
