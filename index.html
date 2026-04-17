@@ -28,7 +28,7 @@
       color: var(--ink);
     }
 
-    /* ── NAV ── */
+    /* NAV */
     #nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -37,14 +37,12 @@
       align-items: center;
       justify-content: space-between;
       padding: 28px 56px;
-      transition: background 0.3s, backdrop-filter 0.3s;
+      transition: background 0.3s;
     }
-
     #nav.scrolled {
       background: rgba(242,237,227,0.92);
       backdrop-filter: blur(8px);
     }
-
     .nav-logo {
       font-family: 'Kross', sans-serif;
       font-weight: 400;
@@ -54,9 +52,7 @@
       color: var(--ink);
       text-decoration: none;
     }
-
     .nav-links { display: flex; gap: 32px; list-style: none; }
-
     .nav-links a {
       font-family: 'Kross', sans-serif;
       font-weight: 300;
@@ -67,10 +63,9 @@
       text-decoration: none;
       transition: color 0.2s;
     }
-
     .nav-links a:hover { color: var(--blue); }
 
-    /* ── HERO ── */
+    /* HERO */
     #hero {
       position: relative;
       width: 100%;
@@ -81,36 +76,21 @@
       align-items: center;
     }
 
-    #grid-wrap {
+    /* SplashCursor canvas */
+    #splash-canvas {
       position: absolute;
-      inset: -60px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transform: rotate(-4deg) scale(1.14);
-      opacity: 0.28;
-    }
-
-    .g-row { display: flex; gap: 10px; flex-shrink: 0; will-change: transform; }
-    .g-cell { flex-shrink: 0; width: 150px; height: 100px; border-radius: 6px; }
-    .ca{background:#0057FF} .cb{background:#1a1a1a} .cc{background:#ddd5be}
-    .cd{background:#1A6BFF} .ce{background:#e8e0cc} .cf{background:#003ecc}
-    .cg{background:#c9bfa6} .ch{background:#0047d9} .ci{background:#2a2a2a}
-    .cj{background:#f5f0e4;border:1px solid #ddd5be}
-
-    #overlay {
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(to right, var(--cream) 0%, rgba(242,237,227,0.05) 55%, rgba(242,237,227,0.9) 100%),
-        linear-gradient(to bottom, rgba(242,237,227,0.4) 0%, transparent 30%, transparent 65%, var(--cream) 100%);
-      z-index: 5;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.55;
     }
 
     #hero-content {
       position: relative;
       z-index: 10;
       padding: 0 56px;
-      max-width: 700px;
+      max-width: 760px;
     }
 
     .label {
@@ -125,6 +105,7 @@
       animation: up 0.6s ease forwards 0.3s;
     }
 
+    /* Typewriter hero title */
     .hero-title {
       font-family: 'Foun', 'Arial Narrow', sans-serif;
       font-weight: 400;
@@ -136,8 +117,24 @@
       opacity: 0;
       animation: up 0.9s ease forwards 0.55s;
     }
-
     .hero-title .dim { color: rgba(13,10,30,0.15); }
+
+    /* línea typewriter — la segunda y cuarta línea hacen loop */
+    .tw-line {
+      display: block;
+      min-height: 1em;
+    }
+    .tw-cursor {
+      display: inline-block;
+      width: 3px;
+      background: var(--ink);
+      margin-left: 4px;
+      animation: blink 0.8s step-end infinite;
+      vertical-align: baseline;
+      height: 0.8em;
+      transform: translateY(0.05em);
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
     .hero-sub {
       margin-top: 32px;
@@ -147,7 +144,6 @@
       opacity: 0;
       animation: up 0.7s ease forwards 1.05s;
     }
-
     .hero-sub span {
       font-family: 'Kross', sans-serif;
       font-weight: 300;
@@ -156,7 +152,6 @@
       text-transform: uppercase;
       color: rgba(15,10,30,0.3);
     }
-
     .hero-sub .sep { width: 14px; height: 0.5px; background: rgba(15,10,30,0.18); }
 
     #scroll-hint {
@@ -174,12 +169,8 @@
       writing-mode: vertical-rl;
     }
 
-    /* ── WORK ── */
-    #work {
-      padding: 0 56px 120px;
-      background: var(--cream);
-    }
-
+    /* WORK */
+    #work { padding: 0 56px 120px; background: var(--cream); }
     .section-label {
       font-family: 'Kross', sans-serif;
       font-weight: 300;
@@ -192,14 +183,7 @@
       align-items: center;
       gap: 16px;
     }
-
-    .section-label::after {
-      content: '';
-      width: 28px;
-      height: 0.5px;
-      background: var(--muted);
-      display: block;
-    }
+    .section-label::after { content:''; width:28px; height:0.5px; background:var(--muted); display:block; }
 
     .work-grid {
       display: grid;
@@ -217,6 +201,7 @@
     .proj:nth-child(8)  { grid-column: span 4; }
     .proj:nth-child(9)  { grid-column: span 5; }
     .proj:nth-child(10) { grid-column: span 7; }
+    .proj:nth-child(11) { grid-column: span 6; }
 
     .proj {
       position: relative;
@@ -224,7 +209,6 @@
       border-radius: 3px;
       cursor: none;
     }
-
     .proj-img {
       width: 100%;
       aspect-ratio: 4/3;
@@ -232,13 +216,11 @@
       transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
       object-fit: cover;
     }
-
     .proj:nth-child(1) .proj-img,
     .proj:nth-child(4) .proj-img,
     .proj:nth-child(7) .proj-img { aspect-ratio: 16/9; }
     .proj:nth-child(2) .proj-img,
     .proj:nth-child(8) .proj-img { aspect-ratio: 3/4; }
-
     .proj:hover .proj-img { transform: scale(1.03); }
 
     .proj-cursor-label {
@@ -260,9 +242,9 @@
       transition: opacity 0.18s ease;
       will-change: transform;
     }
-
     .proj:hover .proj-cursor-label { opacity: 1; }
 
+    /* placeholder colors */
     .proj:nth-child(1)  .proj-img { background: #a8a098; }
     .proj:nth-child(2)  .proj-img { background: #b8b0a4; }
     .proj:nth-child(3)  .proj-img { background: #a0998e; }
@@ -273,18 +255,16 @@
     .proj:nth-child(8)  .proj-img { background: #c0b8ac; }
     .proj:nth-child(9)  .proj-img { background: #b4aea4; }
     .proj:nth-child(10) .proj-img { background: #aca6a0; }
+    .proj:nth-child(11) .proj-img { background: #b8b2a8; }
 
-    /* ── ABOUT ── */
+    /* ABOUT */
     #about { border-top: 0.5px solid rgba(13,10,30,0.08); }
-
     .about-hero {
       display: grid;
       grid-template-columns: 1fr 1fr;
       min-height: 100vh;
     }
-
     .about-photo-col { overflow: hidden; }
-
     .about-photo-col img {
       width: 100%;
       height: 100%;
@@ -292,14 +272,12 @@
       object-position: top center;
       display: block;
     }
-
     .about-right {
       padding: 48px 56px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
-
     .about-role {
       font-family: 'Kross', sans-serif;
       font-weight: 300;
@@ -309,9 +287,7 @@
       color: var(--muted);
       align-self: flex-end;
     }
-
     .about-name { margin-top: auto; }
-
     .about-name .n1,
     .about-name .n2 {
       display: block;
@@ -323,10 +299,8 @@
       line-height: 0.86;
       letter-spacing: -0.02em;
     }
-
     .about-name .n1 { text-align: left; }
     .about-name .n2 { text-align: right; margin-top: -10px; }
-
     .about-bio {
       margin-top: 36px;
       font-family: 'Kross', sans-serif;
@@ -336,18 +310,14 @@
       color: rgba(13,10,30,0.6);
     }
 
-    /* ── EXPERIENCIA ── */
-    .exp-section {
-      padding: 48px 56px 100px;
-    }
-
+    /* EXPERIENCIA */
+    .exp-section { padding: 48px 56px 80px; }
     .exp-cols {
       display: flex;
       justify-content: space-between;
       padding-bottom: 8px;
       border-bottom: 0.5px solid rgba(13,10,30,0.12);
     }
-
     .exp-col-label {
       font-family: 'Kross', sans-serif;
       font-weight: 300;
@@ -356,13 +326,11 @@
       text-transform: uppercase;
       color: rgba(13,10,30,0.28);
     }
-
     .exp-item {
       border-bottom: 0.5px solid rgba(13,10,30,0.1);
       overflow: hidden;
       cursor: default;
     }
-
     .exp-row {
       display: flex;
       align-items: baseline;
@@ -370,9 +338,7 @@
       padding: 20px 0;
       transition: opacity 0.2s;
     }
-
     .exp-item:hover .exp-row { opacity: 0.45; }
-
     .exp-company {
       font-family: 'Foun', 'Arial Narrow', sans-serif;
       font-weight: 400;
@@ -382,7 +348,6 @@
       letter-spacing: -0.01em;
       line-height: 1;
     }
-
     .exp-year {
       font-family: 'Foun', 'Arial Narrow', sans-serif;
       font-weight: 400;
@@ -390,18 +355,12 @@
       color: rgba(13,10,30,0.2);
       letter-spacing: -0.01em;
     }
-
     .exp-body {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.45s cubic-bezier(0.25,0.46,0.45,0.94), padding 0.3s ease;
     }
-
-    .exp-item:hover .exp-body {
-      max-height: 180px;
-      padding-bottom: 22px;
-    }
-
+    .exp-item:hover .exp-body { max-height: 200px; padding-bottom: 22px; }
     .exp-role {
       font-family: 'Kross', sans-serif;
       font-weight: 300;
@@ -411,7 +370,6 @@
       color: var(--blue);
       margin-bottom: 8px;
     }
-
     .exp-desc {
       font-family: 'Kross', sans-serif;
       font-weight: 300;
@@ -420,7 +378,6 @@
       color: rgba(13,10,30,0.5);
       margin-bottom: 8px;
     }
-
     .exp-brands {
       font-family: 'Kross', sans-serif;
       font-weight: 300;
@@ -430,7 +387,33 @@
       line-height: 1.7;
     }
 
-    /* ── PLACEHOLDERS ── */
+    /* AFICIONES — marca de agua */
+    .interests {
+      padding: 40px 56px 80px;
+      overflow: hidden;
+      border-top: 0.5px solid rgba(13,10,30,0.06);
+    }
+    .interests-row {
+      display: flex;
+      gap: 0.15em;
+      align-items: baseline;
+      white-space: nowrap;
+    }
+    .interests-word {
+      font-family: 'Foun', 'Arial Narrow', sans-serif;
+      font-weight: 400;
+      font-size: clamp(48px, 8vw, 96px);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: rgba(13,10,30,0.07);
+      padding-right: 0.3em;
+      transition: color 0.3s ease;
+      cursor: default;
+    }
+    .interests-word:hover { color: rgba(13,10,30,0.55); }
+
+    /* PLACEHOLDERS */
     .placeholder-section {
       min-height: 50vh;
       display: flex;
@@ -439,17 +422,13 @@
       border-top: 0.5px solid rgba(13,10,30,0.08);
     }
 
-    /* ── FADE UP ── */
+    /* FADE UP */
     .fade-up {
       opacity: 0;
       transform: translateY(24px);
       transition: opacity 0.8s ease, transform 0.8s ease;
     }
-
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
 
     @keyframes up {
       from { opacity: 0; transform: translateY(12px); }
@@ -472,15 +451,15 @@
 
 <!-- HERO -->
 <section id="hero">
-  <div id="grid-wrap"></div>
-  <div id="overlay"></div>
+  <canvas id="splash-canvas"></canvas>
+
   <div id="hero-content">
     <p class="label">Creative Director · Barna</p>
     <h1 class="hero-title">
-      Creative<br>
-      <span class="dim">Playmaker</span><br>
-      &amp; Brand<br>
-      <span class="dim">Storyteller</span>
+      <span class="tw-line" id="tw1">Creative</span>
+      <span class="tw-line dim" id="tw2"></span>
+      <span class="tw-line">&amp; Brand</span>
+      <span class="tw-line dim" id="tw4"></span>
     </h1>
     <div class="hero-sub">
       <span>Audiovisual</span>
@@ -499,17 +478,18 @@
   <div class="work-grid">
 
     <div class="proj fade-up">
-      <img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776425520/Vivir_pese_a_la_enfermedad_gracias_a_la_investigacio%CC%81n__Nos_mantiene_con_vida__1-6_screenshot_czxviq.png" alt="Ford" loading="lazy">
+      <img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776425520/Vivir_pese_a_la_enfermedad_gracias_a_la_investigacio%CC%81n__Nos_mantiene_con_vida__1-6_screenshot_czxviq.png" alt="Bayer" loading="lazy">
       <div class="proj-cursor-label">Bayer</div>
     </div>
 
     <div class="proj fade-up">
-      <img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776425844/2024-ford-e-transit-enhanced-range_100920572_h_vucpln.jpg" alt="Bayer" loading="lazy">
+      <img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776425844/2024-ford-e-transit-enhanced-range_100920572_h_vucpln.jpg" alt="Ford" loading="lazy">
       <div class="proj-cursor-label">Ford</div>
     </div>
 
     <div class="proj fade-up">
-      <img class="proj-img" src="URL_MUSTANG" alt="Mustang" loading="lazy">
+      <!-- TODO: añadir imagen Mustang -->
+      <div class="proj-img" style="background:#a0998e;"></div>
       <div class="proj-cursor-label">Mustang</div>
     </div>
 
@@ -524,12 +504,13 @@
     </div>
 
     <div class="proj fade-up">
-      <img class="proj-img" src="URL_ESPANYOL" alt="RCD Espanyol" loading="lazy">
+      <!-- TODO: añadir imagen RCD Espanyol -->
+      <div class="proj-img" style="background:#a8a099;"></div>
       <div class="proj-cursor-label">RCD Espanyol</div>
     </div>
 
     <div class="proj fade-up">
-      <img class="proj-img" src="https://scontent-bcn1-1.xx.fbcdn.net/v/t39.30808-6/474870395_623695440170743_765777446380443093_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=06a7ca&_nc_ohc=f62V9X5M3RcQ7kNvwHxXM3m&_nc_oc=AdraAPPiuEl2qZoZPa6uEK-alzuxebLrxj-R75YXz0FvDXdwvS3Tge0LAnX9fpkGdx34VBMvhHydBN0UnR0ZM9Dd&_nc_zt=23&_nc_ht=scontent-bcn1-1.xx&_nc_gid=OH3TQQ3mWJg0QCE_CSZpVg&_nc_ss=7a389&oh=00_Af0v7pEQbqj-nHJ9TdDwGWGfWXx6dZt7GkftsrJqrL80bw&oe=69E7D7A2" alt="Colhogar" loading="lazy">
+      <img class="proj-img" src="https://scontent-bcn1-1.xx.fbcdn.net/v/t39.30808-6/474870395_623695440170743_765777446380443093_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=06a7ca&_nc_ohc=f62V9X5M3RcQ7kNvwHxXM3m&_nc_oc=AdraAPPiuEl2qZoZPa6uEK-alzuxebLrxj-R75YXz0FvDXdwvS3Tge0LAnX9fpkGdx34VBMvhHydBN0UnR0ZM9Dd&_nc_zt=23&_nc_ht=scontent-bcn1-1.xx&_nc_gid=OH3TQQ3mWJg0QCE_CSZpVg&_nc_ss=7a389&oh=00_Af0v7pEQbqj-nHJ9TdDwGWGfWXx6dZt7GkftsrJqrL80bw&oe=69E7D7A2" alt="OMG!LaLiga" loading="lazy">
       <div class="proj-cursor-label">OMG!LaLiga</div>
     </div>
 
@@ -544,8 +525,15 @@
     </div>
 
     <div class="proj fade-up">
-      <img class="proj-img" src="URL_ESADE" alt="Esade" loading="lazy">
+      <!-- TODO: añadir imagen Esade -->
+      <div class="proj-img" style="background:#aca6a0;"></div>
       <div class="proj-cursor-label">Esade</div>
+    </div>
+
+    <div class="proj fade-up">
+      <!-- TODO: añadir imagen Colhogar -->
+      <div class="proj-img" style="background:#b8b2a8;"></div>
+      <div class="proj-cursor-label">Colhogar</div>
     </div>
 
   </div>
@@ -553,7 +541,6 @@
 
 <!-- ABOUT -->
 <section id="about">
-
   <div class="about-hero">
     <div class="about-photo-col">
       <img src="https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla" alt="Marta Rived">
@@ -626,7 +613,29 @@
       </div>
     </div>
 
+    <div class="exp-item">
+      <div class="exp-row">
+        <span class="exp-company">Internship</span>
+        <span class="exp-year">2015</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">Grupo Planeta · SEAT · Heraldo de Aragón</div>
+        <div class="exp-desc">Early career internships across media, automotive and editorial industries.</div>
+      </div>
+    </div>
+
   </div>
+
+  <!-- AFICIONES — marca de agua -->
+  <div class="interests fade-up">
+    <div class="interests-row">
+      <span class="interests-word">Tenis</span>
+      <span class="interests-word">Ciclismo</span>
+      <span class="interests-word">Barça</span>
+      <span class="interests-word">Cine</span>
+    </div>
+  </div>
+
 </section>
 
 <!-- TYPING -->
@@ -640,81 +649,221 @@
 </section>
 
 <script>
-  /* GRID */
-  const PALETTE = ['ca','ca','cb','cc','cc','cd','ce','ce','cf','cg','cg','ch','ci','cj','cj','cj'];
-  const ROWS = 6, COLS = 11;
-  const SPEEDS = [0.28,-0.19,0.22,-0.15,0.25,-0.17];
-  const offsets = [0,75,20,55,10,40];
-  const wrap = document.getElementById('grid-wrap');
-  const gridRows = [];
+/* ── TYPEWRITER ── */
+const tw2words = ['Playmaker', 'Storyteller', 'Director'];
+const tw4words = ['Storyteller', 'Playmaker', 'Creator'];
+let tw2i = 0, tw4i = 0;
 
-  for (let r = 0; r < ROWS; r++) {
-    const row = document.createElement('div');
-    row.className = 'g-row';
-    for (let c = 0; c < COLS * 2; c++) {
-      const cell = document.createElement('div');
-      cell.className = 'g-cell ' + PALETTE[Math.floor(Math.random() * PALETTE.length)];
-      row.appendChild(cell);
+function typeWord(el, word, cb) {
+  el.textContent = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'tw-cursor';
+  el.appendChild(cursor);
+  let i = 0;
+  const t = setInterval(() => {
+    el.insertBefore(document.createTextNode(word[i]), cursor);
+    i++;
+    if (i >= word.length) { clearInterval(t); setTimeout(cb, 1800); }
+  }, 80);
+}
+
+function eraseWord(el, cb) {
+  const cursor = el.querySelector('.tw-cursor');
+  const text = el.textContent;
+  let i = text.length;
+  const t = setInterval(() => {
+    el.textContent = text.slice(0, i - 1);
+    el.appendChild(cursor);
+    i--;
+    if (i <= 0) { clearInterval(t); cb(); }
+  }, 45);
+}
+
+function loopTw2() {
+  const el = document.getElementById('tw2');
+  typeWord(el, tw2words[tw2i % tw2words.length], () => {
+    eraseWord(el, () => { tw2i++; loopTw2(); });
+  });
+}
+
+function loopTw4() {
+  const el = document.getElementById('tw4');
+  typeWord(el, tw4words[tw4i % tw4words.length], () => {
+    eraseWord(el, () => { tw4i++; loopTw4(); });
+  });
+}
+
+setTimeout(loopTw2, 1200);
+setTimeout(loopTw4, 1600);
+
+/* ── SPLASH CURSOR (fluid simulation) ── */
+(function() {
+  const canvas = document.getElementById('splash-canvas');
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const vs = `
+    attribute vec2 a_pos;
+    void main() { gl_Position = vec4(a_pos, 0, 1); }
+  `;
+
+  const fs = `
+    precision mediump float;
+    uniform vec2 u_res;
+    uniform vec2 u_mouse;
+    uniform float u_time;
+    uniform vec2 u_splats[8];
+    uniform float u_ages[8];
+
+    float blob(vec2 uv, vec2 center, float age) {
+      float d = length(uv - center);
+      float r = 0.08 + age * 0.25;
+      float s = exp(-d * d / (r * r * 0.5));
+      return s * max(0.0, 1.0 - age * 0.7);
     }
-    wrap.appendChild(row);
-    gridRows.push(row);
+
+    void main() {
+      vec2 uv = gl_FragCoord.xy / u_res;
+      float acc = 0.0;
+      for (int i = 0; i < 8; i++) {
+        acc += blob(uv, u_splats[i], u_ages[i]);
+      }
+      acc = clamp(acc, 0.0, 1.0);
+
+      // base cream, accent blue
+      vec3 cream = vec3(0.949, 0.929, 0.890);
+      vec3 blue  = vec3(0.0, 0.341, 1.0);
+      vec3 dark  = vec3(0.051, 0.039, 0.118);
+
+      vec3 col = mix(cream, mix(blue, dark, acc * 0.4), acc * 0.6);
+      gl_FragColor = vec4(col, acc * 0.5);
+    }
+  `;
+
+  function mkShader(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
   }
 
-  function animateGrid() {
-    gridRows.forEach((row, i) => {
-      offsets[i] += SPEEDS[i];
-      const total = COLS * 160;
-      if (offsets[i] > total) offsets[i] -= total;
-      if (offsets[i] < -total) offsets[i] += total;
-      row.style.transform = 'translateX(' + offsets[i] + 'px)';
-    });
-    requestAnimationFrame(animateGrid);
-  }
-  requestAnimationFrame(animateGrid);
+  const prog = gl.createProgram();
+  gl.attachShader(prog, mkShader(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
 
-  /* NAV */
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  });
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
-  /* FADE UP */
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
-  /* CURSOR FOLLOW */
-  document.querySelectorAll('.proj').forEach(proj => {
-    const label = proj.querySelector('.proj-cursor-label');
-    let cx = 0, cy = 0, tx = 0, ty = 0, raf;
+  const uRes   = gl.getUniformLocation(prog, 'u_res');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+  const uTime  = gl.getUniformLocation(prog, 'u_time');
+  const uSplats= gl.getUniformLocation(prog, 'u_splats');
+  const uAges  = gl.getUniformLocation(prog, 'u_ages');
 
-    proj.addEventListener('mouseenter', e => {
-      const r = proj.getBoundingClientRect();
-      cx = tx = e.clientX - r.left;
-      cy = ty = e.clientY - r.top;
-      label.style.opacity = '1';
-      raf = requestAnimationFrame(loop);
-    });
+  const N = 8;
+  const splats = Array.from({length:N}, () => [0.5, 0.5]);
+  const ages   = Array.from({length:N}, () => 999);
+  let head = 0;
+  let mx = 0.5, my = 0.5;
+  let lastSplat = 0;
 
-    proj.addEventListener('mouseleave', () => {
-      label.style.opacity = '0';
-      cancelAnimationFrame(raf);
-    });
-
-    proj.addEventListener('mousemove', e => {
-      const r = proj.getBoundingClientRect();
-      tx = e.clientX - r.left;
-      ty = e.clientY - r.top;
-    });
-
-    function loop() {
-      cx += (tx - cx) * 0.1;
-      cy += (ty - cy) * 0.1;
-      label.style.transform = 'translate(calc(' + cx + 'px - 50%), calc(' + cy + 'px - 50%))';
-      raf = requestAnimationFrame(loop);
+  document.getElementById('hero').addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mx = (e.clientX - r.left) / r.width;
+    my = 1 - (e.clientY - r.top) / r.height;
+    const now = performance.now();
+    if (now - lastSplat > 60) {
+      splats[head] = [mx, my];
+      ages[head] = 0;
+      head = (head + 1) % N;
+      lastSplat = now;
     }
   });
+
+  let last = 0;
+  function loop(ts) {
+    const dt = (ts - last) / 1000;
+    last = ts;
+    for (let i = 0; i < N; i++) ages[i] += dt * 0.6;
+
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.uniform2f(uMouse, mx, my);
+    gl.uniform1f(uTime, ts / 1000);
+    gl.uniform2fv(uSplats, splats.flat());
+    gl.uniform1fv(uAges, ages);
+
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* ── GRID ── */
+const PALETTE = ['ca','ca','cb','cc','cc','cd','ce','ce','cf','cg','cg','ch','ci','cj','cj','cj'];
+const ROWS = 6, COLS = 11;
+const SPEEDS = [0.28,-0.19,0.22,-0.15,0.25,-0.17];
+const offsets = [0,75,20,55,10,40];
+const gridRows = [];
+
+/* ── NAV ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── FADE UP ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+/* ── CURSOR FOLLOW ── */
+document.querySelectorAll('.proj').forEach(proj => {
+  const label = proj.querySelector('.proj-cursor-label');
+  let cx = 0, cy = 0, tx = 0, ty = 0, raf;
+  proj.addEventListener('mouseenter', e => {
+    const r = proj.getBoundingClientRect();
+    cx = tx = e.clientX - r.left;
+    cy = ty = e.clientY - r.top;
+    label.style.opacity = '1';
+    raf = requestAnimationFrame(loop);
+  });
+  proj.addEventListener('mouseleave', () => {
+    label.style.opacity = '0';
+    cancelAnimationFrame(raf);
+  });
+  proj.addEventListener('mousemove', e => {
+    const r = proj.getBoundingClientRect();
+    tx = e.clientX - r.left;
+    ty = e.clientY - r.top;
+  });
+  function loop() {
+    cx += (tx - cx) * 0.1;
+    cy += (ty - cy) * 0.1;
+    label.style.transform = 'translate(calc('+cx+'px - 50%), calc('+cy+'px - 50%))';
+    raf = requestAnimationFrame(loop);
+  }
+});
 </script>
 
 </body>
