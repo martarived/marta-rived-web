@@ -307,74 +307,175 @@
     .exp-desc { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.75; color: rgba(13,10,30,0.5); margin-bottom: 8px; }
     .exp-brands { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.06em; color: rgba(13,10,30,0.3); line-height: 1.7; }
 
-    /* ── FLYING POSTERS ── */
-    #flying-posters {
+    /* ── CARRUSEL AFICIONES ── */
+    #interests-strip {
       width: 100%;
-      height: 580px;
-      position: relative;
       overflow: hidden;
-      margin-top: 24px;
+      padding: 48px 0 80px;
+      border-top: 0.5px solid rgba(13,10,30,0.06);
     }
 
-    #flying-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .interests-track {
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      animation: slide 20s linear infinite;
+    }
+
+    .interests-track:hover { animation-play-state: paused; }
+
+    @keyframes slide {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .interest-card { flex-shrink: 0; width: 280px; cursor: default; }
+
+    .interest-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: 3px;
+      overflow: hidden;
+      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .interest-card:hover .interest-img { transform: scale(1.02); }
+
+    .interest-label {
+      display: block;
+      margin-top: 12px;
+      font-family: 'Foun', 'Arial Narrow', sans-serif;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      color: rgba(13,10,30,0.2);
+      transition: color 0.2s;
+    }
+
+    .interest-card:hover .interest-label { color: var(--ink); }
 
     /* ── TYPING ── */
     #typing { border-top: 0.5px solid rgba(13,10,30,0.08); padding-bottom: 120px; }
 
     .typing-grid {
       display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 64px 24px;
-      padding: 48px 56px 0;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 64px 32px;
+      padding: 0 56px;
     }
 
-    .typing-post:nth-child(1) { grid-column: span 7; }
-    .typing-post:nth-child(2) { grid-column: span 5; }
-    .typing-post:nth-child(3) { grid-column: span 5; }
-    .typing-post:nth-child(4) { grid-column: span 7; }
-    .typing-post:nth-child(5) { grid-column: span 6; }
-    .typing-post:nth-child(6) { grid-column: span 6; }
+    .typing-post { text-decoration: none; display: block; cursor: pointer; }
 
-    .typing-post {
-      display: block;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .typing-post-img {
+    .typing-img {
       width: 100%;
       aspect-ratio: 3/2;
-      object-fit: cover;
-      display: block;
       border-radius: 3px;
-      background: #c8c0b2;
+      overflow: hidden;
       transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+      background-size: cover;
+      background-position: center;
     }
 
-    .typing-post:nth-child(2) .typing-post-img,
-    .typing-post:nth-child(5) .typing-post-img { aspect-ratio: 4/5; }
+    .typing-post:hover .typing-img { transform: scale(1.02); }
 
-    .typing-post:hover .typing-post-img { transform: scale(1.02); }
-
-    .typing-post-title {
+    .typing-info {
       margin-top: 20px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+      column-gap: 14px;
+    }
+
+    .typing-num {
+      grid-row: 1 / 3;
+      font-family: 'Foun', sans-serif;
+      font-size: 11px;
+      color: rgba(13,10,30,0.18);
+      padding-top: 4px;
+    }
+
+    .typing-title {
       font-family: 'Foun', 'Arial Narrow', sans-serif;
       font-weight: 400;
-      font-size: clamp(20px, 2.8vw, 34px);
+      font-size: clamp(18px, 2.2vw, 28px);
       text-transform: uppercase;
       color: var(--ink);
       letter-spacing: -0.01em;
       line-height: 0.95;
+      transition: color 0.2s;
     }
 
-    .typing-post-date {
-      margin-top: 8px;
+    .typing-post:hover .typing-title { color: rgba(13,10,30,0.4); }
+
+    .typing-date {
       font-family: 'Kross', sans-serif;
       font-weight: 300;
       font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      border-top: 0.5px solid rgba(13,10,30,0.08);
+      padding: 80px 56px 100px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 48px;
+      margin-top: 48px;
+      padding-bottom: 48px;
+      border-bottom: 0.5px solid rgba(13,10,30,0.08);
+    }
+
+    .contact-left { display: flex; flex-direction: column; gap: 6px; }
+
+    .contact-big {
+      font-family: 'Foun', 'Arial Narrow', sans-serif;
+      font-weight: 400;
+      font-size: clamp(22px, 3.5vw, 44px);
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      transition: color 0.2s;
+      display: block;
+    }
+
+    .contact-big:hover { color: rgba(13,10,30,0.28); }
+
+    .contact-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+
+    .contact-link {
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-link:hover { color: var(--ink); }
+
+    .contact-footer {
+      margin-top: 32px;
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(13,10,30,0.18);
     }
 
     /* ── PLACEHOLDERS ── */
@@ -521,27 +622,103 @@
     </div>
   </div>
 
-  <!-- FLYING POSTERS -->
-  <div id="flying-posters">
-    <canvas id="flying-canvas"></canvas>
+  <!-- CARRUSEL AFICIONES -->
+  <div id="interests-strip">
+    <div class="interests-track" id="interests-track">
+      <!-- duplicado para loop infinito -->
+      <div class="interest-card"><div class="interest-img" style="background:#b0a898;"></div><span class="interest-label">Tenis</span></div>
+      <div class="interest-card"><div class="interest-img" style="background:#a8a090;"></div><span class="interest-label">Ciclismo</span></div>
+      <div class="interest-card"><div class="interest-img" style="background:#b8b0a4;"></div><span class="interest-label">Barça</span></div>
+      <div class="interest-card"><div class="interest-img" style="background:#a4a098;"></div><span class="interest-label">Cine</span></div>
+      <div class="interest-card"><div class="interest-img" style="background:#b0a898;"></div><span class="interest-label">Tenis</span></div>
+      <div class="interest-card"><div class="interest-img" style="background:#a8a090;"></div><span class="interest-label">Ciclismo</span></div>
+      <div class="interest-card"><div class="interest-img" style="background:#b8b0a4;"></div><span class="interest-label">Barça</span></div>
+      <div class="interest-card"><div class="interest-img" style="background:#a4a098;"></div><span class="interest-label">Cine</span></div>
+    </div>
   </div>
 
 </section>
 
+<!-- TYPING -->
 <section id="typing">
-  <div class="typing-header fade-up">
-    <span class="section-label" style="padding:80px 56px 0;">Typing</span>
-  </div>
-  <div class="typing-grid" id="typing-grid">
-    <!-- posts cargados via JS -->
+  <p class="section-label fade-up" style="padding: 80px 56px 48px;">Typing</p>
+  <div class="typing-grid">
+
+    <a class="typing-post fade-up" href="#" target="_blank">
+      <div class="typing-img" style="background:#b8b0a4;"></div>
+      <div class="typing-info">
+        <span class="typing-num">01</span>
+        <h3 class="typing-title">Título del artículo uno</h3>
+        <span class="typing-date">Enero 2025</span>
+      </div>
+    </a>
+
+    <a class="typing-post fade-up" href="#" target="_blank">
+      <div class="typing-img" style="background:#a8a098;"></div>
+      <div class="typing-info">
+        <span class="typing-num">02</span>
+        <h3 class="typing-title">Título del artículo dos</h3>
+        <span class="typing-date">Febrero 2025</span>
+      </div>
+    </a>
+
+    <a class="typing-post fade-up" href="#" target="_blank">
+      <div class="typing-img" style="background:#c0b8ac;"></div>
+      <div class="typing-info">
+        <span class="typing-num">03</span>
+        <h3 class="typing-title">Título del artículo tres</h3>
+        <span class="typing-date">Marzo 2025</span>
+      </div>
+    </a>
+
+    <a class="typing-post fade-up" href="#" target="_blank">
+      <div class="typing-img" style="background:#b4aea4;"></div>
+      <div class="typing-info">
+        <span class="typing-num">04</span>
+        <h3 class="typing-title">Título del artículo cuatro</h3>
+        <span class="typing-date">Abril 2025</span>
+      </div>
+    </a>
+
+    <a class="typing-post fade-up" href="#" target="_blank">
+      <div class="typing-img" style="background:#aca6a0;"></div>
+      <div class="typing-info">
+        <span class="typing-num">05</span>
+        <h3 class="typing-title">Título del artículo cinco</h3>
+        <span class="typing-date">Mayo 2025</span>
+      </div>
+    </a>
+
+    <a class="typing-post fade-up" href="#" target="_blank">
+      <div class="typing-img" style="background:#b0a89c;"></div>
+      <div class="typing-info">
+        <span class="typing-num">06</span>
+        <h3 class="typing-title">Título del artículo seis</h3>
+        <span class="typing-date">Junio 2025</span>
+      </div>
+    </a>
+
   </div>
 </section>
 
-<section id="contact" class="placeholder-section">
-  <p class="section-label fade-up">Contact</p>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner fade-up">
+    <p class="section-label">Contact</p>
+    <div class="contact-grid">
+      <div class="contact-left">
+        <a href="mailto:rivedmodrego@gmail.com" class="contact-big">rivedmodrego@gmail.com</a>
+        <a href="tel:+34626754785" class="contact-big">+34 626 754 785</a>
+      </div>
+      <div class="contact-right">
+        <a href="https://linkedin.com/in/martarived" target="_blank" rel="noopener" class="contact-link">LinkedIn</a>
+        <a href="https://instagram.com/martarived" target="_blank" rel="noopener" class="contact-link">Instagram</a>
+      </div>
+    </div>
+    <p class="contact-footer">Barcelona · 2025</p>
+  </div>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 
 /* ── HAMBURGUESA ── */
@@ -646,206 +823,6 @@ window.addEventListener('scroll', () => {
   requestAnimationFrame(loop);
 })();
 
-/* ── FLYING POSTERS — 6 pósters, loop continuo, hover para ver ── */
-(function() {
-  const container = document.getElementById('flying-posters');
-  const canvas = document.getElementById('flying-canvas');
-  const W = container.offsetWidth;
-  const H = container.offsetHeight;
-
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setSize(W, H);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0x000000, 0);
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 100);
-  camera.position.z = 18;
-
-  // 6 pósters — reemplaza con tus imágenes reales
-  const URLS = [
-    'https://picsum.photos/500/700?grayscale&random=10',
-    'https://picsum.photos/500/700?grayscale&random=20',
-    'https://picsum.photos/500/700?grayscale&random=30',
-    'https://picsum.photos/500/700?grayscale&random=40',
-    'https://picsum.photos/500/700?grayscale&random=50',
-    'https://picsum.photos/500/700?grayscale&random=60',
-  ];
-
-  const loader = new THREE.TextureLoader();
-  const PW = 5, PH = 7.2;
-  const GAP = 1.8;
-  const TOTAL = URLS.length;
-  const SPAN = (PW + GAP) * TOTAL;
-
-  const vShader = `
-    uniform float uDistortion;
-    uniform float uOffset;
-    uniform float uTime;
-    varying vec2 vUv;
-    void main() {
-      vUv = uv;
-      vec3 pos = position;
-      float freq = 3.5;
-      float speed = uOffset;
-      float bendZ = sin(pos.x * freq + speed) * cos(pos.y * 2.0 + speed * 0.6) * uDistortion;
-      float bendX = cos(pos.y * freq * 0.8 + speed * 1.2) * uDistortion * 0.4;
-      float bendY = sin(pos.x * 2.0 + speed * 0.9) * uDistortion * 0.2;
-      pos.z += bendZ;
-      pos.x += bendX;
-      pos.y += bendY;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-    }
-  `;
-
-  const fShader = `
-    uniform sampler2D uTex;
-    uniform float uBrightness;
-    varying vec2 vUv;
-    void main() {
-      vec4 col = texture2D(uTex, vUv);
-      gl_FragColor = vec4(col.rgb * uBrightness, col.a);
-    }
-  `;
-
-  const meshes = [];
-  const baseX = [];
-
-  URLS.forEach((url, i) => {
-    const tex = loader.load(url);
-    const mat = new THREE.ShaderMaterial({
-      uniforms: {
-        uTex:        { value: tex },
-        uDistortion: { value: 0.9 },
-        uOffset:     { value: 0.0 },
-        uTime:       { value: 0.0 },
-        uBrightness: { value: 0.55 },
-      },
-      vertexShader: vShader,
-      fragmentShader: fShader,
-      side: THREE.DoubleSide,
-      transparent: true,
-    });
-    const geo = new THREE.PlaneGeometry(PW, PH, 20, 20);
-    const mesh = new THREE.Mesh(geo, mat);
-    const x = (i - TOTAL / 2 + 0.5) * (PW + GAP);
-    mesh.position.x = x;
-    mesh.position.y = 0.8;
-    baseX.push(x);
-    scene.add(mesh);
-    meshes.push(mesh);
-  });
-
-  let autoScroll = 0;
-  const AUTO_SPEED = 0.022;
-  let hoveredIndex = -1;
-
-  // raycaster para hover
-  const raycaster = new THREE.Raycaster();
-  const mouse = new THREE.Vector2();
-
-  container.addEventListener('mousemove', e => {
-    const r = container.getBoundingClientRect();
-    mouse.x = ((e.clientX - r.left) / r.width) * 2 - 1;
-    mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1;
-    raycaster.setFromCamera(mouse, camera);
-    const hits = raycaster.intersectObjects(meshes);
-    hoveredIndex = hits.length > 0 ? meshes.indexOf(hits[0].object) : -1;
-  });
-
-  container.addEventListener('mouseleave', () => { hoveredIndex = -1; });
-
-  function loop() {
-    requestAnimationFrame(loop);
-    autoScroll += AUTO_SPEED;
-
-    meshes.forEach((mesh, i) => {
-      let x = baseX[i] - autoScroll;
-      const half = SPAN / 2;
-      while (x > half) x -= SPAN;
-      while (x < -half) x += SPAN;
-      mesh.position.x = x;
-
-      // hover: brillo al 100%, sin hover: 55%
-      const targetBrightness = hoveredIndex === i ? 1.0 : 0.55;
-      const cur = mesh.material.uniforms.uBrightness.value;
-      mesh.material.uniforms.uBrightness.value += (targetBrightness - cur) * 0.08;
-
-      // distorsión suave continua, se aplana en hover
-      const targetDist = hoveredIndex === i ? 0.02 : 0.9;
-      const curDist = mesh.material.uniforms.uDistortion.value;
-      mesh.material.uniforms.uDistortion.value += (targetDist - curDist) * 0.08;
-
-      mesh.material.uniforms.uOffset.value = autoScroll * 0.6;
-    });
-
-    renderer.render(scene, camera);
-  }
-  loop();
-
-  window.addEventListener('resize', () => {
-    const W2 = container.offsetWidth;
-    renderer.setSize(W2, H);
-    camera.aspect = W2 / H;
-    camera.updateProjectionMatrix();
-  });
-})();
-
-/* ── TYPING — Substack RSS via allorigins proxy ── */
-(async function() {
-  const FEED = 'https://aquelveranodel92.substack.com/feed';
-  const PROXY = `https://api.allorigins.win/get?url=${encodeURIComponent(FEED)}`;
-  const grid = document.getElementById('typing-grid');
-
-  try {
-    const res = await fetch(PROXY);
-    const data = await res.json();
-    const parser = new DOMParser();
-    const xml = parser.parseFromString(data.contents, 'text/xml');
-    const items = Array.from(xml.querySelectorAll('item')).slice(0, 6);
-
-    items.forEach(item => {
-      const title = item.querySelector('title')?.textContent || '';
-      const link  = item.querySelector('link')?.textContent || '#';
-      const pubDate = item.querySelector('pubDate')?.textContent || '';
-      const enclosure = item.querySelector('enclosure');
-      const mediaThumbnail = item.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'thumbnail')[0];
-      const imgUrl = enclosure?.getAttribute('url') || mediaThumbnail?.getAttribute('url') || '';
-
-      const a = document.createElement('a');
-      a.className = 'typing-post fade-up';
-      a.href = link;
-      a.target = '_blank';
-      a.rel = 'noopener';
-
-      const img = document.createElement('div');
-      img.className = 'typing-post-img';
-      if (imgUrl) {
-        img.style.backgroundImage = `url(${imgUrl})`;
-        img.style.backgroundSize = 'cover';
-        img.style.backgroundPosition = 'center';
-      }
-
-      const t = document.createElement('div');
-      t.className = 'typing-post-title';
-      t.textContent = title;
-
-      const d = document.createElement('div');
-      d.className = 'typing-post-date';
-      d.textContent = pubDate ? new Date(pubDate).toLocaleDateString('es-ES', { year:'numeric', month:'long', day:'numeric' }) : '';
-
-      a.appendChild(img);
-      a.appendChild(t);
-      a.appendChild(d);
-      grid.appendChild(a);
-    });
-
-    grid.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-  } catch(e) {
-    grid.innerHTML = `<div style="grid-column:span 12;padding:48px 0;font-family:'Kross',sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(13,10,30,0.3);">Pronto.</div>`;
-  }
-})();
 
 /* ── FADE UP ── */
 const observer = new IntersectionObserver(entries => {
