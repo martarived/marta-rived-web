@@ -9,14 +9,29 @@
       font-family: 'Foun';
       src: url('Foun.ttf') format('truetype');
       font-weight: 400;
-      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Kross';
+      src: url('KrossNeueGrotesk-Light.ttf') format('truetype');
+      font-weight: 300;
+    }
+    @font-face {
+      font-family: 'Kross';
+      src: url('KrossNeueGrotesk-Regular.ttf') format('truetype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Kross';
+      src: url('KrossNeueGrotesk-Bold.ttf') format('truetype');
+      font-weight: 700;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background: #f2ede3;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-family: 'Kross', 'Helvetica Neue', sans-serif;
+      font-weight: 400;
     }
 
     #hero {
@@ -39,19 +54,9 @@
       opacity: 0.28;
     }
 
-    .row {
-      display: flex;
-      gap: 10px;
-      flex-shrink: 0;
-      will-change: transform;
-    }
+    .row { display: flex; gap: 10px; flex-shrink: 0; will-change: transform; }
 
-    .cell {
-      flex-shrink: 0;
-      width: 150px;
-      height: 100px;
-      border-radius: 6px;
-    }
+    .cell { flex-shrink: 0; width: 150px; height: 100px; border-radius: 6px; }
 
     .a { background: #0057FF; }
     .b { background: #1a1a1a; }
@@ -84,24 +89,23 @@
     }
 
     .nav-logo {
+      font-family: 'Kross', sans-serif;
+      font-weight: 400;
       font-size: 11px;
-      font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: rgba(15,10,30,0.5);
     }
 
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
 
     .nav-links a {
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
       font-size: 11px;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(15,10,30,0.36);
+      color: rgba(15,10,30,0.38);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -116,8 +120,10 @@
     }
 
     .label {
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
       font-size: 11px;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       color: rgba(15,10,30,0.35);
       margin-bottom: 22px;
@@ -126,9 +132,9 @@
     }
 
     .hero-title {
-      font-family: 'Foun', 'Arial Narrow', Arial, sans-serif;
-      font-size: clamp(64px, 10vw, 116px);
+      font-family: 'Foun', 'Arial Narrow', sans-serif;
       font-weight: 400;
+      font-size: clamp(64px, 10vw, 116px);
       line-height: 0.9;
       letter-spacing: -0.01em;
       color: #0d0a1e;
@@ -137,9 +143,7 @@
       animation: up 0.9s ease forwards 0.55s;
     }
 
-    .hero-title .dim {
-      color: rgba(13,10,30,0.15);
-    }
+    .hero-title .dim { color: rgba(13,10,30,0.15); }
 
     .hero-sub {
       margin-top: 32px;
@@ -151,25 +155,25 @@
     }
 
     .hero-sub span {
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
       font-size: 11px;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: rgba(15,10,30,0.3);
     }
 
-    .hero-sub .sep {
-      width: 14px;
-      height: 0.5px;
-      background: rgba(15,10,30,0.18);
-    }
+    .hero-sub .sep { width: 14px; height: 0.5px; background: rgba(15,10,30,0.18); }
 
     #scroll-hint {
       position: absolute;
       bottom: 28px;
       right: 56px;
       z-index: 20;
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
       font-size: 10px;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: rgba(15,10,30,0.2);
       opacity: 0;
@@ -221,11 +225,9 @@
 
 <script>
   const PALETTE = ['a','a','b','c','c','d','e','e','f','g','g','h','i','j','j','j','c','e','g','j'];
-  const ROWS = 6;
-  const COLS = 11;
+  const ROWS = 6, COLS = 11;
   const SPEEDS = [0.28, -0.19, 0.22, -0.15, 0.25, -0.17];
   const offsets = [0, 75, 20, 55, 10, 40];
-
   const wrap = document.getElementById('grid-wrap');
   const rows = [];
 
@@ -251,7 +253,6 @@
     });
     requestAnimationFrame(animate);
   }
-
   requestAnimationFrame(animate);
 </script>
 
