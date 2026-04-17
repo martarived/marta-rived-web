@@ -155,7 +155,7 @@
       font-size: 11px;
       letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #0077a8;
       margin-bottom: 22px;
       opacity: 0;
       animation: up 0.6s ease forwards 0.3s;
@@ -191,10 +191,10 @@
       font-size: 11px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(15,10,30,0.3);
+      color: #0077a8;
     }
 
-    .hero-sub .sep { width: 14px; height: 0.5px; background: rgba(15,10,30,0.18); }
+    .hero-sub .sep { width: 14px; height: 0.5px; background: #0077a8; opacity: 0.5; }
 
     /* gradiente de salida suave del hero — orgánico */
     #hero::after {
@@ -317,6 +317,65 @@
     }
 
     #flying-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    /* ── TYPING ── */
+    #typing { border-top: 0.5px solid rgba(13,10,30,0.08); padding-bottom: 120px; }
+
+    .typing-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 64px 24px;
+      padding: 48px 56px 0;
+    }
+
+    .typing-post:nth-child(1) { grid-column: span 7; }
+    .typing-post:nth-child(2) { grid-column: span 5; }
+    .typing-post:nth-child(3) { grid-column: span 5; }
+    .typing-post:nth-child(4) { grid-column: span 7; }
+    .typing-post:nth-child(5) { grid-column: span 6; }
+    .typing-post:nth-child(6) { grid-column: span 6; }
+
+    .typing-post {
+      display: block;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .typing-post-img {
+      width: 100%;
+      aspect-ratio: 3/2;
+      object-fit: cover;
+      display: block;
+      border-radius: 3px;
+      background: #c8c0b2;
+      transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+
+    .typing-post:nth-child(2) .typing-post-img,
+    .typing-post:nth-child(5) .typing-post-img { aspect-ratio: 4/5; }
+
+    .typing-post:hover .typing-post-img { transform: scale(1.02); }
+
+    .typing-post-title {
+      margin-top: 20px;
+      font-family: 'Foun', 'Arial Narrow', sans-serif;
+      font-weight: 400;
+      font-size: clamp(20px, 2.8vw, 34px);
+      text-transform: uppercase;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 0.95;
+    }
+
+    .typing-post-date {
+      margin-top: 8px;
+      font-family: 'Kross', sans-serif;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
 
     /* ── PLACEHOLDERS ── */
     .placeholder-section { min-height: 50vh; display: flex; align-items: center; padding: 0 56px; border-top: 0.5px solid rgba(13,10,30,0.08); }
@@ -469,8 +528,13 @@
 
 </section>
 
-<section id="typing" class="placeholder-section">
-  <p class="section-label fade-up">Typing</p>
+<section id="typing">
+  <div class="typing-header fade-up">
+    <span class="section-label" style="padding:80px 56px 0;">Typing</span>
+  </div>
+  <div class="typing-grid" id="typing-grid">
+    <!-- posts cargados via JS -->
+  </div>
 </section>
 
 <section id="contact" class="placeholder-section">
@@ -529,12 +593,13 @@ window.addEventListener('scroll', () => {
       vec2 uv=gl_FragCoord.xy/u_res; float acc=0.0;
       for(int i=0;i<8;i++) acc+=blob(uv,u_splats[i],u_ages[i]);
       acc=clamp(acc,0.0,1.0);
-      /* base crema, trazo del cursor en azul Mesura */
-      vec3 cream=vec3(0.949,0.929,0.890);
-      vec3 blue=vec3(0.106,0.310,0.847);
-      vec3 lightBlue=vec3(0.55,0.72,0.98);
-      vec3 col=mix(blue,lightBlue,acc*0.4);
-      gl_FragColor=vec4(col,acc*0.7);
+      /* mar — turquesa profundo, verde agua, azul mediterráneo */
+      vec3 deep=vec3(0.0,0.18,0.38);
+      vec3 mid=vec3(0.0,0.48,0.65);
+      vec3 foam=vec3(0.45,0.82,0.88);
+      float t=acc*acc;
+      vec3 col=mix(deep,mix(mid,foam,t*0.6),acc*0.85);
+      gl_FragColor=vec4(col,acc*0.75);
     }
   `;
 
@@ -620,8 +685,10 @@ window.addEventListener('scroll', () => {
     void main() {
       vUv = uv;
       vec3 pos = position;
-      float wave = sin(pos.y * 1.4 + uOffset) * uDistortion;
-      pos.z += wave;
+      float waveZ = sin(pos.y * 2.2 + uOffset) * uDistortion;
+      float waveX = cos(pos.y * 1.8 + uOffset * 0.7) * uDistortion * 0.5;
+      pos.z += waveZ;
+      pos.x += waveX;
       gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
     }
   `;
@@ -644,7 +711,7 @@ window.addEventListener('scroll', () => {
     const mat = new THREE.ShaderMaterial({
       uniforms: {
         uTex:        { value: tex },
-        uDistortion: { value: 0.25 },
+        uDistortion: { value: 0.9 },
         uOffset:     { value: 0.0 },
         uBrightness: { value: 0.55 }, // oscuro por defecto
       },
@@ -699,7 +766,7 @@ window.addEventListener('scroll', () => {
       mesh.material.uniforms.uBrightness.value += (targetBrightness - cur) * 0.08;
 
       // distorsión suave continua, se aplana en hover
-      const targetDist = hoveredIndex === i ? 0.05 : 0.25;
+      const targetDist = hoveredIndex === i ? 0.02 : 0.9;
       const curDist = mesh.material.uniforms.uDistortion.value;
       mesh.material.uniforms.uDistortion.value += (targetDist - curDist) * 0.08;
 
@@ -716,6 +783,45 @@ window.addEventListener('scroll', () => {
     camera.aspect = W2 / H;
     camera.updateProjectionMatrix();
   });
+})();
+
+/* ── TYPING — Substack RSS ── */
+(async function() {
+  const SUBSTACK = 'aquelveranodel92.substack.com';
+  const RSS = `https://api.rss2json.com/v1/api.json?rss_url=https://${SUBSTACK}/feed`;
+  const grid = document.getElementById('typing-grid');
+  try {
+    const res = await fetch(RSS);
+    const data = await res.json();
+    const posts = (data.items || []).slice(0, 6);
+    posts.forEach((post) => {
+      const a = document.createElement('a');
+      a.className = 'typing-post fade-up';
+      a.href = post.link;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      const img = document.createElement('div');
+      img.className = 'typing-post-img';
+      if (post.thumbnail) {
+        img.style.backgroundImage = `url(${post.thumbnail})`;
+        img.style.backgroundSize = 'cover';
+        img.style.backgroundPosition = 'center';
+      }
+      const title = document.createElement('div');
+      title.className = 'typing-post-title';
+      title.textContent = post.title;
+      const date = document.createElement('div');
+      date.className = 'typing-post-date';
+      date.textContent = new Date(post.pubDate).toLocaleDateString('es-ES', { year:'numeric', month:'long', day:'numeric' });
+      a.appendChild(img);
+      a.appendChild(title);
+      a.appendChild(date);
+      grid.appendChild(a);
+    });
+    grid.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  } catch(e) {
+    grid.innerHTML = `<div style="grid-column:span 12;padding:40px 0;font-family:Kross,sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(13,10,30,0.3);">Pronto.</div>`;
+  }
 })();
 
 /* ── FADE UP ── */
