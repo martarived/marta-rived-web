@@ -36,9 +36,64 @@
     .overlay-home { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(242,237,227,0.22); text-decoration: none; transition: color 0.2s; }
     .overlay-home:hover { color: var(--cream); }
 
-    /* HERO */
-    #hero { position: relative; width: 100%; height: 100vh; overflow: hidden; background: var(--cream); display: flex; align-items: center; }
+    /* HERO — sticky shrink estilo Fuego */
+    #hero-outer {
+      position: relative;
+      height: 350vh;
+    }
+
+    #hero {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      z-index: 10;
+    }
     #splash-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.6; }
+
+    /* frase intermedia — aparece detrás del hero mientras se encoge */
+    #hero-quote {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      background: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10vw;
+      margin-top: -100vh;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    #hero-quote p {
+      font-family: 'Foun', 'Arial Narrow', sans-serif;
+      font-weight: 400;
+      font-size: clamp(32px, 5vw, 72px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--cream);
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    #hero-quote .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      margin-right: 0.25em;
+    }
+
+    #hero-quote .word.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     #hero-content {
       position: relative; z-index: 10; padding: 0 56px; max-width: 960px;
@@ -116,7 +171,7 @@
     .about-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
     .about-photo-col { overflow: hidden; }
     .about-photo-col img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
-    .about-right { padding: 48px 56px; display: flex; flex-direction: column; justify-content: flex-end; }
+    .about-right { padding: 48px 56px; display: flex; flex-direction: column; justify-content: flex-end; gap: 48px; }
     .about-name { margin-top: auto; }
     .about-name .n1, .about-name .n2 { display: block; font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(52px, 7.5vw, 96px); text-transform: uppercase; color: var(--ink); line-height: 0.86; letter-spacing: -0.02em; }
     .about-name .n1 { text-align: left; }
@@ -138,47 +193,46 @@
     .exp-desc { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.75; color: rgba(13,10,30,0.5); margin-bottom: 8px; }
     .exp-brands { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.06em; color: rgba(13,10,30,0.3); line-height: 1.7; }
 
-    /* PÓSTERS */
-    #posters-section {
-      border-top: 0.5px solid rgba(13,10,30,0.06);
-      padding: 80px 0;
-      overflow: hidden;
-      perspective: 1200px;
+    /* PÓSTERS — scroll horizontal sticky */
+    #posters-outer {
+      position: relative;
+      /* altura = ventana × número de pósters para dar scroll suficiente */
+      height: 500vh;
     }
+
+    #posters-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background: var(--cream);
+      border-top: 0.5px solid rgba(13,10,30,0.06);
+    }
+
     .posters-track {
       display: flex;
-      gap: 28px;
-      padding: 40px 80px;
-      width: max-content;
-      animation: posters-scroll 24s linear infinite;
+      gap: 32px;
+      padding: 0 80px;
+      will-change: transform;
     }
-    .posters-track:hover { animation-play-state: paused; }
-    @keyframes posters-scroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
+
     .poster-card {
       flex-shrink: 0;
-      width: 260px; height: 360px;
+      width: 300px;
+      height: 420px;
       border-radius: 4px;
-      background-size: cover; background-position: center;
-      box-shadow: 0 12px 40px rgba(13,10,30,0.15);
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 8px 32px rgba(13,10,30,0.12);
       cursor: pointer;
-      filter: brightness(0.65) saturate(0.7);
-      will-change: transform, filter;
-      transition: transform 0.65s cubic-bezier(0.34,1.2,0.64,1), filter 0.5s ease;
+      transition: filter 0.4s ease, transform 0.4s ease;
+      filter: brightness(0.9);
     }
-    .poster-card:nth-child(1)  { transform: rotate(-7deg)  rotateY(18deg)  rotateX(6deg)  scale(0.88); }
-    .poster-card:nth-child(2)  { transform: rotate(5deg)   rotateY(-14deg) rotateX(-4deg) scale(0.88); }
-    .poster-card:nth-child(3)  { transform: rotate(-4deg)  rotateY(20deg)  rotateX(8deg)  scale(0.88); }
-    .poster-card:nth-child(4)  { transform: rotate(8deg)   rotateY(-16deg) rotateX(-6deg) scale(0.88); }
-    .poster-card:nth-child(5)  { transform: rotate(-7deg)  rotateY(18deg)  rotateX(6deg)  scale(0.88); }
-    .poster-card:nth-child(6)  { transform: rotate(5deg)   rotateY(-14deg) rotateX(-4deg) scale(0.88); }
-    .poster-card:nth-child(7)  { transform: rotate(-4deg)  rotateY(20deg)  rotateX(8deg)  scale(0.88); }
-    .poster-card:nth-child(8)  { transform: rotate(8deg)   rotateY(-16deg) rotateX(-6deg) scale(0.88); }
-    .poster-card.hovered {
-      transform: rotate(0deg) rotateY(0deg) rotateX(0deg) scale(1);
-      filter: brightness(1) saturate(1);
+    .poster-card:hover {
+      filter: brightness(1);
+      transform: scale(1.02);
     }
 
     /* TYPING */
@@ -265,6 +319,7 @@
   </div>
 </div>
 
+<div id="hero-outer">
 <section id="hero">
   <canvas id="splash-canvas"></canvas>
   <div id="hero-content">
@@ -282,6 +337,11 @@
     </div>
   </div>
 </section>
+
+<div id="hero-quote">
+  <p></p>
+</div>
+</div>
 
 <section id="work">
   <p class="section-label fade-up">Work</p>
@@ -362,16 +422,14 @@
     </div>
   </div>
 
-  <div id="posters-section">
-    <div class="posters-track" id="posters-track">
-      <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_42_651671681_17999370065734956_1038806975697912338_n_pnfbqa.jpg');"></div>
-      <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_48_662419569_18115643209672886_6517409684614708522_n_potdva.jpg');"></div>
-      <div class="poster-card" style="background:#b0a898;"></div>
-      <div class="poster-card" style="background:#a8a090;"></div>
-      <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_42_651671681_17999370065734956_1038806975697912338_n_pnfbqa.jpg');"></div>
-      <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_48_662419569_18115643209672886_6517409684614708522_n_potdva.jpg');"></div>
-      <div class="poster-card" style="background:#b0a898;"></div>
-      <div class="poster-card" style="background:#a8a090;"></div>
+  <div id="posters-outer">
+    <div id="posters-sticky">
+      <div class="posters-track" id="posters-track">
+        <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_42_651671681_17999370065734956_1038806975697912338_n_pnfbqa.jpg');"></div>
+        <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_48_662419569_18115643209672886_6517409684614708522_n_potdva.jpg');"></div>
+        <div class="poster-card" style="background:#b0a898;"></div>
+        <div class="poster-card" style="background:#a8a090;"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -415,14 +473,43 @@ document.querySelectorAll('.overlay-link').forEach(link => {
   link.addEventListener('click', () => { burger.classList.remove('open'); overlay.classList.remove('open'); });
 });
 
-/* HERO SCROLL SHRINK */
-const heroContent = document.getElementById('hero-content');
-const heroSection = document.getElementById('hero');
-window.addEventListener('scroll', () => {
-  const p = Math.min(window.scrollY / (heroSection.offsetHeight * 0.8), 1);
-  heroContent.style.transform = `scale(${1 - p * 0.28})`;
-  heroContent.style.opacity = 1 - p * 1.1;
-}, { passive: true });
+/* HERO STICKY SHRINK + FRASE — estilo Fuego/Locomotive */
+(function() {
+  const outer   = document.getElementById('hero-outer');
+  const content = document.getElementById('hero-content');
+  const quote   = document.getElementById('hero-quote');
+  const quoteP  = quote.querySelector('p');
+  if (!outer || !content) return;
+
+  const FRASE = 'Una es más auténtica cuanto más se parezca a lo que ha soñado de sí misma';
+  const words = FRASE.split(' ');
+  quoteP.innerHTML = words.map(w =>
+    `<span class="word">${w}</span>`
+  ).join('');
+  const spans = quoteP.querySelectorAll('.word');
+
+  function update() {
+    const outerH = outer.offsetHeight - window.innerHeight;
+    const p      = Math.max(0, Math.min(1, window.scrollY / outerH));
+
+    // 0→0.45: hero se encoge
+    const shrinkP = Math.min(1, p / 0.45);
+    const scale   = 1 - shrinkP * 0.35;
+    const opacity = 1 - shrinkP * 1.2;
+    content.style.transform = `scale(${Math.max(scale, 0.65)})`;
+    content.style.opacity   = Math.max(opacity, 0);
+
+    // 0.45→1: frase aparece palabra a palabra
+    const quoteP2 = Math.max(0, (p - 0.45) / 0.55);
+    spans.forEach((span, i) => {
+      const threshold = i / spans.length;
+      span.classList.toggle('visible', quoteP2 >= threshold);
+    });
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
 
 /* SPLASH CURSOR WebGL */
 (function() {
@@ -483,11 +570,32 @@ window.addEventListener('scroll', () => {
   requestAnimationFrame(loop);
 })();
 
-/* PÓSTERS HOVER */
-document.querySelectorAll('.poster-card').forEach(card => {
-  card.addEventListener('mouseenter', () => card.classList.add('hovered'));
-  card.addEventListener('mouseleave', () => card.classList.remove('hovered'));
-});
+/* PÓSTERS — scroll horizontal */
+(function() {
+  const outer  = document.getElementById('posters-outer');
+  const track  = document.getElementById('posters-track');
+  if (!outer || !track) return;
+
+  function update() {
+    const outerRect = outer.getBoundingClientRect();
+    const outerTop  = outer.offsetTop;
+    const scrollY   = window.scrollY;
+
+    // cuánto hemos scrolleado dentro del outer
+    const scrolled = scrollY - outerTop;
+    // máximo desplazamiento horizontal = ancho del track - ancho de ventana
+    const maxX = track.scrollWidth - window.innerWidth;
+    // progreso 0→1 mientras estamos dentro del outer
+    const totalScroll = outer.offsetHeight - window.innerHeight;
+    const progress = Math.max(0, Math.min(1, scrolled / totalScroll));
+
+    track.style.transform = `translateX(${-progress * maxX}px)`;
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
 
 /* FADE UP */
 const observer = new IntersectionObserver(entries => {
