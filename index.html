@@ -11,54 +11,30 @@
     @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Bold.ttf') format('truetype'); font-weight: 700; }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root { --cream: #f2ede3; --ink: #0d0a1e; --blue: #0057FF; --muted: rgba(13,10,30,0.35); }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --blue: #0057FF; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
     html { scroll-behavior: smooth; }
     body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
 
-    /* ── NAV — solo logo + hamburguesa, no sticky ── */
+    /* ── NAV ── */
     #nav {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      position: absolute; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 28px 56px;
     }
-
     .nav-logo {
-      font-family: 'Kross', sans-serif;
-      font-weight: 400;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink);
-      text-decoration: none;
-      position: relative;
-      z-index: 300;
+      font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink);
+      text-decoration: none; position: relative; z-index: 300;
     }
-
     .burger {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-      z-index: 300;
-      position: relative;
-      background: none;
-      border: none;
+      display: flex; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 4px; z-index: 300; position: relative; background: none; border: none;
     }
-
     .burger span {
-      display: block;
-      width: 24px;
-      height: 1px;
-      background: var(--ink);
+      display: block; width: 24px; height: 1px; background: var(--ink);
       transition: transform 0.35s ease, opacity 0.25s ease, background 0.3s;
       transform-origin: center;
     }
-
     .burger.open span { background: var(--cream); }
     .burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
     .burger.open span:nth-child(2) { opacity: 0; }
@@ -66,172 +42,101 @@
 
     /* ── OVERLAY ── */
     #overlay {
-      position: fixed;
-      inset: 0;
-      background: var(--ink);
-      z-index: 250;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 56px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.45s ease;
+      position: fixed; inset: 0; background: var(--ink); z-index: 250;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 56px; opacity: 0; pointer-events: none; transition: opacity 0.45s ease;
     }
-
     #overlay.open { opacity: 1; pointer-events: all; }
 
-    .overlay-links {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
+    .overlay-links { list-style: none; display: flex; flex-direction: column; gap: 2px; }
     .overlay-links a {
       font-family: 'Foun', 'Arial Narrow', sans-serif;
-      font-size: clamp(48px, 8vw, 96px);
-      font-weight: 400;
-      text-transform: uppercase;
-      color: rgba(242,237,227,0.12);
-      text-decoration: none;
-      letter-spacing: -0.02em;
-      line-height: 0.95;
-      display: block;
-      transition: color 0.2s ease;
+      font-size: clamp(48px, 8vw, 96px); font-weight: 400;
+      text-transform: uppercase; color: var(--cream);
+      text-decoration: none; letter-spacing: -0.02em; line-height: 0.95;
+      display: block; transition: color 0.2s ease; opacity: 0.85;
     }
-
-    .overlay-links a:hover { color: var(--cream); }
+    .overlay-links a:hover { color: var(--sea); opacity: 1; }
 
     .overlay-bottom {
-      position: absolute;
-      bottom: 40px;
-      left: 56px;
-      right: 56px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
+      position: absolute; bottom: 36px; left: 56px; right: 56px;
+      display: flex; justify-content: space-between; align-items: center;
     }
-
     .overlay-tagline {
-      font-family: 'Kross', sans-serif;
-      font-weight: 300;
-      font-size: 12px;
-      font-style: italic;
-      letter-spacing: 0.08em;
-      color: rgba(242,237,227,0.28);
+      font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px;
+      font-style: italic; letter-spacing: 0.06em;
+      color: rgba(242,237,227,0.22);
     }
+    .overlay-home {
+      font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(242,237,227,0.22); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .overlay-home:hover { color: var(--cream); }
 
     /* ── HERO ── */
     #hero {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      background: var(--cream);
-      display: flex;
-      align-items: center;
+      position: relative; width: 100%; height: 100vh;
+      overflow: hidden; background: var(--cream); display: flex; align-items: center;
     }
-
-    #splash-canvas {
-      position: absolute;
-      inset: 0; width: 100%; height: 100%;
-      z-index: 1;
-      opacity: 0.6;
-    }
+    #splash-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.6; }
 
     #hero-content {
-      position: relative;
-      z-index: 10;
-      padding: 0 56px;
-      max-width: 960px;
-      transform-origin: left center;
-      will-change: transform, opacity;
+      position: relative; z-index: 10; padding: 0 56px; max-width: 960px;
+      transform-origin: left center; will-change: transform, opacity;
     }
 
-    .label {
-      font-family: 'Kross', sans-serif;
-      font-weight: 300;
-      font-size: 11px;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: #0077a8;
-      margin-bottom: 60px;
-      opacity: 0;
-      animation: up 0.6s ease forwards 0.3s;
+    /* label arriba — más separado del título */
+    .hero-label-top {
+      font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px;
+      letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea);
+      margin-bottom: 28px; opacity: 0; animation: up 0.6s ease forwards 0.3s;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hero-label-top::before {
+      content: ''; display: block; width: 20px; height: 0.5px;
+      background: var(--sea); opacity: 0.6;
     }
 
-    /* título más grande */
     .hero-title {
-      font-family: 'Foun', 'Arial Narrow', sans-serif;
-      font-weight: 400;
-      font-size: clamp(88px, 14vw, 160px);
-      line-height: 0.87;
-      letter-spacing: -0.025em;
-      color: var(--ink);
-      text-transform: uppercase;
-      opacity: 0;
-      animation: up 0.9s ease forwards 0.55s;
+      font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400;
+      font-size: clamp(88px, 14vw, 160px); line-height: 0.87;
+      letter-spacing: -0.025em; color: var(--ink); text-transform: uppercase;
+      opacity: 0; animation: up 0.9s ease forwards 0.55s;
     }
-
     .hero-title .dim { color: rgba(13,10,30,0.14); }
 
+    /* sub debajo — más separado */
     .hero-sub {
-      margin-top: 32px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      opacity: 0;
-      animation: up 0.7s ease forwards 1.05s;
+      margin-top: 40px; display: flex; align-items: center; gap: 20px;
+      opacity: 0; animation: up 0.7s ease forwards 1.05s;
     }
-
     .hero-sub span {
-      font-family: 'Kross', sans-serif;
-      font-weight: 300;
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #0077a8;
+      font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--sea);
+    }
+    .hero-sub .sep {
+      width: 1px; height: 14px; background: var(--sea); opacity: 0.3;
     }
 
-    .hero-sub .sep { width: 14px; height: 0.5px; background: #0077a8; opacity: 0.5; }
-
-    /* gradiente de salida suave del hero — orgánico */
     #hero::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
       height: 280px;
       background: linear-gradient(to bottom, transparent 0%, var(--cream) 100%);
-      z-index: 15;
-      pointer-events: none;
+      z-index: 15; pointer-events: none;
     }
 
-    /* ── WORK — menos espacio arriba ── */
+    /* ── WORK ── */
     #work { padding: 0 56px 120px; background: var(--cream); }
-
     .section-label {
-      font-family: 'Kross', sans-serif;
-      font-weight: 300;
-      font-size: 10px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: 40px 0 48px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
+      font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px;
+      letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted);
+      padding: 40px 0 48px; display: flex; align-items: center; gap: 16px;
     }
-
     .section-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
 
-    /* más aire entre proyectos */
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 96px 32px;
-    }
-
+    .work-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 96px 32px; }
     .proj:nth-child(1)  { grid-column: span 7; }
     .proj:nth-child(2)  { grid-column: span 5; }
     .proj:nth-child(3)  { grid-column: span 4; }
@@ -249,24 +154,15 @@
     .proj:nth-child(1) .proj-img, .proj:nth-child(4) .proj-img, .proj:nth-child(7) .proj-img { aspect-ratio: 16/9; }
     .proj:nth-child(2) .proj-img, .proj:nth-child(8) .proj-img { aspect-ratio: 3/4; }
     .proj:hover .proj-img { transform: scale(1.03); }
-
     .proj-cursor-label {
-      position: absolute; top: 0; left: 0;
-      pointer-events: none; z-index: 10;
-      font-family: 'Foun', 'Arial Narrow', sans-serif;
-      font-weight: 400;
-      font-size: clamp(28px, 4vw, 56px);
-      text-transform: uppercase;
-      letter-spacing: -0.01em; line-height: 0.9;
-      color: #f2ede3; white-space: nowrap;
-      mix-blend-mode: difference;
-      opacity: 0; transform: translate(-50%, -50%);
-      transition: opacity 0.18s ease;
-      will-change: transform;
+      position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10;
+      font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400;
+      font-size: clamp(28px, 4vw, 56px); text-transform: uppercase;
+      letter-spacing: -0.01em; line-height: 0.9; color: #f2ede3; white-space: nowrap;
+      mix-blend-mode: difference; opacity: 0; transform: translate(-50%, -50%);
+      transition: opacity 0.18s ease; will-change: transform;
     }
-
     .proj:hover .proj-cursor-label { opacity: 1; }
-
     .proj:nth-child(1)  .proj-img { background: #a8a098; }
     .proj:nth-child(2)  .proj-img { background: #b8b0a4; }
     .proj:nth-child(3)  .proj-img { background: #a0998e; }
@@ -284,13 +180,19 @@
     .about-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
     .about-photo-col { overflow: hidden; }
     .about-photo-col img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
-    .about-right { padding: 48px 56px; display: flex; flex-direction: column; justify-content: space-between; }
-    .about-role { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); align-self: flex-end; }
+    .about-right { padding: 48px 56px; display: flex; flex-direction: column; justify-content: flex-end; }
     .about-name { margin-top: auto; }
-    .about-name .n1, .about-name .n2 { display: block; font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(52px, 7.5vw, 96px); text-transform: uppercase; color: var(--ink); line-height: 0.86; letter-spacing: -0.02em; }
+    .about-name .n1, .about-name .n2 {
+      display: block; font-family: 'Foun', 'Arial Narrow', sans-serif;
+      font-weight: 400; font-size: clamp(52px, 7.5vw, 96px);
+      text-transform: uppercase; color: var(--ink); line-height: 0.86; letter-spacing: -0.02em;
+    }
     .about-name .n1 { text-align: left; }
     .about-name .n2 { text-align: right; margin-top: -10px; }
-    .about-bio { margin-top: 36px; font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
+    .about-bio {
+      margin-top: 36px; font-family: 'Kross', sans-serif; font-weight: 300;
+      font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6);
+    }
 
     /* ── EXPERIENCIA ── */
     .exp-section { padding: 48px 56px 40px; }
@@ -307,217 +209,136 @@
     .exp-desc { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.75; color: rgba(13,10,30,0.5); margin-bottom: 8px; }
     .exp-brands { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.06em; color: rgba(13,10,30,0.3); line-height: 1.7; }
 
-    /* ── MAZO AFICIONES ── */
-    #interests-stage {
-      width: 100%;
+    /* ── CARRUSEL PÓSTERS — CSS + perspectiva ── */
+    #posters-section {
       border-top: 0.5px solid rgba(13,10,30,0.06);
-      padding: 64px 56px 80px;
+      padding: 80px 0;
+      overflow: hidden;
+      perspective: 1200px;
+    }
+
+    .posters-track {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 40px;
+      gap: 28px;
+      padding: 40px 80px;
+      width: max-content;
+      animation: posters-scroll 22s linear infinite;
     }
 
-    .icard-wrap {
-      position: relative;
-      width: 300px;
-      height: 420px;
+    .posters-track:hover { animation-play-state: paused; }
+
+    @keyframes posters-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
     }
 
-    .icard {
-      position: absolute;
-      inset: 0;
+    .poster-card {
+      flex-shrink: 0;
+      width: 260px;
+      height: 360px;
       border-radius: 4px;
       background-size: cover;
       background-position: center;
-      box-shadow: 0 8px 32px rgba(13,10,30,0.12);
-      transition: transform 0.7s cubic-bezier(0.34,1.2,0.64,1), opacity 0.5s ease;
+      box-shadow: 0 12px 40px rgba(13,10,30,0.15);
       cursor: pointer;
-      will-change: transform;
-    }
-
-    /* rotaciones iniciales del mazo */
-    .icard:nth-child(1) { transform: rotate(-6deg) translateY(0px);   z-index: 4; }
-    .icard:nth-child(2) { transform: rotate(3deg)  translateY(-8px);  z-index: 3; }
-    .icard:nth-child(3) { transform: rotate(-2deg) translateY(-16px); z-index: 2; }
-    .icard:nth-child(4) { transform: rotate(5deg)  translateY(-24px); z-index: 1; }
-
-    /* estado desplegado — en línea horizontal */
-    #interests-stage.spread .icard-wrap {
-      width: 100%;
-      height: 380px;
-    }
-
-    #interests-stage.spread .icard {
       position: relative;
-      inset: unset;
-      display: inline-block;
-      width: 100%;
-      height: 100%;
-      transform: rotate(0deg) translateY(0) !important;
+      /* estado retorcido por defecto */
+      transform: rotate(var(--r)) rotateY(var(--ry)) rotateX(var(--rx)) scale(0.88);
+      filter: brightness(0.65) saturate(0.7);
+      transition:
+        transform 0.65s cubic-bezier(0.34,1.2,0.64,1),
+        filter 0.5s ease;
+      will-change: transform, filter;
     }
 
-    #interests-stage.spread .icard-wrap {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      width: 100%;
-      height: auto;
+    /* rotaciones únicas por carta */
+    .poster-card:nth-child(1)  { --r: -7deg;  --ry: 18deg;  --rx: 6deg;  }
+    .poster-card:nth-child(2)  { --r:  5deg;  --ry: -14deg; --rx: -4deg; }
+    .poster-card:nth-child(3)  { --r: -4deg;  --ry: 20deg;  --rx: 8deg;  }
+    .poster-card:nth-child(4)  { --r:  8deg;  --ry: -16deg; --rx: -6deg; }
+    .poster-card:nth-child(5)  { --r: -6deg;  --ry: 15deg;  --rx: 5deg;  }
+    .poster-card:nth-child(6)  { --r:  4deg;  --ry: -18deg; --rx: -3deg; }
+    .poster-card:nth-child(7)  { --r: -5deg;  --ry: 12deg;  --rx: 7deg;  }
+    .poster-card:nth-child(8)  { --r:  7deg;  --ry: -20deg; --rx: -5deg; }
+
+    /* hover — se endereza y se ilumina */
+    .poster-card:hover {
+      transform: rotate(0deg) rotateY(0deg) rotateX(0deg) scale(1);
+      filter: brightness(1) saturate(1);
     }
-
-    /* CTA */
-    .interests-cta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: none;
-      border: 0.5px solid rgba(13,10,30,0.2);
-      border-radius: 2px;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-family: 'Kross', sans-serif;
-      font-weight: 300;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(13,10,30,0.45);
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .interests-cta:hover { color: var(--ink); border-color: rgba(13,10,30,0.5); }
-
-    .interests-cta .arrow {
-      display: inline-block;
-      transition: transform 0.4s ease;
-      font-size: 14px;
-    }
-
-    #interests-stage.spread .interests-cta .arrow { transform: rotate(180deg); }
 
     /* ── TYPING ── */
     #typing { border-top: 0.5px solid rgba(13,10,30,0.08); padding-bottom: 120px; }
-
-    .typing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 64px 32px;
-      padding: 0 56px;
-    }
-
+    .typing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 64px 32px; padding: 0 56px; }
     .typing-post { text-decoration: none; display: block; cursor: pointer; }
-
-    .typing-img {
-      width: 100%;
-      aspect-ratio: 3/2;
-      border-radius: 3px;
-      overflow: hidden;
-      transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
-      background-size: cover;
-      background-position: center;
-    }
-
+    .typing-img { width: 100%; aspect-ratio: 3/2; border-radius: 3px; overflow: hidden; transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); background-size: cover; background-position: center; }
     .typing-post:hover .typing-img { transform: scale(1.02); }
-
-    .typing-info {
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      grid-template-rows: auto auto;
-      column-gap: 14px;
-    }
-
-    .typing-num {
-      grid-row: 1 / 3;
-      font-family: 'Foun', sans-serif;
-      font-size: 11px;
-      color: rgba(13,10,30,0.18);
-      padding-top: 4px;
-    }
-
-    .typing-title {
-      font-family: 'Foun', 'Arial Narrow', sans-serif;
-      font-weight: 400;
-      font-size: clamp(18px, 2.2vw, 28px);
-      text-transform: uppercase;
-      color: var(--ink);
-      letter-spacing: -0.01em;
-      line-height: 0.95;
-      transition: color 0.2s;
-    }
-
+    .typing-info { margin-top: 20px; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 14px; }
+    .typing-num { grid-row: 1 / 3; font-family: 'Foun', sans-serif; font-size: 11px; color: rgba(13,10,30,0.18); padding-top: 4px; }
+    .typing-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(18px, 2.2vw, 28px); text-transform: uppercase; color: var(--ink); letter-spacing: -0.01em; line-height: 0.95; transition: color 0.2s; }
     .typing-post:hover .typing-title { color: rgba(13,10,30,0.4); }
-
-    .typing-date {
-      font-family: 'Kross', sans-serif;
-      font-weight: 300;
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 6px;
-      display: block;
-    }
+    .typing-date { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 6px; display: block; }
 
     /* ── CONTACT ── */
-    #contact {
-      border-top: 0.5px solid rgba(13,10,30,0.08);
-      padding: 80px 56px 100px;
-    }
+    #contact { border-top: 0.5px solid rgba(13,10,30,0.08); }
 
-    .contact-grid {
+    .contact-layout {
       display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: end;
-      gap: 48px;
-      margin-top: 48px;
-      padding-bottom: 48px;
-      border-bottom: 0.5px solid rgba(13,10,30,0.08);
+      grid-template-columns: 1fr 1fr;
+      min-height: 60vh;
     }
 
-    .contact-left { display: flex; flex-direction: column; gap: 6px; }
+    /* foto izquierda */
+    .contact-photo {
+      overflow: hidden;
+    }
+    .contact-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: grayscale(20%);
+      transition: filter 0.4s ease;
+    }
+    .contact-photo:hover img { filter: grayscale(0%); }
+
+    /* datos derecha */
+    .contact-data {
+      padding: 56px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .contact-data .section-label { padding: 0 0 48px; }
+
+    .contact-links { display: flex; flex-direction: column; gap: 6px; }
 
     .contact-big {
-      font-family: 'Foun', 'Arial Narrow', sans-serif;
-      font-weight: 400;
-      font-size: clamp(22px, 3.5vw, 44px);
-      text-transform: uppercase;
-      color: var(--ink);
-      text-decoration: none;
-      letter-spacing: -0.01em;
-      line-height: 1;
-      transition: color 0.2s;
-      display: block;
+      font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400;
+      font-size: clamp(20px, 2.8vw, 38px); text-transform: uppercase;
+      color: var(--ink); text-decoration: none; letter-spacing: -0.01em;
+      line-height: 1.05; transition: color 0.2s; display: block;
     }
-
     .contact-big:hover { color: rgba(13,10,30,0.28); }
 
-    .contact-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-
-    .contact-link {
-      font-family: 'Kross', sans-serif;
-      font-weight: 300;
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
+    .contact-secondary {
+      margin-top: 32px;
+      display: flex; flex-direction: column; gap: 6px;
     }
 
+    .contact-link {
+      font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+      text-decoration: none; transition: color 0.2s; display: block;
+    }
     .contact-link:hover { color: var(--ink); }
 
     .contact-footer {
-      margin-top: 32px;
-      font-family: 'Kross', sans-serif;
-      font-weight: 300;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(13,10,30,0.18);
+      font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: rgba(13,10,30,0.18);
     }
-
-    /* ── PLACEHOLDERS ── */
-    .placeholder-section { min-height: 50vh; display: flex; align-items: center; padding: 0 56px; border-top: 0.5px solid rgba(13,10,30,0.08); }
 
     /* ── FADE UP ── */
     .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -542,13 +363,14 @@
 <!-- OVERLAY -->
 <div id="overlay">
   <ul class="overlay-links">
-    <li><a href="#work" class="overlay-link">Work</a></li>
-    <li><a href="#about" class="overlay-link">About me</a></li>
-    <li><a href="#typing" class="overlay-link">Typing</a></li>
+    <li><a href="#work"    class="overlay-link">Work</a></li>
+    <li><a href="#about"   class="overlay-link">About me</a></li>
+    <li><a href="#typing"  class="overlay-link">Typing</a></li>
     <li><a href="#contact" class="overlay-link">Contact</a></li>
   </ul>
   <div class="overlay-bottom">
     <span class="overlay-tagline">Somewhere between WIP and OOO.</span>
+    <a href="#hero" class="overlay-home overlay-link">↑ Inicio</a>
   </div>
 </div>
 
@@ -556,7 +378,7 @@
 <section id="hero">
   <canvas id="splash-canvas"></canvas>
   <div id="hero-content">
-    <p class="label">Creative Director · Barna</p>
+    <p class="hero-label-top">Creative Director · Barna</p>
     <h1 class="hero-title">
       Creative<br>
       <span class="dim">Playmaker</span><br>
@@ -564,8 +386,10 @@
       <span class="dim">Storyteller</span>
     </h1>
     <div class="hero-sub">
-      <span>Audiovisual</span><div class="sep"></div>
-      <span>Brand</span><div class="sep"></div>
+      <span>Audiovisual</span>
+      <div class="sep"></div>
+      <span>Brand</span>
+      <div class="sep"></div>
       <span>Content</span>
     </div>
   </div>
@@ -596,16 +420,13 @@
       <img src="https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla" alt="Marta Rived">
     </div>
     <div class="about-right">
-      <span class="about-role">Creative Playmaker · Barna</span>
-      <div>
-        <div class="about-name">
-          <span class="n1">Marta</span>
-          <span class="n2">Rived</span>
-        </div>
-        <p class="about-bio">
-          "Te voy a escribir la canción más bonita del mundo. Voy a capturar nuestra historia tan solo un segundo." Creative, Storyteller and Playmaker. Turning brand values into impactful ideas, campaigns and experiences — from concept and copy to talent direction and production execution.
-        </p>
+      <div class="about-name">
+        <span class="n1">Marta</span>
+        <span class="n2">Rived</span>
       </div>
+      <p class="about-bio">
+        "Te voy a escribir la canción más bonita del mundo. Voy a capturar nuestra historia tan solo un segundo." Creative, Storyteller and Playmaker. Turning brand values into impactful ideas, campaigns and experiences — from concept and copy to talent direction and production execution.
+      </p>
     </div>
   </div>
 
@@ -614,7 +435,6 @@
       <span class="exp-col-label">Company</span>
       <span class="exp-col-label">Year</span>
     </div>
-
     <div class="exp-item">
       <div class="exp-row"><span class="exp-company">Spodeal</span><span class="exp-year">2025</span></div>
       <div class="exp-body">
@@ -623,7 +443,6 @@
         <div class="exp-brands">Vueling · Girona FC · CUPRA · Sprinter · CaixaBank · Volkswagen · LaLiga · RFEF · Baskonia-Alavés · Sevilla FC · Steven Gerrard</div>
       </div>
     </div>
-
     <div class="exp-item">
       <div class="exp-row"><span class="exp-company">La Vanguardia</span><span class="exp-year">2023</span></div>
       <div class="exp-body">
@@ -632,7 +451,6 @@
         <div class="exp-brands">Ford · Bayer · Novartis · El Corte Inglés · ESADE · Square · Samsung · Colhogar · Paris 2024 Olympics · Correos · La Vuelta · Puig</div>
       </div>
     </div>
-
     <div class="exp-item">
       <div class="exp-row"><span class="exp-company">NSN</span><span class="exp-year">2020</span></div>
       <div class="exp-body">
@@ -641,7 +459,6 @@
         <div class="exp-brands">Andrés Iniesta · Bojan Krkić · Heura Foods · FC Barcelona · Capitten · LaLiga · Samsung · RCD Espanyol · Joventut de Badalona · Guava Bikes · Iniesta Academy · iFeel · CUPRA</div>
       </div>
     </div>
-
     <div class="exp-item">
       <div class="exp-row"><span class="exp-company">NTT Data</span><span class="exp-year">2019</span></div>
       <div class="exp-body">
@@ -650,7 +467,6 @@
         <div class="exp-brands">Vueling · Ajuntament de Barcelona · CaixaBank · Tangity / NTT Data</div>
       </div>
     </div>
-
     <div class="exp-item">
       <div class="exp-row"><span class="exp-company">Internship</span><span class="exp-year">2015</span></div>
       <div class="exp-body">
@@ -660,19 +476,20 @@
     </div>
   </div>
 
-  <!-- MAZO AFICIONES -->
-  <div id="interests-stage">
-    <div class="icard-wrap" id="icard-wrap">
-      <!-- Sustituye los background por tus 4 fotos: style="background-image:url('foto.jpg')" -->
-      <div class="icard" style="background-image: url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_42_651671681_17999370065734956_1038806975697912338_n_pnfbqa.jpg');"></div>
-      <div class="icard" style="background-image: url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_48_662419569_18115643209672886_6517409684614708522_n_potdva.jpg');"></div>
-      <div class="icard" style="background-image: url('tu-foto.jpg');"></div>
-      <div class="icard" style="background-image: url('tu-foto.jpg');"></div>
+  <!-- CARRUSEL PÓSTERS — retorcidos, se enderezan al hover -->
+  <div id="posters-section">
+    <div class="posters-track">
+      <!-- set 1 -->
+      <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_42_651671681_17999370065734956_1038806975697912338_n_pnfbqa.jpg');"></div>
+      <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_48_662419569_18115643209672886_6517409684614708522_n_potdva.jpg');"></div>
+      <div class="poster-card" style="background:#b0a898;"></div>
+      <div class="poster-card" style="background:#a8a090;"></div>
+      <!-- set 2 duplicado para loop infinito -->
+      <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_42_651671681_17999370065734956_1038806975697912338_n_pnfbqa.jpg');"></div>
+      <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_48_662419569_18115643209672886_6517409684614708522_n_potdva.jpg');"></div>
+      <div class="poster-card" style="background:#b0a898;"></div>
+      <div class="poster-card" style="background:#a8a090;"></div>
     </div>
-    <button class="interests-cta" id="interests-cta">
-      <span>Desplegar</span>
-      <span class="arrow">↓</span>
-    </button>
   </div>
 
 </section>
@@ -681,93 +498,66 @@
 <section id="typing">
   <p class="section-label fade-up" style="padding: 80px 56px 48px;">Typing</p>
   <div class="typing-grid">
-
     <a class="typing-post fade-up" href="#" target="_blank">
       <div class="typing-img" style="background:#b8b0a4;"></div>
-      <div class="typing-info">
-        <span class="typing-num">01</span>
-        <h3 class="typing-title">Título del artículo uno</h3>
-        <span class="typing-date">Enero 2025</span>
-      </div>
+      <div class="typing-info"><span class="typing-num">01</span><h3 class="typing-title">Título del artículo uno</h3><span class="typing-date">Enero 2025</span></div>
     </a>
-
     <a class="typing-post fade-up" href="#" target="_blank">
       <div class="typing-img" style="background:#a8a098;"></div>
-      <div class="typing-info">
-        <span class="typing-num">02</span>
-        <h3 class="typing-title">Título del artículo dos</h3>
-        <span class="typing-date">Febrero 2025</span>
-      </div>
+      <div class="typing-info"><span class="typing-num">02</span><h3 class="typing-title">Título del artículo dos</h3><span class="typing-date">Febrero 2025</span></div>
     </a>
-
     <a class="typing-post fade-up" href="#" target="_blank">
       <div class="typing-img" style="background:#c0b8ac;"></div>
-      <div class="typing-info">
-        <span class="typing-num">03</span>
-        <h3 class="typing-title">Título del artículo tres</h3>
-        <span class="typing-date">Marzo 2025</span>
-      </div>
+      <div class="typing-info"><span class="typing-num">03</span><h3 class="typing-title">Título del artículo tres</h3><span class="typing-date">Marzo 2025</span></div>
     </a>
-
     <a class="typing-post fade-up" href="#" target="_blank">
       <div class="typing-img" style="background:#b4aea4;"></div>
-      <div class="typing-info">
-        <span class="typing-num">04</span>
-        <h3 class="typing-title">Título del artículo cuatro</h3>
-        <span class="typing-date">Abril 2025</span>
-      </div>
+      <div class="typing-info"><span class="typing-num">04</span><h3 class="typing-title">Título del artículo cuatro</h3><span class="typing-date">Abril 2025</span></div>
     </a>
-
     <a class="typing-post fade-up" href="#" target="_blank">
       <div class="typing-img" style="background:#aca6a0;"></div>
-      <div class="typing-info">
-        <span class="typing-num">05</span>
-        <h3 class="typing-title">Título del artículo cinco</h3>
-        <span class="typing-date">Mayo 2025</span>
-      </div>
+      <div class="typing-info"><span class="typing-num">05</span><h3 class="typing-title">Título del artículo cinco</h3><span class="typing-date">Mayo 2025</span></div>
     </a>
-
     <a class="typing-post fade-up" href="#" target="_blank">
       <div class="typing-img" style="background:#b0a89c;"></div>
-      <div class="typing-info">
-        <span class="typing-num">06</span>
-        <h3 class="typing-title">Título del artículo seis</h3>
-        <span class="typing-date">Junio 2025</span>
-      </div>
+      <div class="typing-info"><span class="typing-num">06</span><h3 class="typing-title">Título del artículo seis</h3><span class="typing-date">Junio 2025</span></div>
     </a>
-
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
-  <div class="contact-inner fade-up">
-    <p class="section-label">Contact</p>
-    <div class="contact-grid">
-      <div class="contact-left">
-        <a href="mailto:rivedmodrego@gmail.com" class="contact-big">rivedmodrego@gmail.com</a>
-        <a href="tel:+34626754785" class="contact-big">+34 626 754 785</a>
-      </div>
-      <div class="contact-right">
-        <a href="https://linkedin.com/in/martarived" target="_blank" rel="noopener" class="contact-link">LinkedIn</a>
-        <a href="https://instagram.com/martarived" target="_blank" rel="noopener" class="contact-link">Instagram</a>
-      </div>
+  <div class="contact-layout">
+    <!-- foto sutil izquierda -->
+    <div class="contact-photo">
+      <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1776436282/imgi_1_c11cc6eb297bb4fbaed18900adcf8374_kq5eke.jpg" alt="">
     </div>
-    <p class="contact-footer">Barcelona · 2025</p>
+    <!-- datos derecha -->
+    <div class="contact-data fade-up">
+      <p class="section-label">Contact</p>
+      <div>
+        <div class="contact-links">
+          <a href="mailto:rivedmodrego@gmail.com" class="contact-big">rivedmodrego@gmail.com</a>
+          <a href="tel:+34626754785" class="contact-big">+34 626 754 785</a>
+        </div>
+        <div class="contact-secondary">
+          <a href="https://linkedin.com/in/martarived" target="_blank" rel="noopener" class="contact-link">LinkedIn</a>
+          <a href="https://instagram.com/martarived" target="_blank" rel="noopener" class="contact-link">Instagram</a>
+        </div>
+      </div>
+      <p class="contact-footer">Barcelona · 2025</p>
+    </div>
   </div>
 </section>
 
 <script>
-
 /* ── HAMBURGUESA ── */
 const burger = document.getElementById('burger');
 const overlay = document.getElementById('overlay');
-
 burger.addEventListener('click', () => {
   burger.classList.toggle('open');
   overlay.classList.toggle('open');
 });
-
 document.querySelectorAll('.overlay-link').forEach(link => {
   link.addEventListener('click', () => {
     burger.classList.remove('open');
@@ -775,26 +565,23 @@ document.querySelectorAll('.overlay-link').forEach(link => {
   });
 });
 
-/* ── HERO SCROLL SHRINK — orgánico ── */
+/* ── HERO SCROLL SHRINK ── */
 const heroContent = document.getElementById('hero-content');
 const heroSection = document.getElementById('hero');
-
 window.addEventListener('scroll', () => {
   const p = Math.min(window.scrollY / (heroSection.offsetHeight * 0.8), 1);
   heroContent.style.transform = `scale(${1 - p * 0.28})`;
   heroContent.style.opacity = 1 - p * 1.1;
 }, { passive: true });
 
-/* ── SPLASH CURSOR WebGL — azul Mesura ── */
+/* ── SPLASH CURSOR WebGL — vibe mar ── */
 (function() {
   const canvas = document.getElementById('splash-canvas');
   const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
   if (!gl) return;
-
   function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
   resize();
   window.addEventListener('resize', resize);
-
   const vs = `attribute vec2 a_pos; void main(){gl_Position=vec4(a_pos,0,1);}`;
   const fs = `
     precision mediump float;
@@ -808,7 +595,6 @@ window.addEventListener('scroll', () => {
       vec2 uv=gl_FragCoord.xy/u_res; float acc=0.0;
       for(int i=0;i<8;i++) acc+=blob(uv,u_splats[i],u_ages[i]);
       acc=clamp(acc,0.0,1.0);
-      /* mar — turquesa profundo, verde agua, azul mediterráneo */
       vec3 deep=vec3(0.0,0.18,0.38);
       vec3 mid=vec3(0.0,0.48,0.65);
       vec3 foam=vec3(0.45,0.82,0.88);
@@ -817,7 +603,6 @@ window.addEventListener('scroll', () => {
       gl_FragColor=vec4(col,acc*0.75);
     }
   `;
-
   function mkShader(t,s){const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh;}
   const prog=gl.createProgram();
   gl.attachShader(prog,mkShader(gl.VERTEX_SHADER,vs));
@@ -837,14 +622,12 @@ window.addEventListener('scroll', () => {
   const splats=Array.from({length:N},()=>[0.5,0.5]);
   const ages=Array.from({length:N},()=>999);
   let head=0,lastSplat=0;
-
   document.getElementById('hero').addEventListener('mousemove',e=>{
     const r=canvas.getBoundingClientRect();
     const mx=(e.clientX-r.left)/r.width,my=1-(e.clientY-r.top)/r.height;
     const now=performance.now();
     if(now-lastSplat>55){splats[head]=[mx,my];ages[head]=0;head=(head+1)%N;lastSplat=now;}
   });
-
   let last=0;
   function loop(ts){
     const dt=(ts-last)/1000;last=ts;
@@ -860,16 +643,6 @@ window.addEventListener('scroll', () => {
   }
   requestAnimationFrame(loop);
 })();
-/* ── MAZO AFICIONES ── */
-const interestsStage = document.getElementById('interests-stage');
-const interestsCta   = document.getElementById('interests-cta');
-let isSpread = false;
-
-interestsCta.addEventListener('click', () => {
-  isSpread = !isSpread;
-  interestsStage.classList.toggle('spread', isSpread);
-  interestsCta.querySelector('span:first-child').textContent = isSpread ? 'Apilar' : 'Desplegar';
-});
 
 /* ── FADE UP ── */
 const observer = new IntersectionObserver(entries => {
@@ -881,22 +654,11 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 document.querySelectorAll('.proj').forEach(proj => {
   const label = proj.querySelector('.proj-cursor-label');
   let cx=0,cy=0,tx=0,ty=0,raf;
-  proj.addEventListener('mouseenter',e=>{
-    const r=proj.getBoundingClientRect();
-    cx=tx=e.clientX-r.left;cy=ty=e.clientY-r.top;
-    label.style.opacity='1';raf=requestAnimationFrame(loop);
-  });
+  proj.addEventListener('mouseenter',e=>{ const r=proj.getBoundingClientRect(); cx=tx=e.clientX-r.left;cy=ty=e.clientY-r.top; label.style.opacity='1';raf=requestAnimationFrame(loop); });
   proj.addEventListener('mouseleave',()=>{label.style.opacity='0';cancelAnimationFrame(raf);});
-  proj.addEventListener('mousemove',e=>{
-    const r=proj.getBoundingClientRect();tx=e.clientX-r.left;ty=e.clientY-r.top;
-  });
-  function loop(){
-    cx+=(tx-cx)*0.1;cy+=(ty-cy)*0.1;
-    label.style.transform=`translate(calc(${cx}px - 50%), calc(${cy}px - 50%))`;
-    raf=requestAnimationFrame(loop);
-  }
+  proj.addEventListener('mousemove',e=>{ const r=proj.getBoundingClientRect();tx=e.clientX-r.left;ty=e.clientY-r.top; });
+  function loop(){ cx+=(tx-cx)*0.1;cy+=(ty-cy)*0.1; label.style.transform=`translate(calc(${cx}px - 50%), calc(${cy}px - 50%))`; raf=requestAnimationFrame(loop); }
 });
 </script>
-
 </body>
 </html>
