@@ -55,61 +55,57 @@
     }
     #splash-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.6; }
 
-    /* frase — líneas que caen una tras otra */
+    /* frase — mismo fondo crema, líneas que caen */
     #hero-quote {
       position: sticky;
       top: 0;
       width: 100%;
       height: 100vh;
-      background: var(--ink);
+      background: var(--cream);
       display: flex;
       align-items: center;
       padding: 0 56px;
       z-index: 5;
     }
 
-    #hero-quote .quote-inner {
-      max-width: 900px;
-    }
+    .quote-inner { max-width: 860px; }
 
-    #hero-quote .quote-line {
+    .quote-line {
       display: block;
       overflow: hidden;
+      line-height: 1.05;
     }
 
-    #hero-quote .quote-line span {
+    .quote-line span {
       display: block;
       font-family: 'Foun', 'Arial Narrow', sans-serif;
       font-weight: 400;
-      font-size: clamp(36px, 6vw, 80px);
-      line-height: 1.0;
+      font-size: clamp(40px, 6.5vw, 88px);
       letter-spacing: -0.025em;
-      color: var(--cream);
+      color: var(--ink);
       text-transform: uppercase;
-      transform: translateY(100%);
-      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(110%);
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    #hero-quote .quote-line.visible span {
+    .quote-line.visible span {
       transform: translateY(0);
     }
 
-    #hero-quote .quote-attr {
+    .quote-cite {
       display: block;
       font-family: 'Kross', sans-serif;
       font-weight: 300;
       font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(242,237,227,0.3);
-      margin-top: 32px;
+      font-style: italic;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-top: 28px;
       opacity: 0;
-      transition: opacity 0.6s ease 0.8s;
+      transition: opacity 0.5s ease;
     }
 
-    #hero-quote.all-visible .quote-attr {
-      opacity: 1;
-    }
+    #hero-quote.all-visible .quote-cite { opacity: 1; }
 
     #hero-content {
       position: relative; z-index: 10; padding: 0 56px; max-width: 960px;
@@ -258,7 +254,7 @@
     .typing-img { width: 100%; aspect-ratio: 3/2; border-radius: 3px; overflow: hidden; transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); background-size: cover; background-position: center; }
     .typing-post:hover .typing-img { transform: scale(1.02); }
     .typing-info { margin-top: 20px; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 14px; }
-    .typing-num { grid-row: 1/3; font-family: 'Foun', sans-serif; font-size: 11px; color: rgba(13,10,30,0.18); padding-top: 4px; }
+    .typing-num { grid-row: 1/3; font-family: 'Foun', sans-serif; font-size: 11px; color: var(--sea); padding-top: 4px; }
     .typing-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(18px, 2.2vw, 28px); text-transform: uppercase; color: var(--ink); letter-spacing: -0.01em; line-height: 0.95; transition: color 0.2s; }
     .typing-post:hover .typing-title { color: rgba(13,10,30,0.4); }
     .typing-date { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 6px; display: block; }
@@ -283,7 +279,7 @@
     .contact-main { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
     .contact-big {
       font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400;
-      font-size: clamp(28px, 3.8vw, 52px); text-transform: uppercase;
+      font-size: clamp(32px, 4.5vw, 60px); text-transform: uppercase;
       color: var(--ink); text-decoration: none; letter-spacing: -0.01em;
       line-height: 1.05; transition: color 0.2s; display: block;
     }
@@ -295,14 +291,11 @@
     }
     .contact-link {
       font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px;
-      letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--sea);
       text-decoration: none; transition: color 0.2s;
     }
     .contact-link:hover { color: var(--ink); }
-    .contact-sep-social {
-      color: rgba(13,10,30,0.2);
-      font-size: 11px;
-    }
+    .contact-sep-social { color: rgba(13,10,30,0.2); font-size: 11px; }
     .contact-footer {
       font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px;
       letter-spacing: 0.2em; text-transform: uppercase; color: rgba(13,10,30,0.18);
@@ -365,7 +358,7 @@
     <span class="quote-line"><span>cuanto más se parezca</span></span>
     <span class="quote-line"><span>a lo que ha soñado</span></span>
     <span class="quote-line"><span>de sí misma</span></span>
-    <span class="quote-attr">— Pedro Almodóvar</span>
+    <span class="quote-cite">La Agrado — Todo sobre mi madre, Pedro Almodóvar</span>
   </div>
 </div>
 </div>
@@ -510,26 +503,24 @@ document.querySelectorAll('.overlay-link').forEach(link => {
   const quoteEl = document.getElementById('hero-quote');
   if (!outer || !content || !quoteEl) return;
 
-  const lines = quoteEl.querySelectorAll('.quote-line');
+  const lines = Array.from(quoteEl.querySelectorAll('.quote-line'));
 
   function update() {
     const outerH = outer.offsetHeight - window.innerHeight;
     const p      = Math.max(0, Math.min(1, window.scrollY / outerH));
 
-    // primera mitad: hero se encoge
+    // 0→0.5: hero se encoge y desaparece
     const shrinkP = Math.min(1, p * 2);
     content.style.transform = `scale(${1 - shrinkP * 0.32})`;
     content.style.opacity   = `${Math.max(1 - shrinkP * 1.1, 0)}`;
     hero.style.opacity      = `${Math.max(1 - shrinkP * 1.3, 0)}`;
 
-    // segunda mitad: líneas caen una a una
-    const qp = Math.max(0, p * 2 - 1);
+    // 0.5→1: líneas caen una a una
+    const qp = Math.max(0, (p - 0.5) / 0.5);
     lines.forEach((line, i) => {
-      const threshold = i / lines.length;
-      line.classList.toggle('visible', qp >= threshold);
+      line.classList.toggle('visible', qp >= i / lines.length);
     });
-    if (qp >= 1) quoteEl.classList.add('all-visible');
-    else quoteEl.classList.remove('all-visible');
+    quoteEl.classList.toggle('all-visible', qp >= 1);
   }
 
   window.addEventListener('scroll', update, { passive: true });
@@ -597,23 +588,16 @@ document.querySelectorAll('.overlay-link').forEach(link => {
 
 /* PÓSTERS — scroll horizontal */
 (function() {
-  const outer  = document.getElementById('posters-outer');
-  const track  = document.getElementById('posters-track');
+  const outer = document.getElementById('posters-outer');
+  const track = document.getElementById('posters-track');
   if (!outer || !track) return;
 
   function update() {
-    const outerRect = outer.getBoundingClientRect();
-    const outerTop  = outer.offsetTop;
-    const scrollY   = window.scrollY;
-
-    // cuánto hemos scrolleado dentro del outer
-    const scrolled = scrollY - outerTop;
-    // máximo desplazamiento horizontal = ancho del track - ancho de ventana
-    const maxX = track.scrollWidth - window.innerWidth;
-    // progreso 0→1 mientras estamos dentro del outer
+    const outerTop    = outer.getBoundingClientRect().top + window.scrollY;
+    const scrolled    = window.scrollY - outerTop;
     const totalScroll = outer.offsetHeight - window.innerHeight;
-    const progress = Math.max(0, Math.min(1, scrolled / totalScroll));
-
+    const maxX        = track.scrollWidth - window.innerWidth;
+    const progress    = Math.max(0, Math.min(1, scrolled / totalScroll));
     track.style.transform = `translateX(${-progress * maxX}px)`;
   }
 
