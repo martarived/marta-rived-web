@@ -103,7 +103,7 @@
 
 <script>
 (function() {
-  var FEED_URL = '/api/feed';
+  var FEED_URL = 'https://corsproxy.io/?' + encodeURIComponent('https://aquelveranodel92.substack.com/feed');
   var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   var params = new URLSearchParams(window.location.search);
   var slug = params.get('slug') || '';
