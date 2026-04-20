@@ -110,12 +110,11 @@
 
     /* POSTERS */
     #posters-section { border-top: 0.5px solid rgba(13,10,30,0.06); border-bottom: 0.5px solid rgba(13,10,30,0.06); padding: 80px 0; background: var(--cream); overflow: hidden; }
-    .posters-track { display: flex; gap: 24px; padding: 0 80px; overflow-x: auto; scrollbar-width: none; cursor: grab; }
+    .posters-track { display: flex; gap: 28px; padding: 0 80px; overflow-x: auto; scrollbar-width: none; cursor: grab; }
     .posters-track::-webkit-scrollbar { display: none; }
     .posters-track.grabbing { cursor: grabbing; }
-    .poster-card { flex-shrink: 0; width: 160px; height: 220px; border-radius: 2px; background-size: cover; background-position: center; transition: transform 0.4s ease; position: relative; box-shadow: 2px 4px 12px rgba(13,10,30,0.18); }
-    .poster-card::after { content: ''; position: absolute; inset: 0; border-radius: 2px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E"); background-size: 200px 200px; pointer-events: none; mix-blend-mode: multiply; opacity: 0.6; }
-    .poster-card:hover { transform: scale(1.04) rotate(-1deg); }
+    .poster-card { flex-shrink: 0; width: 220px; height: 300px; border-radius: 2px; background-size: cover; background-position: center; transition: transform 0.35s ease; position: relative; box-shadow: 2px 4px 12px rgba(13,10,30,0.18); }
+    .poster-card:hover { transform: scale(1.06); }
 
     /* TYPING */
     #typing { border-top: 0.5px solid rgba(13,10,30,0.08); padding-bottom: 120px; }
@@ -258,14 +257,11 @@
   <div class="posters-track" id="posters-track">
     <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_42_651671681_17999370065734956_1038806975697912338_n_pnfbqa.jpg');"></div>
     <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_48_662419569_18115643209672886_6517409684614708522_n_potdva.jpg');"></div>
-    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/q_auto/f_auto/v1776683350/IMG_5204_lpyh8p.heic');"></div>
+    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/q_auto,f_auto/v1776683350/IMG_5204_lpyh8p.heic');"></div>
     <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776683349/PHOTO-2026-01-18-22-02-49_qt7b5h.jpg');"></div>
     <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776683349/IMG_6659_ibwiyl.jpg');"></div>
-    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776683350/IMG_5204_lpyh8p.heic');"></div>
     <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776696271/imgi_1_2a347f9d4a61e89631bab5f303eb2b72_ooji6m.jpg');"></div>
-    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776696438/IMG_5725_lc4vkq.heic');"></div>
-    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_42_651671681_17999370065734956_1038806975697912338_n_pnfbqa.jpg');"></div>
-    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_42_651671681_17999370065734956_1038806975697912338_n_pnfbqa.jpg');"></div>
+    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/q_auto,f_auto/v1776696438/IMG_5725_lc4vkq.heic');"></div>
   </div>
 </div>
 
