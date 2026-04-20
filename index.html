@@ -470,8 +470,10 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
 
 /* TYPING — carga automática desde Substack RSS */
 (function() {
-  var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  var FEED = 'https://aquelveranodel92.substack.com/feed';
+  var PROXY = 'https://corsproxy.io/?' + encodeURIComponent(FEED);
   var FALLBACK_IMG = 'https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla';
+  var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
   function formatDate(str) {
     var d = new Date(str);
@@ -484,7 +486,6 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
     var items = doc.querySelectorAll('item');
     var grid = document.getElementById('typing-grid');
     var cards = Array.from(grid.querySelectorAll('.typing-post'));
-
     Array.from(items).slice(0, 6).forEach(function(item, i) {
       var card = cards[i];
       if (!card) return;
@@ -511,7 +512,7 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
     });
   }
 
-  fetch('/api/feed')
+  fetch(PROXY)
     .then(function(r) { return r.text(); })
     .then(function(xml) { parseAndRender(xml); })
     .catch(function() {
