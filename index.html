@@ -92,9 +92,11 @@
     .about-photo-col img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
     .about-right { padding: 48px 56px; display: flex; flex-direction: column; justify-content: flex-end; gap: 48px; }
     .about-name .n1, .about-name .n2 { display: block; font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(52px, 7.5vw, 96px); text-transform: uppercase; color: var(--ink); line-height: 0.86; letter-spacing: -0.02em; }
-    .about-name .n1 { text-align: left; position: relative; } .about-name .n2 { text-align: right; margin-top: -10px; }
-    .n1-spark { display: block; width: 72%; height: 12px; margin-top: 2px; overflow: visible; }
-    .n1-spark svg { width: 100%; height: 12px; overflow: visible; }
+    .about-name .n1 { text-align: left; } .about-name .n2 { text-align: right; margin-top: -10px; }
+    .name-spark { display: block; overflow: visible; height: 14px; margin-top: 4px; }
+    .name-spark svg { overflow: visible; height: 14px; }
+    .n1 .name-spark { width: 100%; }
+    .n2 .name-spark { width: 55%; margin-left: auto; }
     .about-bio { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
     .exp-section { padding: 48px 56px 40px; }
     .exp-cols { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 0.5px solid rgba(13,10,30,0.12); }
@@ -132,10 +134,10 @@
 
     /* CONTACT */
     #contact { border-top: 0.5px solid rgba(13,10,30,0.08); display: grid; grid-template-columns: 320px 1fr; min-height: 520px; }
-    .contact-photo { border-right: 0.5px solid rgba(13,10,30,0.06); position: relative; overflow: visible; }
+    .contact-photo { overflow: hidden; border-right: 0.5px solid rgba(13,10,30,0.06); position: relative; }
     .contact-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; filter: grayscale(12%); transition: filter 0.5s; }
     .contact-photo:hover img { filter: grayscale(0%); }
-    .contact-circle { position: absolute; top: -5%; left: -8%; width: 116%; height: 55%; pointer-events: none; z-index: 10; overflow: visible; }
+    .contact-circle { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
     .contact-left { padding: 64px 56px; display: flex; flex-direction: column; justify-content: space-between; }
     .contact-left .section-label { padding: 0 0 56px; }
     .contact-main { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
@@ -224,8 +226,8 @@
     </div>
     <div class="about-right">
       <div class="about-name">
-        <span class="n1">Marta<span class="n1-spark"><svg viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 8 C30 4, 60 10, 90 6 C120 2, 150 9, 198 5" stroke="#0077a8" stroke-width="3.5" stroke-linecap="round" style="stroke-dasharray:220;stroke-dashoffset:220;animation:draw-circle 0.9s ease forwards 1s;"/></svg></span></span>
-        <span class="n2">Rived</span>
+        <span class="n1">Marta<span class="name-spark"><svg viewBox="0 0 300 14" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M2 10 C30 4, 55 13, 85 7 C115 1, 140 12, 170 6 C200 0, 225 11, 255 6 C275 3, 290 8, 298 6" stroke="#0077a8" stroke-width="3" stroke-linecap="round" style="stroke-dasharray:320;stroke-dashoffset:320;animation:draw-circle 1s ease forwards 0.8s;"/></svg></span></span>
+        <span class="n2">Rived<span class="name-spark"><svg viewBox="0 0 200 14" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M2 10 C25 4, 50 13, 80 7 C110 1, 135 11, 160 7 C175 4, 188 9, 198 7" stroke="#0077a8" stroke-width="3" stroke-linecap="round" style="stroke-dasharray:220;stroke-dashoffset:220;animation:draw-circle 0.9s ease forwards 1.1s;"/></svg></span></span>
       </div>
       <p class="about-bio">"Te voy a escribir la canción más bonita del mundo. Voy a capturar nuestra historia tan solo un segundo." Creative, Storyteller and Playmaker. Turning brand values into impactful ideas, campaigns and experiences — from concept and copy to talent direction and production execution.</p>
     </div>
@@ -282,9 +284,9 @@
 <section id="contact">
   <div class="contact-photo">
     <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1776436282/imgi_1_c11cc6eb297bb4fbaed18900adcf8374_kq5eke.jpg" alt="">
-    <svg class="contact-circle" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M160 28 C124 22, 88 34, 64 58 C38 84, 28 120, 32 156 C36 192, 56 224, 88 244 C120 264, 164 268, 200 252 C238 236, 264 204, 274 166 C284 128, 274 86, 250 58 C226 30, 196 20, 160 28 Z" stroke="#0077a8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
-      style="stroke-dasharray: 900; stroke-dashoffset: 900; animation: draw-circle 1.4s ease forwards 0.4s;"
+    <svg class="contact-circle" viewBox="0 0 320 520" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M148 82 C118 72, 88 88, 74 112 C58 140, 56 172, 62 200 C70 234, 88 260, 116 274 C144 288, 178 286, 204 270 C230 254, 246 226, 248 196 C252 164, 240 130, 218 110 C198 92, 172 80, 148 82 Z" stroke="#0077a8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"
+      style="stroke-dasharray: 600; stroke-dashoffset: 600; animation: draw-circle 1.2s ease forwards 0.3s;"
       />
     </svg>
   </div>
