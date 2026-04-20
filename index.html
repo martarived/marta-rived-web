@@ -110,7 +110,7 @@
 
     /* POSTERS */
     #posters-section { border-top: 0.5px solid rgba(13,10,30,0.06); border-bottom: 0.5px solid rgba(13,10,30,0.06); padding: 80px 0; background: var(--cream); overflow: hidden; }
-    .posters-track { display: flex; gap: 24px; padding: 0 80px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; cursor: grab; }
+    .posters-track { display: flex; gap: 24px; padding: 0 80px; overflow-x: auto; scrollbar-width: none; cursor: grab; }
     .posters-track::-webkit-scrollbar { display: none; }
     .posters-track.grabbing { cursor: grabbing; }
     .poster-card { flex-shrink: 0; width: 160px; height: 220px; border-radius: 2px; background-size: cover; background-position: center; transition: transform 0.4s ease; position: relative; box-shadow: 2px 4px 12px rgba(13,10,30,0.18); }
@@ -417,19 +417,47 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
   requestAnimationFrame(loop);
 })();
 
-/* POSTERS — drag & wheel scroll */
+/* POSTERS — scroll con inercia */
 (function() {
   var track = document.getElementById('posters-track');
   if (!track) return;
+
+  var vel = 0, raf;
+  function animate() {
+    if (Math.abs(vel) < 0.5) return;
+    track.scrollLeft += vel;
+    vel *= 0.92;
+    raf = requestAnimationFrame(animate);
+  }
+
   track.addEventListener('wheel', function(e) {
     e.preventDefault();
-    track.scrollLeft += e.deltaY * 3;
+    vel += e.deltaY * 0.8;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(animate);
   }, { passive: false });
-  var down = false, startX, scrollLeft;
-  track.addEventListener('mousedown', function(e) { down = true; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; track.classList.add('grabbing'); });
-  track.addEventListener('mouseleave', function() { down = false; track.classList.remove('grabbing'); });
-  track.addEventListener('mouseup', function() { down = false; track.classList.remove('grabbing'); });
-  track.addEventListener('mousemove', function(e) { if (!down) return; e.preventDefault(); var x = e.pageX - track.offsetLeft; track.scrollLeft = scrollLeft - (x - startX) * 2; });
+
+  var down = false, startX, scrollLeft, lastX, lastT;
+  track.addEventListener('mousedown', function(e) {
+    down = true; vel = 0;
+    startX = e.pageX; scrollLeft = track.scrollLeft;
+    lastX = e.pageX; lastT = Date.now();
+    track.classList.add('grabbing');
+    cancelAnimationFrame(raf);
+  });
+  window.addEventListener('mouseup', function() {
+    if (!down) return;
+    down = false; track.classList.remove('grabbing');
+    raf = requestAnimationFrame(animate);
+  });
+  window.addEventListener('mousemove', function(e) {
+    if (!down) return;
+    var dx = e.pageX - startX;
+    track.scrollLeft = scrollLeft - dx;
+    var dt = Date.now() - lastT || 1;
+    vel = -(e.pageX - lastX) / dt * 16;
+    lastX = e.pageX; lastT = Date.now();
+  });
 })();
 
 /* FADE UP */
