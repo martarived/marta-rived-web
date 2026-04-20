@@ -344,6 +344,7 @@
     document.getElementById('welcome-bottom').style.opacity = '1';
   }, 1200);
   document.getElementById('welcome-btn').addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'instant' });
     ws.style.transition = 'transform 0.85s cubic-bezier(0.76,0,0.24,1)';
     ws.style.transform = 'translateY(-100%)';
     setTimeout(function() { ws.style.display = 'none'; }, 900);
@@ -422,13 +423,13 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
   if (!track) return;
   track.addEventListener('wheel', function(e) {
     e.preventDefault();
-    track.scrollLeft += e.deltaY;
+    track.scrollLeft += e.deltaY * 3;
   }, { passive: false });
   var down = false, startX, scrollLeft;
   track.addEventListener('mousedown', function(e) { down = true; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; track.classList.add('grabbing'); });
   track.addEventListener('mouseleave', function() { down = false; track.classList.remove('grabbing'); });
   track.addEventListener('mouseup', function() { down = false; track.classList.remove('grabbing'); });
-  track.addEventListener('mousemove', function(e) { if (!down) return; e.preventDefault(); var x = e.pageX - track.offsetLeft; track.scrollLeft = scrollLeft - (x - startX); });
+  track.addEventListener('mousemove', function(e) { if (!down) return; e.preventDefault(); var x = e.pageX - track.offsetLeft; track.scrollLeft = scrollLeft - (x - startX) * 2; });
 })();
 
 /* FADE UP */
