@@ -470,13 +470,8 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
 
 /* TYPING — carga automática desde Substack RSS */
 (function() {
-  var FEED = 'https://aquelveranodel92.substack.com/feed';
-  var PROXIES = [
-    'https://api.allorigins.win/get?disableCache=true&url=' + encodeURIComponent(FEED),
-    'https://corsproxy.io/?' + encodeURIComponent(FEED),
-  ];
-  var FALLBACK_IMG = 'https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla';
   var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  var FALLBACK_IMG = 'https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla';
 
   function formatDate(str) {
     var d = new Date(str);
@@ -516,22 +511,12 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
     });
   }
 
-  function tryProxy(index) {
-    if (index >= PROXIES.length) {
+  fetch('/api/feed')
+    .then(function(r) { return r.text(); })
+    .then(function(xml) { parseAndRender(xml); })
+    .catch(function() {
       document.querySelectorAll('.typing-skeleton').forEach(function(c) { c.style.opacity = '0.25'; });
-      return;
-    }
-    fetch(PROXIES[index])
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        var xml = data.contents || data.body || '';
-        if (!xml) throw new Error('empty');
-        parseAndRender(xml);
-      })
-      .catch(function() { tryProxy(index + 1); });
-  }
-
-  tryProxy(0);
+    });
 })();
 var observer = new IntersectionObserver(function(entries) {
   entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
