@@ -1,5 +1,11 @@
 {
-  "rewrites": [
-    { "source": "/api/feed", "destination": "/api/feed.js" }
+  "version": 2,
+  "builds": [
+    { "src": "api/feed.js", "use": "@vercel/node" },
+    { "src": "*.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/feed", "dest": "/api/feed.js" },
+    { "src": "/(.*)", "dest": "/$1" }
   ]
 }
