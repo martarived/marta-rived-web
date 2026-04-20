@@ -2,7 +2,12 @@
   "version": 2,
   "builds": [
     { "src": "api/feed.js", "use": "@vercel/node" },
-    { "src": "*.html", "use": "@vercel/static" }
+    { "src": "*.html", "use": "@vercel/static" },
+    { "src": "*.ttf", "use": "@vercel/static" },
+    { "src": "*.otf", "use": "@vercel/static" },
+    { "src": "*.pdf", "use": "@vercel/static" },
+    { "src": "*.jpg", "use": "@vercel/static" },
+    { "src": "*.png", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/api/feed", "dest": "/api/feed.js" },
