@@ -471,9 +471,11 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
 /* TYPING — carga automática desde Substack RSS */
 (function() {
   var FEED = 'https://aquelveranodel92.substack.com/feed';
-  var API  = 'https://allorigins.win/get?disableCache=true&url=' + encodeURIComponent(FEED);
+  var PROXIES = [
+    'https://api.allorigins.win/get?disableCache=true&url=' + encodeURIComponent(FEED),
+    'https://corsproxy.io/?' + encodeURIComponent(FEED),
+  ];
   var FALLBACK_IMG = 'https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla';
-
   var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
   function formatDate(str) {
@@ -481,70 +483,55 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
     return months[d.getMonth()] + ' ' + d.getFullYear();
   }
 
-  function parseRSS(xml) {
+  function parseAndRender(xmlText) {
     var parser = new DOMParser();
-    var doc = parser.parseFromString(xml, 'text/xml');
+    var doc = parser.parseFromString(xmlText, 'text/xml');
     var items = doc.querySelectorAll('item');
-    var posts = [];
-    items.forEach(function(item) {
+    var grid = document.getElementById('typing-grid');
+    var cards = Array.from(grid.querySelectorAll('.typing-post'));
+
+    Array.from(items).slice(0, 6).forEach(function(item, i) {
+      var card = cards[i];
+      if (!card) return;
       var title = item.querySelector('title');
       var link  = item.querySelector('link');
       var date  = item.querySelector('pubDate');
-      var desc  = item.querySelector('description') || item.querySelector('content\\:encoded') || item.querySelector('encoded');
-      // buscar imagen en enclosure o en el HTML del body
       var enclosure = item.querySelector('enclosure');
-      var img = null;
-      if (enclosure && enclosure.getAttribute('url')) {
-        img = enclosure.getAttribute('url');
-      } else if (desc) {
-        var match = desc.textContent.match(/<img[^>]+src=["']([^"']+)["']/);
-        if (match) img = match[1];
-        // también en el innerHTML del description como HTML
-        var tmp = document.createElement('div');
-        tmp.innerHTML = desc.textContent;
-        var imgTag = tmp.querySelector('img');
-        if (imgTag && imgTag.src) img = imgTag.src;
+      var img = enclosure && enclosure.getAttribute('url') ? enclosure.getAttribute('url') : null;
+      if (!img) {
+        var encoded = item.getElementsByTagNameNS('*','encoded')[0];
+        var html = encoded ? encoded.textContent : '';
+        var match = html.match(/src=["'](https:\/\/[^"']+)/i);
+        if (match) img = match[1].split('"')[0].split("'")[0];
       }
-      // media:content o media:thumbnail
-      var media = item.querySelector('content') || item.querySelector('thumbnail');
-      if (!img && media && media.getAttribute('url')) img = media.getAttribute('url');
-
-      posts.push({
-        title: title ? title.textContent : '',
-        link:  link  ? (link.nextSibling ? link.nextSibling.textContent.trim() : link.textContent) : '#',
-        date:  date  ? date.textContent : '',
-        img:   img
-      });
+      var url = link ? (link.nextSibling ? link.nextSibling.textContent.trim() : link.textContent.trim()) : '';
+      var imgEl = card.querySelector('.typing-img');
+      imgEl.style.backgroundImage = "url('" + (img || FALLBACK_IMG) + "')";
+      card.href = 'post.html?slug=' + encodeURIComponent(url.split('/').filter(Boolean).pop() || String(i));
+      card.querySelector('.typing-num').textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
+      card.querySelector('.typing-title').textContent = title ? title.textContent : '';
+      card.querySelector('.typing-date').textContent = date ? formatDate(date.textContent) : '';
+      card.classList.remove('typing-skeleton');
+      setTimeout(function() { card.classList.add('visible'); }, 100 + i * 80);
     });
-    return posts;
   }
 
-  fetch(API)
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      var posts = parseRSS(data.contents);
-      var grid = document.getElementById('typing-grid');
-      var cards = Array.from(grid.querySelectorAll('.typing-post'));
-      posts.slice(0, 6).forEach(function(post, i) {
-        var card = cards[i];
-        if (!card) return;
-        var imgEl = card.querySelector('.typing-img');
-        var src = post.img || FALLBACK_IMG;
-        imgEl.style.backgroundImage = "url('" + src + "')";
-        card.href = 'post.html?slug=' + encodeURIComponent(post.link.split('/').pop() || post.link.split('/').slice(-2,-1)[0] || i);
-        card.target = '';
-        card.rel = '';
-        card.querySelector('.typing-num').textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
-        card.querySelector('.typing-title').textContent = post.title;
-        card.querySelector('.typing-date').textContent = post.date ? formatDate(post.date) : '';
-        card.classList.remove('typing-skeleton');
-        setTimeout(function() { card.classList.add('visible'); }, 100 + i * 80);
-      });
-    })
-    .catch(function(err) {
-      console.warn('RSS load failed', err);
+  function tryProxy(index) {
+    if (index >= PROXIES.length) {
       document.querySelectorAll('.typing-skeleton').forEach(function(c) { c.style.opacity = '0.25'; });
-    });
+      return;
+    }
+    fetch(PROXIES[index])
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var xml = data.contents || data.body || '';
+        if (!xml) throw new Error('empty');
+        parseAndRender(xml);
+      })
+      .catch(function() { tryProxy(index + 1); });
+  }
+
+  tryProxy(0);
 })();
 var observer = new IntersectionObserver(function(entries) {
   entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
