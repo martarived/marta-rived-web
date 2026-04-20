@@ -1,19 +1,12 @@
-export const config = { runtime: 'edge' };
-
-export default async function handler(req) {
+module.exports = async (req, res) => {
   try {
-    const res = await fetch('https://aquelveranodel92.substack.com/feed', {
-      headers: { 'User-Agent': 'Mozilla/5.0' }
-    });
-    const xml = await res.text();
-    return new Response(xml, {
-      headers: {
-        'Content-Type': 'application/xml',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 's-maxage=300, stale-while-revalidate'
-      }
-    });
+    const response = await fetch('https://aquelveranodel92.substack.com/feed');
+    const xml = await response.text();
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Content-Type', 'application/xml');
+    res.setHeader('Cache-Control', 's-maxage=300');
+    res.status(200).send(xml);
   } catch (e) {
-    return new Response('Error', { status: 500 });
+    res.status(500).send('Error');
   }
-}
+};
