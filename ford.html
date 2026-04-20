@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ford — Marta Rived</title>
+  <style>
+    @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
+
+    /* NAV */
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; mix-blend-mode: difference; }
+    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); text-decoration: none; }
+    .nav-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: gap 0.2s; }
+    .nav-back:hover { gap: 16px; }
+    .nav-back::before { content: '←'; }
+
+    /* HERO — fondo oscuro sin vídeo, título protagonista */
+    #hero { position: relative; height: 100vh; background: var(--ink); display: flex; align-items: flex-end; padding: 0 56px 64px; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #0d0a1e 0%, #1a1528 100%); }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(64px, 10vw, 140px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.88; color: var(--cream); }
+    .hero-title .dim { color: rgba(242,237,227,0.18); }
+
+    /* META */
+    .proj-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-meta-item { padding: 36px 40px; border-right: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-meta-item:last-child { border-right: none; }
+    .proj-meta-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .proj-meta-value { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(16px, 2vw, 24px); text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); }
+
+    /* INTRO */
+    .proj-intro { padding: 96px 56px; display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
+    .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
+
+    /* VÍDEO EMBED */
+    .video-full { padding: 0 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 3px; overflow: hidden; background: var(--ink); }
+    .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
+    .video-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); padding: 40px 0 20px; display: flex; align-items: center; gap: 16px; }
+    .video-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
+    .video-caption { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; color: var(--muted); padding: 16px 0 40px; letter-spacing: 0.06em; }
+
+    /* SPLIT */
+    .proj-split { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-split-media { overflow: hidden; background: var(--ink); }
+    .proj-split-media .video-wrap { border-radius: 0; height: 100%; aspect-ratio: unset; min-height: 400px; }
+    .proj-split-text { padding: 80px 56px; display: flex; flex-direction: column; justify-content: center; }
+    .proj-split-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 20px; }
+    .proj-split-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 28px; }
+    .proj-split-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
+
+    /* QUOTE */
+    .proj-quote { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); border-top: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-quote blockquote { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(32px, 4.5vw, 64px); text-transform: uppercase; letter-spacing: -0.025em; line-height: 1.0; color: var(--ink); max-width: 900px; }
+    .proj-quote .dim { color: rgba(13,10,30,0.18); }
+
+    /* FOOTER */
+    .proj-footer { padding: 64px 56px; border-top: 0.5px solid rgba(13,10,30,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .proj-footer-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.2s, gap 0.2s; }
+    .proj-footer-back:hover { color: var(--ink); gap: 16px; }
+    .proj-footer-back::before { content: '←'; }
+    .proj-footer-next { text-decoration: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .proj-footer-next-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .proj-footer-next-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); transition: color 0.2s; display: flex; align-items: center; gap: 12px; }
+    .proj-footer-next-title::after { content: '→'; color: var(--sea); }
+    .proj-footer-next:hover .proj-footer-next-title { color: var(--sea); }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">Marta Rived</a>
+  <a class="nav-back" href="index.html#work">Work</a>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-label">Ford · La Vanguardia · 2023</p>
+    <h1 class="hero-title">
+      Ford<br>
+      <span class="dim">Branded</span><br>
+      Content
+    </h1>
+  </div>
+</section>
+
+<div class="proj-meta">
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Cliente</p>
+    <p class="proj-meta-value">Ford</p>
+  </div>
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Medio</p>
+    <p class="proj-meta-value">La Vanguardia</p>
+  </div>
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Año</p>
+    <p class="proj-meta-value">2023</p>
+  </div>
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Rol</p>
+    <p class="proj-meta-value">Project Manager · Creative Director · Script</p>
+  </div>
+</div>
+
+<div class="proj-intro">
+  <p class="proj-intro-label">El proyecto</p>
+  <p class="proj-intro-text">Dos campañas de branded content para Ford en La Vanguardia — el Ford Tourneo y el Ford Transit — con Mario Picazo como driver de marca. Un proyecto de producción audiovisual de principio a fin: desde la concepción creativa, el guion y la narrativa de cada pieza, hasta la coordinación del rodaje junto al equipo de Linkvids y Maxi Lastra.</p>
+</div>
+
+<!-- VÍDEO TOURNEO — Vimeo -->
+<div class="video-full">
+  <p class="video-label">Ford Tourneo</p>
+  <div class="video-wrap">
+    <iframe src="https://player.vimeo.com/video/956724909?autoplay=0&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <p class="video-caption">Ford Tourneo Connect · Branded Content · La Vanguardia · 2023</p>
+</div>
+
+<!-- SPLIT: reto + vídeo Transit 1 -->
+<div class="proj-split">
+  <div class="proj-split-text">
+    <p class="proj-split-num">01 — El reto</p>
+    <h2 class="proj-split-title">Hacer que un coche de empresa emocione</h2>
+    <p class="proj-split-body">El desafío era claro: convertir un vehículo comercial en protagonista de una historia que conectara con la audiencia de La Vanguardia. La solución fue poner al frente a Mario Picazo — periodista de referencia — para dar credibilidad y cercanía a cada pieza.</p>
+  </div>
+  <div class="proj-split-media">
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/V5tJgwntcFM?autoplay=0&rel=0&modestbranding=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="proj-quote">
+  <blockquote>
+    Branded content<br>
+    <span class="dim">que no parece</span><br>
+    publicidad
+  </blockquote>
+</div>
+
+<!-- SPLIT inverso: vídeo Transit 2 + ejecución -->
+<div class="proj-split">
+  <div class="proj-split-media">
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/HO8v_d_aHe8?autoplay=0&rel=0&modestbranding=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+  </div>
+  <div class="proj-split-text">
+    <p class="proj-split-num">02 — La ejecución</p>
+    <h2 class="proj-split-title">De la idea al rodaje, sin soltar el hilo</h2>
+    <p class="proj-split-body">Asumí la dirección creativa y la coordinación completa del proyecto: redacción de guiones, planificación de rodaje y dirección en set junto al equipo de Linkvids y el director Maxi Lastra. Dos campañas, un mismo nivel de exigencia.</p>
+  </div>
+</div>
+
+<div class="proj-footer">
+  <a class="proj-footer-back" href="index.html#work">Volver a Work</a>
+  <a class="proj-footer-next" href="30-anos.html">
+    <span class="proj-footer-next-label">Siguiente proyecto</span>
+    <span class="proj-footer-next-title">30 Años No Son Nada</span>
+  </a>
+</div>
+
+</body>
+</html>
