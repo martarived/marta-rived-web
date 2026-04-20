@@ -93,10 +93,6 @@
     .about-right { padding: 48px 56px; display: flex; flex-direction: column; justify-content: flex-end; gap: 48px; }
     .about-name .n1, .about-name .n2 { display: block; font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(52px, 7.5vw, 96px); text-transform: uppercase; color: var(--ink); line-height: 0.86; letter-spacing: -0.02em; }
     .about-name .n1 { text-align: left; } .about-name .n2 { text-align: right; margin-top: -10px; }
-    .name-spark { display: block; overflow: visible; height: 14px; margin-top: 4px; }
-    .name-spark svg { overflow: visible; height: 14px; }
-    .n1 .name-spark { width: 100%; }
-    .n2 .name-spark { width: 55%; margin-left: auto; }
     .about-bio { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
     .exp-section { padding: 48px 56px 40px; }
     .exp-cols { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 0.5px solid rgba(13,10,30,0.12); }
@@ -230,8 +226,8 @@
     </div>
     <div class="about-right">
       <div class="about-name">
-        <span class="n1">Marta<span class="name-spark"><svg viewBox="0 0 300 14" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M2 10 C30 4, 55 13, 85 7 C115 1, 140 12, 170 6 C200 0, 225 11, 255 6 C275 3, 290 8, 298 6" stroke="#0077a8" stroke-width="3" stroke-linecap="round" style="stroke-dasharray:320;stroke-dashoffset:320;animation:draw-circle 1s ease forwards 0.8s;"/></svg></span></span>
-        <span class="n2">Rived<span class="name-spark"><svg viewBox="0 0 200 14" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M2 10 C25 4, 50 13, 80 7 C110 1, 135 11, 160 7 C175 4, 188 9, 198 7" stroke="#0077a8" stroke-width="3" stroke-linecap="round" style="stroke-dasharray:220;stroke-dashoffset:220;animation:draw-circle 0.9s ease forwards 1.1s;"/></svg></span></span>
+        <span class="n1">Marta</span>
+        <span class="n2">Rived</span>
       </div>
       <p class="about-bio">"Te voy a escribir la canción más bonita del mundo. Voy a capturar nuestra historia tan solo un segundo." Creative, Storyteller and Playmaker. Turning brand values into impactful ideas, campaigns and experiences — from concept and copy to talent direction and production execution.</p>
     </div>
@@ -475,7 +471,7 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
 /* TYPING — carga automática desde Substack RSS */
 (function() {
   var FEED = 'https://aquelveranodel92.substack.com/feed';
-  var API  = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(FEED) + '&count=6';
+  var API  = 'https://allorigins.win/get?disableCache=true&url=' + encodeURIComponent(FEED);
   var FALLBACK_IMG = 'https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla';
 
   var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -485,50 +481,69 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
     return months[d.getMonth()] + ' ' + d.getFullYear();
   }
 
-  function extractImg(item) {
-    // 1. thumbnail del feed
-    if (item.thumbnail && item.thumbnail.indexOf('http') === 0) return item.thumbnail;
-    // 2. enclosure
-    if (item.enclosure && item.enclosure.link) return item.enclosure.link;
-    // 3. primera imagen en el content
-    var match = item.content && item.content.match(/<img[^>]+src=["']([^"']+)["']/);
-    if (match) return match[1];
-    return null;
+  function parseRSS(xml) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(xml, 'text/xml');
+    var items = doc.querySelectorAll('item');
+    var posts = [];
+    items.forEach(function(item) {
+      var title = item.querySelector('title');
+      var link  = item.querySelector('link');
+      var date  = item.querySelector('pubDate');
+      var desc  = item.querySelector('description') || item.querySelector('content\\:encoded') || item.querySelector('encoded');
+      // buscar imagen en enclosure o en el HTML del body
+      var enclosure = item.querySelector('enclosure');
+      var img = null;
+      if (enclosure && enclosure.getAttribute('url')) {
+        img = enclosure.getAttribute('url');
+      } else if (desc) {
+        var match = desc.textContent.match(/<img[^>]+src=["']([^"']+)["']/);
+        if (match) img = match[1];
+        // también en el innerHTML del description como HTML
+        var tmp = document.createElement('div');
+        tmp.innerHTML = desc.textContent;
+        var imgTag = tmp.querySelector('img');
+        if (imgTag && imgTag.src) img = imgTag.src;
+      }
+      // media:content o media:thumbnail
+      var media = item.querySelector('content') || item.querySelector('thumbnail');
+      if (!img && media && media.getAttribute('url')) img = media.getAttribute('url');
+
+      posts.push({
+        title: title ? title.textContent : '',
+        link:  link  ? (link.nextSibling ? link.nextSibling.textContent.trim() : link.textContent) : '#',
+        date:  date  ? date.textContent : '',
+        img:   img
+      });
+    });
+    return posts;
   }
 
   fetch(API)
     .then(function(r) { return r.json(); })
     .then(function(data) {
-      if (!data.items || !data.items.length) return;
+      var posts = parseRSS(data.contents);
       var grid = document.getElementById('typing-grid');
-      var cards = grid.querySelectorAll('.typing-post');
-      data.items.slice(0, 6).forEach(function(item, i) {
+      var cards = Array.from(grid.querySelectorAll('.typing-post'));
+      posts.slice(0, 6).forEach(function(post, i) {
         var card = cards[i];
         if (!card) return;
-        var img = extractImg(item);
         var imgEl = card.querySelector('.typing-img');
-        if (img) {
-          imgEl.style.backgroundImage = "url('" + img + "')";
-        } else {
-          imgEl.style.backgroundImage = "url('" + FALLBACK_IMG + "')";
-        }
-        card.href = item.link;
-        card.target = '_blank';
-        card.rel = 'noopener';
+        var src = post.img || FALLBACK_IMG;
+        imgEl.style.backgroundImage = "url('" + src + "')";
+        card.href = 'post.html?slug=' + encodeURIComponent(post.link.split('/').pop() || post.link.split('/').slice(-2,-1)[0] || i);
+        card.target = '';
+        card.rel = '';
         card.querySelector('.typing-num').textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
-        card.querySelector('.typing-title').textContent = item.title;
-        card.querySelector('.typing-date').textContent = formatDate(item.pubDate);
+        card.querySelector('.typing-title').textContent = post.title;
+        card.querySelector('.typing-date').textContent = post.date ? formatDate(post.date) : '';
         card.classList.remove('typing-skeleton');
-        // re-trigger fade-up
-        card.classList.remove('visible');
-        setTimeout(function() { card.classList.add('visible'); }, i * 80);
+        setTimeout(function() { card.classList.add('visible'); }, 100 + i * 80);
       });
     })
-    .catch(function() {
-      // si falla el proxy, quita los skeletons silenciosamente
-      document.querySelectorAll('.typing-skeleton').forEach(function(c) {
-        c.style.opacity = '0.3';
-      });
+    .catch(function(err) {
+      console.warn('RSS load failed', err);
+      document.querySelectorAll('.typing-skeleton').forEach(function(c) { c.style.opacity = '0.25'; });
     });
 })();
 var observer = new IntersectionObserver(function(entries) {
