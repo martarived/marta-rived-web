@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>30 Años No Son Nada — Marta Rived</title>
+  <style>
+    @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
+
+    /* NAV */
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; mix-blend-mode: difference; }
+    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); text-decoration: none; }
+    .nav-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: gap 0.2s; }
+    .nav-back:hover { gap: 16px; }
+    .nav-back::before { content: '←'; }
+
+    /* HERO */
+    #hero { position: relative; height: 100vh; background: var(--ink); overflow: hidden; display: flex; align-items: flex-end; padding: 0 56px 64px; }
+    #hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.45; }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(64px, 10vw, 140px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.88; color: var(--cream); }
+    .hero-title .dim { color: rgba(242,237,227,0.18); }
+
+    /* META */
+    .proj-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-meta-item { padding: 36px 40px; border-right: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-meta-item:last-child { border-right: none; }
+    .proj-meta-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .proj-meta-value { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(16px, 2vw, 24px); text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); }
+
+    /* INTRO */
+    .proj-intro { padding: 96px 56px; display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
+    .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
+
+    /* IMAGEN FULL */
+    .img-full { width: 100%; display: block; object-fit: cover; }
+    .img-full-padded { padding: 0 56px; width: calc(100% - 112px); display: block; object-fit: cover; border-radius: 3px; margin: 0 56px; }
+
+    /* QUOTE */
+    .proj-quote { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-quote blockquote { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(32px, 4.5vw, 64px); text-transform: uppercase; letter-spacing: -0.025em; line-height: 1.0; color: var(--ink); max-width: 900px; }
+    .proj-quote .dim { color: rgba(13,10,30,0.18); }
+    .proj-quote cite { display: block; font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; font-style: italic; letter-spacing: 0.12em; color: var(--muted); margin-top: 24px; }
+
+    /* REELS GRID */
+    .reels-section { padding: 80px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .reels-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; display: flex; align-items: center; gap: 16px; }
+    .reels-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
+    .reels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .reel-wrap { position: relative; border-radius: 3px; overflow: hidden; background: var(--ink); aspect-ratio: 9/16; }
+    .reel-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* SPLIT */
+    .proj-split { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-split-media { overflow: hidden; background: var(--ink); aspect-ratio: 4/3; }
+    .proj-split-media video, .proj-split-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .proj-split-text { padding: 80px 56px; display: flex; flex-direction: column; justify-content: center; }
+    .proj-split-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 20px; }
+    .proj-split-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 28px; }
+    .proj-split-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
+
+    /* FOTO GRUPO */
+    .img-group { width: 100%; display: block; object-fit: cover; max-height: 70vh; border-top: 0.5px solid rgba(13,10,30,0.08); }
+
+    /* FOOTER PROYECTO */
+    .proj-footer { padding: 64px 56px; border-top: 0.5px solid rgba(13,10,30,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .proj-footer-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.2s, gap 0.2s; }
+    .proj-footer-back:hover { color: var(--ink); gap: 16px; }
+    .proj-footer-back::before { content: '←'; }
+    .proj-footer-next { text-decoration: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .proj-footer-next-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .proj-footer-next-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); transition: color 0.2s; display: flex; align-items: center; gap: 12px; }
+    .proj-footer-next-title::after { content: '→'; color: var(--sea); }
+    .proj-footer-next:hover .proj-footer-next-title { color: var(--sea); }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">Marta Rived</a>
+  <a class="nav-back" href="index.html#work">Work</a>
+</nav>
+
+<!-- HERO — primer reel como vídeo de fondo -->
+<section id="hero">
+  <video id="hero-video" autoplay muted loop playsinline>
+    <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776675832/AQM3QnJn-PE3Tg1YTCJX_ixQBx2rOtf0jSUs3fDP2KJT6p7mrMsPWZVYhFnD524NdZek8YdciWtvd_8ud-5y0opR3LbSFdl9XUP5Lzc_lv5mof.mp4" type="video/mp4">
+  </video>
+  <div class="hero-content">
+    <p class="hero-label">NSN · 2022</p>
+    <h1 class="hero-title">
+      30 Años<br>
+      <span class="dim">No Son</span><br>
+      Nada
+    </h1>
+  </div>
+</section>
+
+<!-- META -->
+<div class="proj-meta">
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Cliente</p>
+    <p class="proj-meta-value">NSN</p>
+  </div>
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Año</p>
+    <p class="proj-meta-value">2022</p>
+  </div>
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Disciplina</p>
+    <p class="proj-meta-value">Branded Content · Audiovisual · Copy</p>
+  </div>
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Rol</p>
+    <p class="proj-meta-value">Creative Director & Copywriter</p>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="proj-intro">
+  <p class="proj-intro-label">El proyecto</p>
+  <p class="proj-intro-text">Una iniciativa interna de NSN con motivo del 8M: ¿cuánto ha cambiado el deporte femenino 30 años después de las Olimpiadas de Barcelona 92? Entrevistas a deportistas de nueva generación, con la mirada de Olga Viza — la periodista que narró aquellos Juegos — como hilo conductor entre dos épocas.</p>
+</div>
+
+<!-- PRIMERA IMAGEN A SANGRE -->
+<img class="img-full" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776675831/655248338_18113110477737654_8114042870856651891_n_zjbndc.jpg" alt="30 Años No Son Nada">
+
+<!-- SPLIT: contexto + reel -->
+<div class="proj-split">
+  <div class="proj-split-text">
+    <p class="proj-split-num">01 — La idea</p>
+    <h2 class="proj-split-title">Una generación que no pudo competir en el 92</h2>
+    <p class="proj-split-body">El concepto nació de una pregunta simple: ¿qué habría pasado si estas deportistas hubieran competido en Barcelona 92? La respuesta, contada por ellas mismas, con la voz de Olga Viza como testigo de lo que fue y de lo que es.</p>
+  </div>
+  <div class="proj-split-media">
+    <video autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776675832/AQMYycZ-oBBtBU-v41CoSbkNwnBn9qdnA7aBs_i5D7SuW-zcXAWgVo1cYrtQsd7EyMQsXiRbiwqQgE2X3hHcQNHUOa20RvX9JbpcHTM_xholc8.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="proj-quote">
+  <blockquote>
+    El deporte femenino<br>
+    <span class="dim">no necesita</span><br>
+    30 años más
+  </blockquote>
+  <cite>— Concepto creativo, Marta Rived</cite>
+</div>
+
+<!-- REELS GRID — 3+3 -->
+<div class="reels-section">
+  <p class="reels-label">Piezas</p>
+  <div class="reels-grid">
+    <div class="reel-wrap">
+      <video autoplay muted loop playsinline>
+        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776675832/AQOZwcBV9zHNQ2RLhpIUlazzaeztrqLiu07bWyZU7qEoTbXrAzrHGtGtkpTSRBMRezqzhh7iHjO_B2sAvffDeaz0m7dpmCUcqdw8R-0_ml51hd.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="reel-wrap">
+      <video autoplay muted loop playsinline>
+        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776675832/AQNroNK_zHQdVEneNRS1wdDibxqXgKvTqQ-j8V4ZwFzabQQF9pQBrqE2e5bhjZrIzGrxEsCscI3FqldE9cNSOLrHe8-biAv5frUYhfQ_vqpmi3.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="reel-wrap">
+      <video autoplay muted loop playsinline>
+        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776675832/AQPQnqUhkRcU5LbCoTK6__6GLSe6A-eeeSz6J4BO1lCEuxArUMr-soIXHNp_oLJWkaoS_JsLo2_NK0QGazo_hrt3EAO5Li4b5ZJOX9Y_dsijjc.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="reel-wrap">
+      <video autoplay muted loop playsinline>
+        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776675833/AQMcItKinMXPbeYIbvpJxgg1g3A4uKbywRBRS8yqo5EE1wIxaahmEWEih5HCyD0klD_wHV-amr5KoMsqTH_xcFcGJ4_T0o77dkQi_Dw_wvikim.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="reel-wrap">
+      <video autoplay muted loop playsinline>
+        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776675833/AQM-MguSrl2AayLOVLxT43wrsghKQWimIFvsFkA8OmCBFKf4rjR7OpVt8YFz4XX0eL8ryjPGhXE3pseKTXEi6eHb3skKWqsaDCPkj0E_mrhm0y.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="reel-wrap">
+      <video autoplay muted loop playsinline>
+        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776675833/AQPnPKQritaEC9F1BJNL4ksvaJDwIyHMOZJU7Y8mdtlETztUTWk73dtEEKCW3PY0OO-vCK8g0qlBohm044-DiEB-Ybuit26XxKK40sA_fbxfid.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+
+<!-- SPLIT: ejecución + reel -->
+<div class="proj-split">
+  <div class="proj-split-media">
+    <video autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776675833/AQNrT3H5bdz44dvK9zhaUT_XdseuirefrVlZEPpYqfrLrY5FdsCkIKFFZA9JbPJ2eOab7rhdWePUng7Zzlf1fklNZx13kE7O_kzP8uw_k1sgsk.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="proj-split-text">
+    <p class="proj-split-num">02 — La ejecución</p>
+    <h2 class="proj-split-title">Guion, dirección creativa y producción de principio a fin</h2>
+    <p class="proj-split-body">Desarrollé el concepto, escribí todos los guiones y fui responsable de la dirección creativa de cada pieza. Desde la selección de deportistas hasta la narrativa de cada entrevista, construyendo un hilo conductor que unía las voces del presente con la memoria del 92.</p>
+  </div>
+</div>
+
+<!-- DOS ÚLTIMOS REELS -->
+<div class="reels-section" style="border-top: 0.5px solid rgba(13,10,30,0.08);">
+  <p class="reels-label">Más piezas</p>
+  <div class="reels-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 700px;">
+    <div class="reel-wrap">
+      <video autoplay muted loop playsinline>
+        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776675833/AQMg53ZteVkDh7Kl-2pG-gRnj9ZCerLUJM99rSDbNRjNmnYcospWSyBZoVTpntvx7gCOPZ3MlgshYqsPo4A_ftbmts.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="reel-wrap">
+      <video autoplay muted loop playsinline>
+        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776675836/AQNb900Z9gCyoSkzoPdZqdYolf9TK3WNowMdmtYCL_zEUooNRCkddYEjHQjCRbJ30lekVNNJoM8EAP19hZAKOoiF_h6x9cx.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+
+<!-- FOTO GRUPO FINAL -->
+<img class="img-group" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776675833/662213554_18335354548171084_3076492245538951113_n_inedtn.jpg" alt="Equipo 30 Años No Son Nada">
+<img class="img-group" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776675834/653584652_18145680733479261_525255698219639565_n_ra2f1c.jpg" alt="30 Años No Son Nada">
+
+<!-- FOOTER -->
+<div class="proj-footer">
+  <a class="proj-footer-back" href="index.html#work">Volver a Work</a>
+  <a class="proj-footer-next" href="index.html#work">
+    <span class="proj-footer-next-label">Siguiente proyecto</span>
+    <span class="proj-footer-next-title">Ford</span>
+  </a>
+</div>
+
+</body>
+</html>
