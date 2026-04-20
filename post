@@ -103,14 +103,8 @@
 
 <script>
 (function() {
-  var FEED = 'https://aquelveranodel92.substack.com/feed';
-  var PROXIES = [
-    'https://api.allorigins.win/get?disableCache=true&url=' + encodeURIComponent(FEED),
-    'https://corsproxy.io/?' + encodeURIComponent(FEED),
-  ];
+  var FEED_URL = '/api/feed';
   var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-
-  // Obtener slug de la URL: post.html?slug=morderse-las-unas
   var params = new URLSearchParams(window.location.search);
   var slug = params.get('slug') || '';
 
@@ -129,29 +123,22 @@
   function extractImg(item) {
     var enclosure = item.querySelector('enclosure');
     if (enclosure && enclosure.getAttribute('url')) return enclosure.getAttribute('url');
-    var media = item.querySelector('content') || item.querySelector('thumbnail');
-    if (media && media.getAttribute('url')) return media.getAttribute('url');
-    // buscar en content:encoded
     var encoded = item.getElementsByTagNameNS('*','encoded')[0];
     var html = encoded ? encoded.textContent : '';
-    var match = html.match(/src=["'](https:\/\/[^"']+\.(jpg|jpeg|png|webp)[^"']*)/i);
-    if (match) return match[1];
+    var match = html.match(/src=["'](https:\/\/[^"']+)/i);
+    if (match) return match[1].split('"')[0].split("'")[0];
     return null;
   }
 
   function cleanContent(html) {
-    // Quitar botones de suscripción de Substack y elementos innecesarios
     var tmp = document.createElement('div');
     tmp.innerHTML = html;
-    tmp.querySelectorAll('.subscription-widget-wrap, .subscribe-widget, .button-wrapper, [class*="subscribe"], [class*="paywall"]').forEach(function(el) { el.remove(); });
-    // Limpiar imágenes con srcset de Substack CDN para que carguen bien
-    tmp.querySelectorAll('img').forEach(function(img) {
-      var src = img.getAttribute('src') || '';
-      if (src.indexOf('substackcdn') > -1 || src.indexOf('substack-post-media') > -1) {
-        img.removeAttribute('srcset');
-        img.removeAttribute('sizes');
+    tmp.querySelectorAll('.subscription-widget-wrap,.subscribe-widget,.button-wrapper,[class*="subscribe"],[class*="paywall"]').forEach(function(el){el.remove();});
+    tmp.querySelectorAll('img').forEach(function(img){
+      if((img.src||'').indexOf('substackcdn')>-1||(img.src||'').indexOf('substack-post-media')>-1){
+        img.removeAttribute('srcset');img.removeAttribute('sizes');
       }
-      img.style.maxWidth = '100%';
+      img.style.maxWidth='100%';
     });
     return tmp.innerHTML;
   }
@@ -160,7 +147,6 @@
     var parser = new DOMParser();
     var doc = parser.parseFromString(xmlText, 'text/xml');
     var items = Array.from(doc.querySelectorAll('item'));
-
     var post = null;
     if (slug) {
       post = items.find(function(item) {
@@ -196,36 +182,22 @@
       tmp2.innerHTML = descEl.textContent;
       var firstP = tmp2.querySelector('p');
       if (firstP && firstP.textContent.trim()) {
-        document.getElementById('post-subtitle').textContent = firstP.textContent.trim().substring(0, 160) + (firstP.textContent.length > 160 ? '…' : '');
+        document.getElementById('post-subtitle').textContent = firstP.textContent.trim().substring(0,160) + (firstP.textContent.length > 160 ? '\u2026' : '');
       }
     }
-
     document.getElementById('post-substack-link').href = url;
     document.getElementById('post-content').innerHTML = cleanContent(content);
   }
 
-  function tryProxy(index) {
-    if (index >= PROXIES.length) {
-      // fallback de muestra
-      document.title = 'Morderse las uñas — Marta Rived';
-      document.getElementById('post-title').textContent = 'Morderse las uñas';
+  fetch(FEED_URL)
+    .then(function(r) { return r.text(); })
+    .then(function(xml) { loadPost(xml); })
+    .catch(function() {
+      document.getElementById('post-title').textContent = 'Morderse las \u00f1as';
       document.getElementById('post-date').textContent = 'Agosto 2025';
-      document.getElementById('post-subtitle').textContent = 'Uñas veces me las muerdo más, y otras, menos.';
-      document.getElementById('post-substack-link').href = 'https://aquelveranodel92.substack.com';
-      document.getElementById('post-content').innerHTML = '<p>Me muerdo las uñas. Me sirve para regular las emociones, según yo misma, pero también según ChatGPT.</p><p>No me gusta morderme las uñas. Sí y no. Me gusta porque me ayuda y me disgusta porque me perjudica.</p><hr><p><em>Contenido cargado automáticamente desde Substack cuando la web está en Vercel.</em></p>';
-      return;
-    }
-    fetch(PROXIES[index])
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        var xml = data.contents || data.body || '';
-        if (!xml) throw new Error('empty');
-        loadPost(xml);
-      })
-      .catch(function() { tryProxy(index + 1); });
-  }
-
-  tryProxy(0);
+      document.getElementById('post-subtitle').textContent = 'U\u00f1as veces me las muerdo m\u00e1s, y otras, menos.';
+      document.getElementById('post-content').innerHTML = '<p>Contenido cargado autom\u00e1ticamente desde Substack en Vercel.</p>';
+    });
 })();
 </script>
 </body>
