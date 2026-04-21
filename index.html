@@ -155,17 +155,42 @@
     @keyframes up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes draw-circle { to { stroke-dashoffset: 0; } }
 
-    /* TYPING MORE BUTTON */
-    #typing-more-btn { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); background: none; border: 0.5px solid rgba(13,10,30,0.2); padding: 16px 48px; cursor: pointer; transition: color 0.2s, border-color 0.2s; display: inline-flex; align-items: center; gap: 16px; }
-    #typing-more-btn:hover { color: var(--ink); border-color: var(--ink); }
-    #typing-more-btn:hover .btn-arrow { background: var(--ink); }
-    #typing-more-btn:hover .btn-arrow::after { border-color: var(--ink); }
-    #typing-more-btn:disabled { opacity: 0.3; cursor: default; }
-    .btn-arrow { display: block; width: 28px; height: 0.5px; background: rgba(13,10,30,0.3); position: relative; transition: background 0.2s; }
-    .btn-arrow::after { content: ''; position: absolute; right: -1px; top: -3px; width: 6px; height: 6px; border-right: 0.5px solid rgba(13,10,30,0.3); border-bottom: 0.5px solid rgba(13,10,30,0.3); transform: rotate(-45deg); transition: border-color 0.2s; }
+    /* UNDER CONSTRUCTION POPUP */
+    #uc-overlay { position: fixed; inset: 0; background: rgba(13,10,30,0.55); z-index: 998; }
+    #uc-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 999; background: var(--cream); border: 0.5px solid rgba(13,10,30,0.15); padding: 56px 64px; display: flex; flex-direction: column; align-items: center; gap: 28px; min-width: 360px; }
+    .uc-icon { animation: uc-pulse 2s ease infinite; }
+    @keyframes uc-pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .uc-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(28px, 4vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.95; color: var(--ink); text-align: center; }
+    .uc-title .dim { color: rgba(13,10,30,0.2); }
+    .uc-sub { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); text-align: center; }
+    .uc-btn { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); background: none; border: 0.5px solid rgba(13,10,30,0.2); padding: 14px 48px; cursor: pointer; transition: color 0.2s, border-color 0.2s; margin-top: 8px; display: inline-flex; align-items: center; gap: 14px; }
+    .uc-btn:hover { color: var(--ink); border-color: var(--ink); }
+    .uc-btn:hover .uc-btn-arrow { background: var(--ink); }
+    .uc-btn:hover .uc-btn-arrow::after { border-color: var(--ink); }
+    .uc-btn-arrow { display: block; width: 24px; height: 0.5px; background: rgba(13,10,30,0.3); position: relative; transition: background 0.2s; }
+    .uc-btn-arrow::after { content: ''; position: absolute; right: -1px; top: -3px; width: 5px; height: 5px; border-right: 0.5px solid rgba(13,10,30,0.3); border-bottom: 0.5px solid rgba(13,10,30,0.3); transform: rotate(-45deg); transition: border-color 0.2s; }
   </style>
 </head>
 <body>
+
+<div id="uc-overlay" onclick="closeUC()"></div>
+<div id="uc-popup">
+  <svg class="uc-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 3L22 21H2L12 3Z" stroke="#0077a8" stroke-width="1" stroke-linejoin="round"/>
+    <line x1="12" y1="10" x2="12" y2="15" stroke="#0077a8" stroke-width="1" stroke-linecap="round"/>
+    <circle cx="12" cy="18" r="0.8" fill="#0077a8"/>
+  </svg>
+  <h2 class="uc-title">Under<br><span class="dim">construction</span><br>always on</h2>
+  <p class="uc-sub">BTW, salid y disfrutad</p>
+  <button class="uc-btn" onclick="closeUC()">OK <span class="uc-btn-arrow"></span></button>
+</div>
+
+<script>
+function closeUC() {
+  document.getElementById('uc-overlay').style.display = 'none';
+  document.getElementById('uc-popup').style.display = 'none';
+}
+</script>
 
 <div id="welcome-screen">
   <div id="welcome-texts">
@@ -214,20 +239,17 @@
 <section id="work">
   <p class="section-label fade-up">Work</p>
   <div class="work-grid">
-    <div class="proj fade-up"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776425520/Vivir_pese_a_la_enfermedad_gracias_a_la_investigacio%CC%81n__Nos_mantiene_con_vida__1-6_screenshot_czxviq.png" alt="Bayer" loading="lazy"><div class="proj-cursor-label">Bayer</div></div>
+    <a class="proj fade-up" href="bayer.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776425520/Vivir_pese_a_la_enfermedad_gracias_a_la_investigacio%CC%81n__Nos_mantiene_con_vida__1-6_screenshot_czxviq.png" alt="Bayer" loading="lazy"><div class="proj-cursor-label">Bayer</div></a>
     <a class="proj fade-up" href="ford.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776760775/Captura-de-pantalla-2024-12-17-a-las-10.05.23_df89tr.png" alt="Ford" loading="lazy"><div class="proj-cursor-label">Ford</div></a>
     <a class="proj fade-up" href="mustang.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776760908/_Mira_sin_manos__o_el_coche_que_conduce_solo_0-5_screenshot_mf1msy.png" alt="Mustang" loading="lazy"><div class="proj-cursor-label">Mustang</div></a>
     <a class="proj fade-up" href="30-anos.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776426169/imgi_40_662213554_18335354548171084_3076492245538951113_n_puh8xp.jpg" alt="30 años" loading="lazy"><div class="proj-cursor-label">30 años no son nada</div></a>
     <div class="proj fade-up"><img class="proj-img" src="https://www.lavanguardia.com/uploads/2023/10/25/65392bcc7c9f3.jpeg" alt="Square" loading="lazy"><div class="proj-cursor-label">Square</div></div>
     <div class="proj fade-up"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761079/RCD-STADIUM-09_zcncae.jpg" alt="RCD Espanyol" loading="lazy"><div class="proj-cursor-label">RCD Espanyol</div></div>
     <div class="proj fade-up"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761703/imgi_17_357005306_17933487365695249_535778624782322737_n_vjriqm.jpg" alt="OMG!LaLiga" loading="lazy"><div class="proj-cursor-label">OMG!LaLiga</div></div>
-    <div class="proj fade-up"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/q_auto/f_auto/v1776423672/A7407434_iay3ew.jpg" alt="Girona FC" loading="lazy"><div class="proj-cursor-label">Girona FC</div></div>
+    <a class="proj fade-up" href="girona.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/q_auto/f_auto/v1776423672/A7407434_iay3ew.jpg" alt="Girona FC" loading="lazy"><div class="proj-cursor-label">Girona FC</div></a>
     <div class="proj fade-up"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776426504/423A2683_f0zkjl.jpg" alt="Steven Gerrard" loading="lazy"><div class="proj-cursor-label">Steven Gerrard</div></div>
     <div class="proj fade-up"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761363/65e05573c7cd1_iraqqf.jpg" alt="Esade" loading="lazy"><div class="proj-cursor-label">Esade</div></div>
-    <div class="proj fade-up"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761161/Co%CC%81mo_es_posible_controlar_el_mal_olor_del_ban%CC%83o__1-32_screenshot_lnlupw.png" alt="Colhogar" loading="lazy"><div class="proj-cursor-label">Colhogar</div></div>
-  </div>
-  <div id="typing-more-wrap" style="padding: 48px 56px 0; text-align:center;">
-    <button id="typing-more-btn" onclick="loadMorePosts()">Give me more <span class="btn-arrow"></span></button>
+    <a class="proj fade-up" href="colhogar.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761161/Co%CC%81mo_es_posible_controlar_el_mal_olor_del_ban%CC%83o__1-32_screenshot_lnlupw.png" alt="Colhogar" loading="lazy"><div class="proj-cursor-label">Colhogar</div></a>
   </div>
 </section>
 
@@ -476,102 +498,54 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
   });
 })();
 
-/* TYPING — carga desde /api/feed con paginación */
-var _typingAllItems = [];
-var _typingPage = 0;
-var TYPING_PER_PAGE = 6;
-var FALLBACK_IMG = 'https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla';
-var _typingMonths = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-
-function _typingFormatDate(str) {
-  var d = new Date(str);
-  return _typingMonths[d.getMonth()] + ' ' + d.getFullYear();
-}
-
-function _typingExtractImg(item) {
-  var enclosure = item.querySelector('enclosure');
-  if (enclosure && enclosure.getAttribute('url')) return enclosure.getAttribute('url');
-  var encoded = item.getElementsByTagNameNS('*','encoded')[0];
-  var html = encoded ? encoded.textContent : '';
-  var match = html.match(/src=["'](https:\/\/[^"']+)/i);
-  return match ? match[1].split('"')[0].split("'")[0] : null;
-}
-
-function _typingMakeCard(item, index) {
-  var title = item.querySelector('title');
-  var link  = item.querySelector('link');
-  var date  = item.querySelector('pubDate');
-  var img   = _typingExtractImg(item);
-  var url   = link ? (link.nextSibling ? link.nextSibling.textContent.trim() : link.textContent.trim()) : '';
-  var num   = index + 1;
-  var card  = document.createElement('a');
-  card.className = 'typing-post fade-up';
-  card.href = '/api/post?slug=' + encodeURIComponent(url.split('/').filter(Boolean).pop() || String(index));
-  card.innerHTML = '<div class="typing-img" style="background-image:url(\'' + (img || FALLBACK_IMG) + '\')"></div>' +
-    '<div class="typing-info">' +
-      '<span class="typing-num">' + (num < 10 ? '0' : '') + num + '</span>' +
-      '<h3 class="typing-title">' + (title ? title.textContent : '') + '</h3>' +
-      '<span class="typing-date">' + (date ? _typingFormatDate(date.textContent) : '') + '</span>' +
-    '</div>';
-  return card;
-}
-
-function loadMorePosts() {
-  var grid = document.getElementById('typing-grid');
-  var btn  = document.getElementById('typing-more-btn');
-  var wrap = document.getElementById('typing-more-wrap');
-  var start = _typingPage * TYPING_PER_PAGE;
-  var batch = _typingAllItems.slice(start, start + TYPING_PER_PAGE);
-  batch.forEach(function(item, i) {
-    var card = _typingMakeCard(item, start + i);
-    grid.appendChild(card);
-    setTimeout(function() { card.classList.add('visible'); observer.observe(card); }, 80 + i * 80);
-  });
-  _typingPage++;
-  var remaining = _typingAllItems.length - _typingPage * TYPING_PER_PAGE;
-  if (remaining <= 0) {
-    wrap.style.display = 'none';
-  }
-}
-
+/* TYPING — carga desde /api/feed (proxy propio de Vercel) */
 (function() {
-  var grid = document.getElementById('typing-grid');
-  var skeletons = Array.from(grid.querySelectorAll('.typing-skeleton'));
+  var PROXY = '/api/feed';
+  var FALLBACK_IMG = 'https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla';
+  var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
-  fetch('/api/feed')
-    .then(function(r) { return r.text(); })
-    .then(function(xmlText) {
-      var parser = new DOMParser();
-      var doc = parser.parseFromString(xmlText, 'text/xml');
-      _typingAllItems = Array.from(doc.querySelectorAll('item'));
+  function formatDate(str) {
+    var d = new Date(str);
+    return months[d.getMonth()] + ' ' + d.getFullYear();
+  }
 
-      // Fill first 6 skeletons
-      _typingAllItems.slice(0, TYPING_PER_PAGE).forEach(function(item, i) {
-        var card = skeletons[i];
-        if (!card) return;
-        var title = item.querySelector('title');
-        var link  = item.querySelector('link');
-        var date  = item.querySelector('pubDate');
-        var img   = _typingExtractImg(item);
-        var url   = link ? (link.nextSibling ? link.nextSibling.textContent.trim() : link.textContent.trim()) : '';
-        card.querySelector('.typing-img').style.backgroundImage = "url('" + (img || FALLBACK_IMG) + "')";
-        card.href = '/api/post?slug=' + encodeURIComponent(url.split('/').filter(Boolean).pop() || String(i));
-        card.querySelector('.typing-num').textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
-        card.querySelector('.typing-title').textContent = title ? title.textContent : '';
-        card.querySelector('.typing-date').textContent = date ? _typingFormatDate(date.textContent) : '';
-        card.classList.remove('typing-skeleton');
-        setTimeout(function() { card.classList.add('visible'); }, 100 + i * 80);
-      });
-
-      _typingPage = 1;
-
-      // Hide button if no more posts
-      if (_typingAllItems.length <= TYPING_PER_PAGE) {
-        document.getElementById('typing-more-wrap').style.display = 'none';
+  function parseAndRender(xmlText) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(xmlText, 'text/xml');
+    var items = doc.querySelectorAll('item');
+    var grid = document.getElementById('typing-grid');
+    var cards = Array.from(grid.querySelectorAll('.typing-post'));
+    Array.from(items).slice(0, 6).forEach(function(item, i) {
+      var card = cards[i];
+      if (!card) return;
+      var title = item.querySelector('title');
+      var link  = item.querySelector('link');
+      var date  = item.querySelector('pubDate');
+      var enclosure = item.querySelector('enclosure');
+      var img = enclosure && enclosure.getAttribute('url') ? enclosure.getAttribute('url') : null;
+      if (!img) {
+        var encoded = item.getElementsByTagNameNS('*','encoded')[0];
+        var html = encoded ? encoded.textContent : '';
+        var match = html.match(/src=["'](https:\/\/[^"']+)/i);
+        if (match) img = match[1].split('"')[0].split("'")[0];
       }
-    })
+      var url = link ? (link.nextSibling ? link.nextSibling.textContent.trim() : link.textContent.trim()) : '';
+      var imgEl = card.querySelector('.typing-img');
+      imgEl.style.backgroundImage = "url('" + (img || FALLBACK_IMG) + "')";
+      card.href = '/api/post?slug=' + encodeURIComponent(url.split('/').filter(Boolean).pop() || String(i));
+      card.querySelector('.typing-num').textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
+      card.querySelector('.typing-title').textContent = title ? title.textContent : '';
+      card.querySelector('.typing-date').textContent = date ? formatDate(date.textContent) : '';
+      card.classList.remove('typing-skeleton');
+      setTimeout(function() { card.classList.add('visible'); }, 100 + i * 80);
+    });
+  }
+
+  fetch(PROXY)
+    .then(function(r) { return r.text(); })
+    .then(function(xmlText) { parseAndRender(xmlText); })
     .catch(function() {
-      skeletons.forEach(function(c) { c.style.opacity = '0.25'; });
+      document.querySelectorAll('.typing-skeleton').forEach(function(c) { c.style.opacity = '0.25'; });
     });
 })();
 
