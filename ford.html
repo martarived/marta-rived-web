@@ -21,14 +21,15 @@
     .nav-back:hover { gap: 16px; }
     .nav-back::before { content: '←'; }
 
-    /* HERO — fondo oscuro sin vídeo, título protagonista */
-    #hero { position: relative; height: 100vh; background: var(--ink); display: flex; align-items: flex-end; padding: 0 56px 64px; overflow: hidden; }
-    .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #0d0a1e 0%, #1a1528 100%); }
-    .hero-content { position: relative; z-index: 2; }
+    /* HERO — vídeo a pantalla completa */
+    #hero { position: relative; height: 100vh; overflow: hidden; background: var(--ink); }
+    #hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    #hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,10,30,0.85) 0%, rgba(13,10,30,0.15) 50%, transparent 100%); }
+    #hero-content { position: absolute; bottom: 64px; left: 56px; z-index: 2; }
     .hero-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
     .hero-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
     .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(64px, 10vw, 140px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.88; color: var(--cream); }
-    .hero-title .dim { color: rgba(242,237,227,0.18); }
+    .hero-title .dim { color: rgba(242,237,227,0.25); }
 
     /* META */
     .proj-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.1); }
@@ -42,18 +43,10 @@
     .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
     .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
 
-    /* VÍDEO EMBED */
-    .video-full { padding: 0 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
-    .video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 3px; overflow: hidden; background: var(--ink); }
-    .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
-    .video-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); padding: 40px 0 20px; display: flex; align-items: center; gap: 16px; }
-    .video-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
-    .video-caption { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; color: var(--muted); padding: 16px 0 40px; letter-spacing: 0.06em; }
-
     /* SPLIT */
     .proj-split { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid rgba(13,10,30,0.08); }
-    .proj-split-media { overflow: hidden; background: var(--ink); }
-    .proj-split-media .video-wrap { border-radius: 0; height: 100%; aspect-ratio: unset; min-height: 400px; }
+    .proj-split-media { overflow: hidden; background: var(--ink); position: relative; min-height: 480px; }
+    .proj-split-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
     .proj-split-text { padding: 80px 56px; display: flex; flex-direction: column; justify-content: center; }
     .proj-split-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 20px; }
     .proj-split-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 28px; }
@@ -83,9 +76,13 @@
   <a class="nav-back" href="index.html#work">Work</a>
 </nav>
 
+<!-- HERO: vídeo Tourneo a pantalla completa -->
 <section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
+  <video autoplay muted loop playsinline>
+    <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776759623/videoplayback_2_j3c6qk.mp4" type="video/mp4">
+  </video>
+  <div id="hero-overlay"></div>
+  <div id="hero-content">
     <p class="hero-label">Ford · La Vanguardia · 2023</p>
     <h1 class="hero-title">
       Ford<br>
@@ -95,6 +92,7 @@
   </div>
 </section>
 
+<!-- META -->
 <div class="proj-meta">
   <div class="proj-meta-item">
     <p class="proj-meta-label">Cliente</p>
@@ -114,21 +112,13 @@
   </div>
 </div>
 
+<!-- INTRO -->
 <div class="proj-intro">
   <p class="proj-intro-label">El proyecto</p>
   <p class="proj-intro-text">Dos campañas de branded content para Ford en La Vanguardia — el Ford Tourneo y el Ford Transit — con Mario Picazo como driver de marca. Un proyecto de producción audiovisual de principio a fin: desde la concepción creativa, el guion y la narrativa de cada pieza, hasta la coordinación del rodaje junto al equipo de Linkvids y Maxi Lastra.</p>
 </div>
 
-<!-- VÍDEO TOURNEO — Vimeo -->
-<div class="video-full">
-  <p class="video-label">Ford Tourneo</p>
-  <div class="video-wrap">
-    <iframe src="https://res.cloudinary.com/doo07efjl/video/upload/v1776759623/videoplayback_2_j3c6qk.mp4" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-  </div>
-  <p class="video-caption">Ford Tourneo Connect · Branded Content · La Vanguardia · 2023</p>
-</div>
-
-<!-- SPLIT: reto + vídeo Transit 1 -->
+<!-- SPLIT 1: texto + vídeo Transit 1 -->
 <div class="proj-split">
   <div class="proj-split-text">
     <p class="proj-split-num">01 — El reto</p>
@@ -136,11 +126,9 @@
     <p class="proj-split-body">El desafío era claro: convertir un vehículo comercial en protagonista de una historia que conectara con la audiencia de La Vanguardia. La solución fue poner al frente a Mario Picazo — periodista de referencia — para dar credibilidad y cercanía a cada pieza.</p>
   </div>
   <div class="proj-split-media">
-    <div class="video-wrap">
-      <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776677523/videoplayback_1_uwgnxv.mp4" type="video/mp4">
-      </video>
-    </div>
+    <video autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776677523/videoplayback_1_uwgnxv.mp4" type="video/mp4">
+    </video>
   </div>
 </div>
 
@@ -153,14 +141,12 @@
   </blockquote>
 </div>
 
-<!-- SPLIT inverso: vídeo Transit 2 + ejecución -->
+<!-- SPLIT 2: vídeo Transit 2 + texto -->
 <div class="proj-split">
   <div class="proj-split-media">
-    <div class="video-wrap">
-      <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776677523/videoplayback_ejg13y.mp4" type="video/mp4">
-      </video>
-    </div>
+    <video autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776677523/videoplayback_ejg13y.mp4" type="video/mp4">
+    </video>
   </div>
   <div class="proj-split-text">
     <p class="proj-split-num">02 — La ejecución</p>
@@ -169,6 +155,7 @@
   </div>
 </div>
 
+<!-- FOOTER -->
 <div class="proj-footer">
   <a class="proj-footer-back" href="index.html#work">Volver a Work</a>
   <a class="proj-footer-next" href="30-anos.html">
