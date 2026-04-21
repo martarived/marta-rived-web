@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colhogar — Marta Rived</title>
+  <style>
+    @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
+
+    /* NAV */
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; mix-blend-mode: difference; }
+    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); text-decoration: none; }
+    .nav-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: gap 0.2s; }
+    .nav-back:hover { gap: 16px; }
+    .nav-back::before { content: '←'; }
+
+    /* HERO — foto */
+    #hero { position: relative; height: 100vh; overflow: hidden; background: var(--ink); }
+    #hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    #hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,10,30,0.92) 0%, rgba(13,10,30,0.3) 55%, rgba(13,10,30,0.1) 100%); }
+    #hero-content { position: absolute; bottom: 64px; left: 56px; z-index: 2; }
+    .hero-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(64px, 10vw, 140px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.88; color: var(--cream); }
+    .hero-title .dim { color: rgba(242,237,227,0.25); }
+
+    /* META */
+    .proj-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-meta-item { padding: 36px 40px; border-right: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-meta-item:last-child { border-right: none; }
+    .proj-meta-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .proj-meta-value { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(16px, 2vw, 24px); text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); }
+
+    /* INTRO */
+    .proj-intro { padding: 96px 56px; display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
+    .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
+
+    /* STAT ROW */
+    .proj-stats { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-stat { padding: 56px 40px; border-right: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-stat:last-child { border-right: none; }
+    .proj-stat-num { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(48px, 6vw, 88px); letter-spacing: -0.03em; line-height: 0.9; color: var(--ink); margin-bottom: 12px; }
+    .proj-stat-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.7; color: rgba(13,10,30,0.5); }
+
+    /* SPLIT */
+    .proj-split { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-split-media { overflow: hidden; background: var(--ink); position: relative; min-height: 520px; }
+    .proj-split-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .proj-split-text { padding: 80px 56px; display: flex; flex-direction: column; justify-content: center; }
+    .proj-split-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 20px; }
+    .proj-split-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 28px; }
+    .proj-split-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
+
+    /* QUOTE */
+    .proj-quote { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); border-top: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-quote blockquote { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(32px, 4.5vw, 64px); text-transform: uppercase; letter-spacing: -0.025em; line-height: 1.0; color: var(--ink); max-width: 900px; }
+    .proj-quote .dim { color: rgba(13,10,30,0.18); }
+
+    /* ROLES */
+    .proj-roles { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; }
+    .proj-role-item { padding: 40px 0; border-top: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-role-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 16px; }
+    .proj-role-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(20px, 2.5vw, 32px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 16px; color: var(--ink); }
+    .proj-role-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.85; color: rgba(13,10,30,0.55); }
+
+    /* FOOTER */
+    .proj-footer { padding: 64px 56px; border-top: 0.5px solid rgba(13,10,30,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .proj-footer-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.2s, gap 0.2s; }
+    .proj-footer-back:hover { color: var(--ink); gap: 16px; }
+    .proj-footer-back::before { content: '←'; }
+    .proj-footer-next { text-decoration: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .proj-footer-next-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .proj-footer-next-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); transition: color 0.2s; display: flex; align-items: center; gap: 12px; }
+    .proj-footer-next-title::after { content: '→'; color: var(--sea); }
+    .proj-footer-next:hover .proj-footer-next-title { color: var(--sea); }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">Marta Rived</a>
+  <a class="nav-back" href="index.html#work">Work</a>
+</nav>
+
+<!-- HERO — foto portada Colhogar -->
+<section id="hero">
+  <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761161/Co%CC%81mo_es_posible_controlar_el_mal_olor_del_ban%CC%83o__1-32_screenshot_lnlupw.png" alt="Colhogar Odor Block">
+  <div id="hero-overlay"></div>
+  <div id="hero-content">
+    <p class="hero-label">Colhogar · La Vanguardia · 2024</p>
+    <h1 class="hero-title">
+      La solución<br>
+      <span class="dim">está en</span><br>
+      tu mano
+    </h1>
+  </div>
+</section>
+
+<!-- META -->
+<div class="proj-meta">
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Cliente</p>
+    <p class="proj-meta-value">Colhogar</p>
+  </div>
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Medio</p>
+    <p class="proj-meta-value">La Vanguardia</p>
+  </div>
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Año</p>
+    <p class="proj-meta-value">2024</p>
+  </div>
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Rol</p>
+    <p class="proj-meta-value">Concepto · Redacción · Host · Producción</p>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="proj-intro">
+  <p class="proj-intro-label">El proyecto</p>
+  <p class="proj-intro-text">Colhogar lanzaba su papel higiénico con tecnología Odor Block — el primero capaz de neutralizar el mal olor del baño — y necesitaba un branded content que no sonara a anuncio. La idea: salir a la calle, preguntar a la gente por sus trucos y dejar que el producto se presentara solo como la solución que nadie sabía que existía. Escribí el artículo, desarrollé el concepto y lo llevé a cámara como host.</p>
+</div>
+
+<!-- STAT ROW -->
+<div class="proj-stats">
+  <div class="proj-stat">
+    <p class="proj-stat-num">75%</p>
+    <p class="proj-stat-label">de los hogares españoles muestra preocupación por el mal olor del baño, según el briefing del proyecto</p>
+  </div>
+  <div class="proj-stat">
+    <p class="proj-stat-num">3</p>
+    <p class="proj-stat-label">capas suaves con tecnología Odor Block que absorben y neutralizan los olores en origen, no los enmascaran</p>
+  </div>
+  <div class="proj-stat">
+    <p class="proj-stat-num">0</p>
+    <p class="proj-stat-label">sprays, velas ni ambientadores necesarios — la solución está literalmente en el rollo de papel</p>
+  </div>
+</div>
+
+<!-- SPLIT: texto + vídeo -->
+<div class="proj-split">
+  <div class="proj-split-text">
+    <p class="proj-split-num">01 — La idea</p>
+    <h2 class="proj-split-title">La calle como<br>laboratorio</h2>
+    <p class="proj-split-body">En vez de hablar del producto directamente, empezamos por el problema. Salí a la calle a preguntar a la gente quién se encarga de la limpieza en casa, qué trucos tiene para el baño y si se imaginan cuál podría ser la mejor solución. La respuesta de todos era la misma — sprays, perfumes, velas — hasta que descubrían que la solución era mucho más sencilla y estaba en sus manos, literalmente.</p>
+  </div>
+  <div class="proj-split-media">
+    <video autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776779159/videoplayback_gjieca.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="proj-quote">
+  <blockquote>
+    No enmascarar<br>
+    <span class="dim">el olor.</span><br>
+    Eliminarlo
+  </blockquote>
+</div>
+
+<!-- ROLES -->
+<div class="proj-roles">
+  <div class="proj-role-item">
+    <p class="proj-role-num">01</p>
+    <h3 class="proj-role-title">Concepto creativo</h3>
+    <p class="proj-role-body">El reto era presentar un lanzamiento de producto sin que pareciera un anuncio. La solución fue darle la vuelta: hablar primero del problema, dejar que la gente lo reconociera como propio y que el producto llegara como una revelación, no como una interrupción.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">02</p>
+    <h3 class="proj-role-title">Redacción</h3>
+    <p class="proj-role-body">Escribí el artículo de branded content publicado en La Vanguardia, estructurando la narrativa del problema a la solución y adaptando el tono al lector del medio: cercano, informativo y sin caer en el lenguaje publicitario.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">03</p>
+    <h3 class="proj-role-title">Host & producción</h3>
+    <p class="proj-role-body">Estuve delante de la cámara conduciendo las entrevistas en calle y presentando el producto. Coordiné también la producción del vídeo — desde el guion de rodaje hasta la entrega final — garantizando coherencia entre la pieza audiovisual y el artículo.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="proj-footer">
+  <a class="proj-footer-back" href="index.html#work">Volver a Work</a>
+  <a class="proj-footer-next" href="bayer.html">
+    <span class="proj-footer-next-label">Siguiente proyecto</span>
+    <span class="proj-footer-next-title">Bayer</span>
+  </a>
+</div>
+
+</body>
+</html>
