@@ -88,7 +88,7 @@ module.exports = (req, res) => {
 <!-- HERO -->
 <section id="hero">
   <video autoplay muted loop playsinline>
-    <source src="https://res.cloudinary.com/doo07efjl/video/upload/f_mp4,vc_h264/v1776778189/videoplayback_4_qxwtms.mp4" type="video/mp4">
+    <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776778189/videoplayback_4_qxwtms.mp4" type="video/mp4">
   </video>
   <div id="hero-overlay"></div>
   <div id="hero-content">
@@ -152,7 +152,7 @@ module.exports = (req, res) => {
   </div>
   <div class="proj-split-media">
     <video autoplay muted loop playsinline>
-      <source src="https://res.cloudinary.com/doo07efjl/video/upload/f_mp4,vc_h264/v1776778189/videoplayback_4_qxwtms.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776778189/videoplayback_4_qxwtms.mp4" type="video/mp4">
     </video>
   </div>
 </div>
@@ -171,7 +171,7 @@ module.exports = (req, res) => {
 <div class="proj-split">
   <div class="proj-split-media">
     <video autoplay muted loop playsinline>
-      <source src="https://res.cloudinary.com/doo07efjl/video/upload/f_mp4,vc_h264/v1776778189/videoplayback_5_ardg44.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776778189/videoplayback_5_ardg44.mp4" type="video/mp4">
     </video>
   </div>
   <div class="proj-split-text">
