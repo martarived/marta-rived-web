@@ -471,7 +471,7 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
 /* TYPING — carga automática desde Substack RSS */
 (function() {
   var FEED = 'https://aquelveranodel92.substack.com/feed';
-  var PROXY = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(FEED);
+  var PROXY = 'https://api.allorigins.win/get?url=' + encodeURIComponent(FEED);
   var FALLBACK_IMG = 'https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla';
   var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
@@ -513,8 +513,8 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
   }
 
   fetch(PROXY)
-    .then(function(r) { return r.text(); })
-    .then(function(xml) { parseAndRender(xml); })
+    .then(function(r) { return r.json(); })
+    .then(function(d) { parseAndRender(d.contents); })
     .catch(function() {
       document.querySelectorAll('.typing-skeleton').forEach(function(c) { c.style.opacity = '0.25'; });
     });
