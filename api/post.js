@@ -66,8 +66,9 @@ module.exports = async (req, res) => {
   const imgMatch = encodedHtml.match(/src=["'](https:\/\/[^"']+)/i);
   const img = imgMatch ? imgMatch[1] : '';
 
-  // Body: full content:encoded HTML
-  const body = encodedHtml || getCdata(item, 'description');
+  // Body: full content:encoded HTML, sin la primera imagen (ya está en el hero)
+  const rawBody = encodedHtml || getCdata(item, 'description');
+  const body = rawBody.replace(/<figure[^>]*>[\s\S]*?<\/figure>/, '').replace(/<img[^>]*>/, '');
 
   const html = `<!DOCTYPE html>
 <html lang="es">
