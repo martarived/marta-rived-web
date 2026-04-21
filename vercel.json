@@ -1,8 +1,6 @@
 {
   "functions": {
-    "api/feed.js": {
-      "memory": 128,
-      "maxDuration": 10
-    }
+    "api/feed.js": { "memory": 128, "maxDuration": 10 },
+    "api/post.js": { "memory": 128, "maxDuration": 10 }
   }
 }
