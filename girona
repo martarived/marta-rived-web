@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Girona FC × Marlex — Marta Rived</title>
+  <style>
+    @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
+
+    /* NAV */
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; mix-blend-mode: difference; }
+    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); text-decoration: none; }
+    .nav-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: gap 0.2s; }
+    .nav-back:hover { gap: 16px; }
+    .nav-back::before { content: '←'; }
+
+    /* HERO — foto */
+    #hero { position: relative; height: 100vh; overflow: hidden; background: var(--ink); }
+    #hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    #hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,10,30,0.9) 0%, rgba(13,10,30,0.3) 50%, rgba(13,10,30,0.15) 100%); }
+    #hero-content { position: absolute; bottom: 64px; left: 56px; z-index: 2; }
+    .hero-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(64px, 10vw, 140px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.88; color: var(--cream); }
+    .hero-title .dim { color: rgba(242,237,227,0.25); }
+
+    /* META */
+    .proj-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-meta-item { padding: 36px 40px; border-right: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-meta-item:last-child { border-right: none; }
+    .proj-meta-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .proj-meta-value { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(16px, 2vw, 24px); text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); }
+
+    /* INTRO */
+    .proj-intro { padding: 96px 56px; display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
+    .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
+
+    /* QUOTE */
+    .proj-quote { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-quote blockquote { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(32px, 4.5vw, 64px); text-transform: uppercase; letter-spacing: -0.025em; line-height: 1.0; color: var(--ink); max-width: 900px; }
+    .proj-quote .dim { color: rgba(13,10,30,0.18); }
+
+    /* REELS GRID */
+    .reels-section { padding: 80px 56px 120px; border-top: 0.5px solid rgba(13,10,30,0.08); }
+    .reels-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 64px; }
+    .reels-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 16px; }
+    .reels-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
+    .reels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .reel-card { display: flex; flex-direction: column; gap: 24px; }
+    .reel-video-wrap { position: relative; width: 100%; aspect-ratio: 9/16; border-radius: 3px; overflow: hidden; background: var(--ink); }
+    .reel-video-wrap video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .reel-info { display: flex; flex-direction: column; gap: 8px; }
+    .reel-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; color: var(--sea); }
+    .reel-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(18px, 2vw, 26px); text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.95; color: var(--ink); }
+    .reel-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.8; color: rgba(13,10,30,0.55); }
+
+    /* FOOTER */
+    .proj-footer { padding: 64px 56px; border-top: 0.5px solid rgba(13,10,30,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .proj-footer-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.2s, gap 0.2s; }
+    .proj-footer-back:hover { color: var(--ink); gap: 16px; }
+    .proj-footer-back::before { content: '←'; }
+    .proj-footer-next { text-decoration: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .proj-footer-next-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .proj-footer-next-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); transition: color 0.2s; display: flex; align-items: center; gap: 12px; }
+    .proj-footer-next-title::after { content: '→'; color: var(--sea); }
+    .proj-footer-next:hover .proj-footer-next-title { color: var(--sea); }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">Marta Rived</a>
+  <a class="nav-back" href="index.html#work">Work</a>
+</nav>
+
+<!-- HERO — foto Girona FC -->
+<section id="hero">
+  <img src="https://res.cloudinary.com/doo07efjl/image/upload/q_auto/f_auto/v1776423672/A7407434_iay3ew.jpg" alt="Girona FC × Marlex">
+  <div id="hero-overlay"></div>
+  <div id="hero-content">
+    <p class="hero-label">Girona FC × Marlex · Spodeal · 2024</p>
+    <h1 class="hero-title">
+      El talento<br>
+      <span class="dim">también hace</span><br>
+      match
+    </h1>
+  </div>
+</section>
+
+<!-- META -->
+<div class="proj-meta">
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Cliente</p>
+    <p class="proj-meta-value">Marlex · Girona FC</p>
+  </div>
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Agencia</p>
+    <p class="proj-meta-value">Spodeal</p>
+  </div>
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Año</p>
+    <p class="proj-meta-value">2024</p>
+  </div>
+  <div class="proj-meta-item">
+    <p class="proj-meta-label">Rol</p>
+    <p class="proj-meta-value">Concepto · Guion · Dirección creativa</p>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="proj-intro">
+  <p class="proj-intro-label">El proyecto</p>
+  <p class="proj-intro-text">Marlex es la empresa de recursos humanos patrocinadora del Girona FC. El reto era ir más allá del logo en la camiseta: construir una activación con alma propia que conectara los valores del club con los de la marca. Tres reels que hablan de talento, de encontrar el partner adecuado y de la importancia del HR — con los jugadores del Girona como protagonistas.</p>
+</div>
+
+<!-- QUOTE -->
+<div class="proj-quote">
+  <blockquote>
+    Un patrocinio<br>
+    <span class="dim">que tiene algo</span><br>
+    que decir
+  </blockquote>
+</div>
+
+<!-- REELS -->
+<div class="reels-section">
+  <div class="reels-header">
+    <p class="reels-label">Los reels</p>
+  </div>
+  <div class="reels-grid">
+
+    <div class="reel-card">
+      <div class="reel-video-wrap">
+        <video autoplay muted loop playsinline>
+          <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776778776/MARLEX-PINTAR_v4_2_dn6h7d.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="reel-info">
+        <p class="reel-num">01</p>
+        <h3 class="reel-title">Los valores<br>de la camiseta</h3>
+        <p class="reel-body">Los jugadores del Girona personalizan su propia camiseta. Un gesto sencillo para hablar de lo que define a una marca: sus valores. Porque Marlex no patrocina solo un club — comparte una forma de entender el trabajo y el talento.</p>
+      </div>
+    </div>
+
+    <div class="reel-card">
+      <div class="reel-video-wrap">
+        <video autoplay muted loop playsinline>
+          <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776778769/%EF%B8%8F_I_si_el_teu_proper_encert_no_depengue%CC%81s_nome%CC%81s_de_veure-hi_clar_sino%CC%81_de_tenir_un_guia_adequat_jzvxre.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="reel-info">
+        <p class="reel-num">02</p>
+        <h3 class="reel-title">El guía<br>adecuado</h3>
+        <p class="reel-body">¿Y si tu próximo acierto no dependiera solo de ver claro, sino de tener un buen guía? Con los ojos vendados, los jugadores confían en quien les acompaña. La misma confianza que depositan empresas y candidatos en Marlex para encontrar su mejor match.</p>
+      </div>
+    </div>
+
+    <div class="reel-card">
+      <div class="reel-video-wrap">
+        <video autoplay muted loop playsinline>
+          <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776778770/I_si_el_talent_tambe%CC%81_fes_match_fora_del_camp_Des_de_Marlex_convidem_els_jugadors_del_Girona_sdzmbr.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="reel-info">
+        <p class="reel-num">03</p>
+        <h3 class="reel-title">El talento<br>fuera del campo</h3>
+        <p class="reel-body">¿Qué profesión tendrían los jugadores del Girona si no fueran futbolistas? Una pieza más gamificada que mantiene el vínculo con el HR: el talento no entiende de posiciones, y Marlex tampoco. Porque encontrar el encaje perfecto es su juego.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="proj-footer">
+  <a class="proj-footer-back" href="index.html#work">Volver a Work</a>
+  <a class="proj-footer-next" href="bayer.html">
+    <span class="proj-footer-next-label">Siguiente proyecto</span>
+    <span class="proj-footer-next-title">Bayer</span>
+  </a>
+</div>
+
+</body>
+</html>
