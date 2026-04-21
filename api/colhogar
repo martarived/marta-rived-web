@@ -162,6 +162,20 @@ module.exports = (req, res) => {
   </div>
 </div>
 
+<!-- SPLIT 2: vídeo resultado -->
+<div class="proj-split">
+  <div class="proj-split-media">
+    <video autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776783599/Co%CC%81mo_es_posible_controlar_el_mal_olor_del_ban%CC%83o__wbordf.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="proj-split-text">
+    <p class="proj-split-num">02 — El resultado</p>
+    <h2 class="proj-split-title">La reacción<br>de la gente</h2>
+    <p class="proj-split-body">Después de entregar las muestras del papel Colhogar Cuida & Protege con tecnología Odor Block, volvimos a preguntar. La diferencia era evidente: no un producto que enmascarara el olor, sino que lo neutralizaba en origen. La misma gente que antes recurría a sprays o velas encontraba por fin una solución que funcionaba.</p>
+  </div>
+</div>
+
 <!-- QUOTE -->
 <div class="proj-quote">
   <blockquote>
