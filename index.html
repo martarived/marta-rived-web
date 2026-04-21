@@ -272,7 +272,6 @@
 <section id="typing">
   <p class="section-label fade-up" style="padding: 80px 56px 48px;">Typing</p>
   <div class="typing-grid" id="typing-grid">
-    <!-- Posts cargados automáticamente desde Substack -->
     <a class="typing-post fade-up typing-skeleton" href="#"><div class="typing-img"></div><div class="typing-info"><span class="typing-num">—</span><h3 class="typing-title">&nbsp;</h3><span class="typing-date">&nbsp;</span></div></a>
     <a class="typing-post fade-up typing-skeleton" href="#"><div class="typing-img"></div><div class="typing-info"><span class="typing-num">—</span><h3 class="typing-title">&nbsp;</h3><span class="typing-date">&nbsp;</span></div></a>
     <a class="typing-post fade-up typing-skeleton" href="#"><div class="typing-img"></div><div class="typing-info"><span class="typing-num">—</span><h3 class="typing-title">&nbsp;</h3><span class="typing-date">&nbsp;</span></div></a>
@@ -429,7 +428,6 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
 (function() {
   var track = document.getElementById('posters-track');
   if (!track) return;
-
   var vel = 0, raf;
   function animate() {
     if (Math.abs(vel) < 0.5) return;
@@ -437,14 +435,12 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
     vel *= 0.92;
     raf = requestAnimationFrame(animate);
   }
-
   track.addEventListener('wheel', function(e) {
     e.preventDefault();
     vel += e.deltaY * 0.8;
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(animate);
   }, { passive: false });
-
   var down = false, startX, scrollLeft, lastX, lastT;
   track.addEventListener('mousedown', function(e) {
     down = true; vel = 0;
@@ -468,10 +464,9 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
   });
 })();
 
-/* TYPING — carga automática desde Substack RSS */
+/* TYPING — carga desde /api/feed (proxy propio de Vercel) */
 (function() {
-  var FEED = 'https://aquelveranodel92.substack.com/feed';
-  var PROXY = 'https://api.allorigins.win/get?url=' + encodeURIComponent(FEED);
+  var PROXY = '/api/feed';
   var FALLBACK_IMG = 'https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla';
   var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
@@ -513,12 +508,13 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
   }
 
   fetch(PROXY)
-    .then(function(r) { return r.json(); })
-    .then(function(d) { parseAndRender(d.contents); })
+    .then(function(r) { return r.text(); })
+    .then(function(xmlText) { parseAndRender(xmlText); })
     .catch(function() {
       document.querySelectorAll('.typing-skeleton').forEach(function(c) { c.style.opacity = '0.25'; });
     });
 })();
+
 var observer = new IntersectionObserver(function(entries) {
   entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.08 });
