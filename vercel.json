@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/feed.js", "use": "@vercel/node" },
+    { "src": "**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/feed", "dest": "/api/feed.js" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}
