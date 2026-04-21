@@ -8,61 +8,60 @@
     @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
     @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
     @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
-
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Bold.ttf') format('truetype'); font-weight: 700; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root { --cream: #f2ede3; --ink: #0d0a1e; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --blue: #0057FF; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
     html { scroll-behavior: smooth; }
     body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
 
     /* NAV */
-    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; mix-blend-mode: difference; }
-    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); text-decoration: none; }
-    .nav-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: gap 0.2s; }
-    .nav-back:hover { gap: 16px; }
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; mix-blend-mode: multiply; }
+    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+    .nav-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 8px; }
+    .nav-back:hover { color: var(--ink); }
     .nav-back::before { content: '←'; }
 
-    /* HERO */
-    #post-hero { min-height: 70vh; background: var(--ink); display: flex; flex-direction: column; justify-content: flex-end; padding: 0 56px 64px; position: relative; overflow: hidden; }
-    #post-hero-img { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0.28; }
-    #post-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 30%, var(--ink) 100%); }
-    .post-hero-content { position: relative; z-index: 2; max-width: 760px; }
-    .post-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    /* HERO IMAGEN */
+    #post-hero { width: 100%; height: 70vh; min-height: 420px; background: rgba(13,10,30,0.06); background-size: cover; background-position: center; position: relative; overflow: hidden; }
+    #post-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 320px; background: linear-gradient(to bottom, transparent, var(--cream)); }
+
+    /* CONTENIDO */
+    #post-wrap { max-width: 720px; margin: 0 auto; padding: 0 32px 120px; }
+    #post-meta { padding: 64px 0 40px; border-bottom: 0.5px solid rgba(13,10,30,0.1); margin-bottom: 56px; }
+    .post-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sea); display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
     .post-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
-    .post-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(48px, 7vw, 96px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.88; color: var(--cream); }
-    .post-subtitle { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.6; color: rgba(242,237,227,0.55); margin-top: 20px; max-width: 560px; }
-    .post-date { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(242,237,227,0.3); margin-top: 32px; }
+    #post-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(42px, 6vw, 80px); text-transform: uppercase; color: var(--ink); letter-spacing: -0.02em; line-height: 0.9; margin-bottom: 28px; }
+    #post-date { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
 
-    /* CONTENT */
-    #post-body { max-width: 680px; margin: 0 auto; padding: 80px 56px 120px; }
+    /* BODY DEL POST */
+    #post-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.9; color: rgba(13,10,30,0.75); }
+    #post-body p { margin-bottom: 1.6em; }
+    #post-body h1, #post-body h2, #post-body h3 { font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; text-transform: uppercase; color: var(--ink); letter-spacing: -0.01em; margin: 2.4em 0 0.8em; line-height: 0.95; }
+    #post-body h1 { font-size: clamp(32px, 4vw, 52px); }
+    #post-body h2 { font-size: clamp(26px, 3vw, 40px); }
+    #post-body h3 { font-size: clamp(20px, 2.5vw, 30px); }
+    #post-body a { color: var(--sea); text-decoration: none; border-bottom: 0.5px solid rgba(0,119,168,0.35); transition: border-color 0.2s, color 0.2s; }
+    #post-body a:hover { color: var(--ink); border-color: var(--ink); }
+    #post-body img { width: 100%; border-radius: 3px; margin: 2em 0; display: block; }
+    #post-body blockquote { border-left: 2px solid var(--sea); margin: 2em 0; padding: 0 0 0 28px; font-style: italic; color: rgba(13,10,30,0.5); }
+    #post-body hr { border: none; border-top: 0.5px solid rgba(13,10,30,0.1); margin: 3em 0; }
+    #post-body ul, #post-body ol { padding-left: 1.4em; margin-bottom: 1.6em; }
+    #post-body li { margin-bottom: 0.5em; }
 
-    /* Estilos del contenido RSS */
-    #post-content { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 17px; line-height: 1.9; color: rgba(13,10,30,0.75); }
-    #post-content p { margin-bottom: 1.6em; }
-    #post-content h1, #post-content h2, #post-content h3 { font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.9; color: var(--ink); margin: 2em 0 0.6em; }
-    #post-content h2 { font-size: clamp(28px, 4vw, 48px); }
-    #post-content h3 { font-size: clamp(22px, 3vw, 36px); }
-    #post-content img { width: 100%; height: auto; border-radius: 2px; margin: 2em 0; display: block; }
-    #post-content a { color: var(--sea); text-decoration: none; border-bottom: 0.5px solid var(--sea); transition: color 0.2s; }
-    #post-content a:hover { color: var(--ink); border-color: var(--ink); }
-    #post-content blockquote { border-left: 2px solid var(--sea); padding: 4px 0 4px 24px; margin: 2em 0; font-style: italic; color: var(--muted); }
-    #post-content hr { border: none; border-top: 0.5px solid rgba(13,10,30,0.1); margin: 2.5em 0; }
-    #post-content strong { font-weight: 400; color: var(--ink); }
-    #post-content ul, #post-content ol { padding-left: 1.5em; margin-bottom: 1.6em; }
-    #post-content li { margin-bottom: 0.4em; }
-    #post-content figure { margin: 2em 0; }
-    #post-content figcaption { font-size: 11px; letter-spacing: 0.1em; color: var(--muted); margin-top: 8px; text-align: center; }
-
-    /* SKELETON */
-    .skel { background: rgba(13,10,30,0.07); border-radius: 2px; animation: shimmer 1.4s ease infinite; }
-    @keyframes shimmer { 0%,100%{opacity:0.5} 50%{opacity:1} }
-
-    /* FOOTER */
-    #post-footer { border-top: 0.5px solid rgba(13,10,30,0.08); padding: 64px 56px; display: flex; align-items: center; justify-content: space-between; }
-    .post-footer-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.2s, gap 0.2s; }
-    .post-footer-back:hover { color: var(--ink); gap: 16px; }
-    .post-footer-back::before { content: '←'; }
-    .post-substack { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sea); text-decoration: none; transition: color 0.2s; }
+    /* FOOTER POST */
+    #post-footer { margin-top: 80px; padding-top: 40px; border-top: 0.5px solid rgba(13,10,30,0.1); display: flex; justify-content: space-between; align-items: center; }
+    .post-footer-link { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--sea); text-decoration: none; transition: color 0.2s; }
+    .post-footer-link:hover { color: var(--ink); }
+    .post-substack { display: flex; align-items: center; gap: 8px; font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .post-substack:hover { color: var(--ink); }
+
+    /* LOADING / ERROR */
+    #post-loading { padding: 120px 32px; text-align: center; }
+    .loading-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(36px, 5vw, 64px); text-transform: uppercase; color: rgba(13,10,30,0.12); letter-spacing: -0.02em; animation: pulse 1.8s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
+
+    @keyframes up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: up 0.7s ease forwards; }
   </style>
 </head>
 <body>
@@ -72,52 +71,38 @@
   <a class="nav-back" href="index.html#typing">Typing</a>
 </nav>
 
-<section id="post-hero">
-  <div id="post-hero-img"></div>
-  <div id="post-hero-overlay"></div>
-  <div class="post-hero-content">
-    <p class="post-label" id="post-label">Typing · Aquel Verano del 92</p>
-    <h1 class="post-title" id="post-title"><span class="skel" style="display:block;height:0.9em;width:70%;margin-bottom:8px;"></span><span class="skel" style="display:block;height:0.9em;width:50%;"></span></h1>
-    <p class="post-subtitle" id="post-subtitle"></p>
-    <p class="post-date" id="post-date"><span class="skel" style="display:inline-block;height:0.8em;width:120px;"></span></p>
-  </div>
-</section>
+<div id="post-hero"></div>
 
-<div id="post-body">
-  <div id="post-content">
-    <p class="skel" style="height:1em;width:100%;margin-bottom:12px;"></p>
-    <p class="skel" style="height:1em;width:92%;margin-bottom:12px;"></p>
-    <p class="skel" style="height:1em;width:85%;margin-bottom:12px;"></p>
-    <p class="skel" style="height:1em;width:96%;margin-bottom:12px;"></p>
-    <p class="skel" style="height:1em;width:78%;margin-bottom:40px;"></p>
-    <p class="skel" style="height:1em;width:100%;margin-bottom:12px;"></p>
-    <p class="skel" style="height:1em;width:88%;margin-bottom:12px;"></p>
-    <p class="skel" style="height:1em;width:60%;"></p>
+<div id="post-wrap">
+  <div id="post-loading">
+    <div class="loading-title">Cargando</div>
   </div>
-</div>
-
-<div id="post-footer">
-  <a class="post-footer-back" href="index.html#typing">Volver a Typing</a>
-  <a class="post-substack" id="post-substack-link" href="https://aquelveranodel92.substack.com" target="_blank" rel="noopener">Leer en Substack →</a>
+  <div id="post-content" style="display:none;">
+    <div id="post-meta">
+      <p class="post-label">Typing</p>
+      <h1 id="post-title"></h1>
+      <p id="post-date"></p>
+    </div>
+    <div id="post-body"></div>
+    <div id="post-footer">
+      <a class="post-footer-link" href="index.html#typing">← Volver a Typing</a>
+      <a class="post-substack" id="post-substack-link" href="https://aquelveranodel92.substack.com" target="_blank" rel="noopener">Leer en Substack ↗</a>
+    </div>
+  </div>
 </div>
 
 <script>
 (function() {
-  var FEED_URL = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://aquelveranodel92.substack.com/feed');
   var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  var params = new URLSearchParams(window.location.search);
-  var slug = params.get('slug') || '';
 
   function formatDate(str) {
     var d = new Date(str);
     return months[d.getMonth()] + ' ' + d.getFullYear();
   }
 
-  function slugify(str) {
-    return str.toLowerCase()
-      .replace(/[áàä]/g,'a').replace(/[éèë]/g,'e').replace(/[íìï]/g,'i')
-      .replace(/[óòö]/g,'o').replace(/[úùü]/g,'u').replace(/ñ/g,'n')
-      .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  function getSlug() {
+    var params = new URLSearchParams(window.location.search);
+    return params.get('slug') || '';
   }
 
   function extractImg(item) {
@@ -126,77 +111,81 @@
     var encoded = item.getElementsByTagNameNS('*','encoded')[0];
     var html = encoded ? encoded.textContent : '';
     var match = html.match(/src=["'](https:\/\/[^"']+)/i);
-    if (match) return match[1].split('"')[0].split("'")[0];
-    return null;
+    return match ? match[1].split('"')[0].split("'")[0] : null;
   }
 
-  function cleanContent(html) {
-    var tmp = document.createElement('div');
-    tmp.innerHTML = html;
-    tmp.querySelectorAll('.subscription-widget-wrap,.subscribe-widget,.button-wrapper,[class*="subscribe"],[class*="paywall"]').forEach(function(el){el.remove();});
-    tmp.querySelectorAll('img').forEach(function(img){
-      if((img.src||'').indexOf('substackcdn')>-1||(img.src||'').indexOf('substack-post-media')>-1){
-        img.removeAttribute('srcset');img.removeAttribute('sizes');
+  function extractBody(item) {
+    var encoded = item.getElementsByTagNameNS('*','encoded')[0];
+    if (encoded && encoded.textContent.trim()) return encoded.textContent;
+    var desc = item.querySelector('description');
+    return desc ? desc.textContent : '';
+  }
+
+  function showError(msg) {
+    document.getElementById('post-loading').innerHTML =
+      '<div style="font-family:\'Kross\',sans-serif;font-weight:300;font-size:14px;color:var(--muted);letter-spacing:0.06em;">' + msg + '</div>' +
+      '<div style="margin-top:32px;"><a href="index.html#typing" style="font-family:\'Kross\',sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--sea);text-decoration:none;">← Volver</a></div>';
+  }
+
+  var slug = getSlug();
+  if (!slug) { showError('Post no encontrado.'); return; }
+
+  fetch('/api/feed')
+    .then(function(r) {
+      if (!r.ok) throw new Error('Feed error');
+      return r.text();
+    })
+    .then(function(xmlText) {
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(xmlText, 'text/xml');
+      var items = Array.from(doc.querySelectorAll('item'));
+
+      var post = null;
+      for (var i = 0; i < items.length; i++) {
+        var linkEl = items[i].querySelector('link');
+        var url = linkEl ? (linkEl.nextSibling ? linkEl.nextSibling.textContent.trim() : linkEl.textContent.trim()) : '';
+        var itemSlug = url.split('/').filter(Boolean).pop() || '';
+        if (itemSlug === slug || String(i) === slug) {
+          post = items[i];
+          break;
+        }
       }
-      img.style.maxWidth='100%';
-    });
-    return tmp.innerHTML;
-  }
 
-  function loadPost(xmlText) {
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(xmlText, 'text/xml');
-    var items = Array.from(doc.querySelectorAll('item'));
-    var post = null;
-    if (slug) {
-      post = items.find(function(item) {
-        var link = item.querySelector('link');
-        var url = link ? (link.nextSibling ? link.nextSibling.textContent.trim() : link.textContent) : '';
-        var title = item.querySelector('title');
-        var titleSlug = title ? slugify(title.textContent) : '';
-        return url.indexOf(slug) > -1 || titleSlug === slug;
-      });
-    }
-    if (!post && items.length) post = items[0];
-    if (!post) return;
+      if (!post) { showError('No se encontró el post.'); return; }
 
-    var titleEl = post.querySelector('title');
-    var linkEl  = post.querySelector('link');
-    var dateEl  = post.querySelector('pubDate');
-    var descEl  = post.querySelector('description');
-    var encoded = post.getElementsByTagNameNS('*','encoded')[0];
+      var title = post.querySelector('title');
+      var date  = post.querySelector('pubDate');
+      var linkEl = post.querySelector('link');
+      var url = linkEl ? (linkEl.nextSibling ? linkEl.nextSibling.textContent.trim() : linkEl.textContent.trim()) : 'https://aquelveranodel92.substack.com';
+      var img = extractImg(post);
+      var body = extractBody(post);
 
-    var title   = titleEl ? titleEl.textContent : '';
-    var url     = linkEl ? (linkEl.nextSibling ? linkEl.nextSibling.textContent.trim() : linkEl.textContent) : '#';
-    var date    = dateEl ? formatDate(dateEl.textContent) : '';
-    var content = encoded ? encoded.textContent : (descEl ? descEl.textContent : '');
-    var img     = extractImg(post);
+      // Título de página
+      document.title = (title ? title.textContent : 'Post') + ' — Marta Rived';
 
-    document.title = title + ' — Marta Rived';
-    if (img) document.getElementById('post-hero-img').style.backgroundImage = "url('" + img + "')";
-    document.getElementById('post-title').textContent = title;
-    document.getElementById('post-date').textContent = date;
-
-    if (descEl) {
-      var tmp2 = document.createElement('div');
-      tmp2.innerHTML = descEl.textContent;
-      var firstP = tmp2.querySelector('p');
-      if (firstP && firstP.textContent.trim()) {
-        document.getElementById('post-subtitle').textContent = firstP.textContent.trim().substring(0,160) + (firstP.textContent.length > 160 ? '\u2026' : '');
+      // Hero imagen
+      if (img) {
+        document.getElementById('post-hero').style.backgroundImage = "url('" + img + "')";
+      } else {
+        document.getElementById('post-hero').style.background = 'rgba(13,10,30,0.06)';
       }
-    }
-    document.getElementById('post-substack-link').href = url;
-    document.getElementById('post-content').innerHTML = cleanContent(content);
-  }
 
-  fetch(FEED_URL)
-    .then(function(r) { return r.text(); })
-    .then(function(xml) { loadPost(xml); })
+      // Meta
+      document.getElementById('post-title').textContent = title ? title.textContent : '';
+      document.getElementById('post-date').textContent = date ? formatDate(date.textContent) : '';
+      document.getElementById('post-substack-link').href = url;
+
+      // Body
+      document.getElementById('post-body').innerHTML = body;
+
+      // Mostrar
+      document.getElementById('post-loading').style.display = 'none';
+      var content = document.getElementById('post-content');
+      content.style.display = 'block';
+      content.classList.add('fade-in');
+    })
     .catch(function() {
-      document.getElementById('post-title').textContent = 'Morderse las \u00f1as';
-      document.getElementById('post-date').textContent = 'Agosto 2025';
-      document.getElementById('post-subtitle').textContent = 'U\u00f1as veces me las muerdo m\u00e1s, y otras, menos.';
-      document.getElementById('post-content').innerHTML = '<p>Contenido cargado autom\u00e1ticamente desde Substack en Vercel.</p>';
+      showError('No se pudo cargar el post. Inténtalo de nuevo.');
     });
 })();
 </script>
