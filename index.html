@@ -154,6 +154,15 @@
     .fade-up.visible { opacity: 1; transform: translateY(0); }
     @keyframes up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes draw-circle { to { stroke-dashoffset: 0; } }
+
+    /* TYPING MORE BUTTON */
+    #typing-more-btn { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); background: none; border: 0.5px solid rgba(13,10,30,0.2); padding: 16px 48px; cursor: pointer; transition: color 0.2s, border-color 0.2s; display: inline-flex; align-items: center; gap: 16px; }
+    #typing-more-btn:hover { color: var(--ink); border-color: var(--ink); }
+    #typing-more-btn:hover .btn-arrow { background: var(--ink); }
+    #typing-more-btn:hover .btn-arrow::after { border-color: var(--ink); }
+    #typing-more-btn:disabled { opacity: 0.3; cursor: default; }
+    .btn-arrow { display: block; width: 28px; height: 0.5px; background: rgba(13,10,30,0.3); position: relative; transition: background 0.2s; }
+    .btn-arrow::after { content: ''; position: absolute; right: -1px; top: -3px; width: 6px; height: 6px; border-right: 0.5px solid rgba(13,10,30,0.3); border-bottom: 0.5px solid rgba(13,10,30,0.3); transform: rotate(-45deg); transition: border-color 0.2s; }
   </style>
 </head>
 <body>
@@ -216,6 +225,9 @@
     <div class="proj fade-up"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776426504/423A2683_f0zkjl.jpg" alt="Steven Gerrard" loading="lazy"><div class="proj-cursor-label">Steven Gerrard</div></div>
     <div class="proj fade-up"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761363/65e05573c7cd1_iraqqf.jpg" alt="Esade" loading="lazy"><div class="proj-cursor-label">Esade</div></div>
     <div class="proj fade-up"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761161/Co%CC%81mo_es_posible_controlar_el_mal_olor_del_ban%CC%83o__1-32_screenshot_lnlupw.png" alt="Colhogar" loading="lazy"><div class="proj-cursor-label">Colhogar</div></div>
+  </div>
+  <div id="typing-more-wrap" style="padding: 48px 56px 0; text-align:center;">
+    <button id="typing-more-btn" onclick="loadMorePosts()">Give me more <span class="btn-arrow"></span></button>
   </div>
 </section>
 
@@ -464,54 +476,102 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
   });
 })();
 
-/* TYPING — carga desde /api/feed (proxy propio de Vercel) */
+/* TYPING — carga desde /api/feed con paginación */
+var _typingAllItems = [];
+var _typingPage = 0;
+var TYPING_PER_PAGE = 6;
+var FALLBACK_IMG = 'https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla';
+var _typingMonths = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+function _typingFormatDate(str) {
+  var d = new Date(str);
+  return _typingMonths[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+function _typingExtractImg(item) {
+  var enclosure = item.querySelector('enclosure');
+  if (enclosure && enclosure.getAttribute('url')) return enclosure.getAttribute('url');
+  var encoded = item.getElementsByTagNameNS('*','encoded')[0];
+  var html = encoded ? encoded.textContent : '';
+  var match = html.match(/src=["'](https:\/\/[^"']+)/i);
+  return match ? match[1].split('"')[0].split("'")[0] : null;
+}
+
+function _typingMakeCard(item, index) {
+  var title = item.querySelector('title');
+  var link  = item.querySelector('link');
+  var date  = item.querySelector('pubDate');
+  var img   = _typingExtractImg(item);
+  var url   = link ? (link.nextSibling ? link.nextSibling.textContent.trim() : link.textContent.trim()) : '';
+  var num   = index + 1;
+  var card  = document.createElement('a');
+  card.className = 'typing-post fade-up';
+  card.href = '/api/post?slug=' + encodeURIComponent(url.split('/').filter(Boolean).pop() || String(index));
+  card.innerHTML = '<div class="typing-img" style="background-image:url(\'' + (img || FALLBACK_IMG) + '\')"></div>' +
+    '<div class="typing-info">' +
+      '<span class="typing-num">' + (num < 10 ? '0' : '') + num + '</span>' +
+      '<h3 class="typing-title">' + (title ? title.textContent : '') + '</h3>' +
+      '<span class="typing-date">' + (date ? _typingFormatDate(date.textContent) : '') + '</span>' +
+    '</div>';
+  return card;
+}
+
+function loadMorePosts() {
+  var grid = document.getElementById('typing-grid');
+  var btn  = document.getElementById('typing-more-btn');
+  var wrap = document.getElementById('typing-more-wrap');
+  var start = _typingPage * TYPING_PER_PAGE;
+  var batch = _typingAllItems.slice(start, start + TYPING_PER_PAGE);
+  batch.forEach(function(item, i) {
+    var card = _typingMakeCard(item, start + i);
+    grid.appendChild(card);
+    setTimeout(function() { card.classList.add('visible'); observer.observe(card); }, 80 + i * 80);
+  });
+  _typingPage++;
+  var remaining = _typingAllItems.length - _typingPage * TYPING_PER_PAGE;
+  if (remaining <= 0) {
+    wrap.style.display = 'none';
+  }
+}
+
 (function() {
-  var PROXY = '/api/feed';
-  var FALLBACK_IMG = 'https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla';
-  var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  var grid = document.getElementById('typing-grid');
+  var skeletons = Array.from(grid.querySelectorAll('.typing-skeleton'));
 
-  function formatDate(str) {
-    var d = new Date(str);
-    return months[d.getMonth()] + ' ' + d.getFullYear();
-  }
-
-  function parseAndRender(xmlText) {
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(xmlText, 'text/xml');
-    var items = doc.querySelectorAll('item');
-    var grid = document.getElementById('typing-grid');
-    var cards = Array.from(grid.querySelectorAll('.typing-post'));
-    Array.from(items).slice(0, 6).forEach(function(item, i) {
-      var card = cards[i];
-      if (!card) return;
-      var title = item.querySelector('title');
-      var link  = item.querySelector('link');
-      var date  = item.querySelector('pubDate');
-      var enclosure = item.querySelector('enclosure');
-      var img = enclosure && enclosure.getAttribute('url') ? enclosure.getAttribute('url') : null;
-      if (!img) {
-        var encoded = item.getElementsByTagNameNS('*','encoded')[0];
-        var html = encoded ? encoded.textContent : '';
-        var match = html.match(/src=["'](https:\/\/[^"']+)/i);
-        if (match) img = match[1].split('"')[0].split("'")[0];
-      }
-      var url = link ? (link.nextSibling ? link.nextSibling.textContent.trim() : link.textContent.trim()) : '';
-      var imgEl = card.querySelector('.typing-img');
-      imgEl.style.backgroundImage = "url('" + (img || FALLBACK_IMG) + "')";
-      card.href = '/api/post?slug=' + encodeURIComponent(url.split('/').filter(Boolean).pop() || String(i));
-      card.querySelector('.typing-num').textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
-      card.querySelector('.typing-title').textContent = title ? title.textContent : '';
-      card.querySelector('.typing-date').textContent = date ? formatDate(date.textContent) : '';
-      card.classList.remove('typing-skeleton');
-      setTimeout(function() { card.classList.add('visible'); }, 100 + i * 80);
-    });
-  }
-
-  fetch(PROXY)
+  fetch('/api/feed')
     .then(function(r) { return r.text(); })
-    .then(function(xmlText) { parseAndRender(xmlText); })
+    .then(function(xmlText) {
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(xmlText, 'text/xml');
+      _typingAllItems = Array.from(doc.querySelectorAll('item'));
+
+      // Fill first 6 skeletons
+      _typingAllItems.slice(0, TYPING_PER_PAGE).forEach(function(item, i) {
+        var card = skeletons[i];
+        if (!card) return;
+        var title = item.querySelector('title');
+        var link  = item.querySelector('link');
+        var date  = item.querySelector('pubDate');
+        var img   = _typingExtractImg(item);
+        var url   = link ? (link.nextSibling ? link.nextSibling.textContent.trim() : link.textContent.trim()) : '';
+        card.querySelector('.typing-img').style.backgroundImage = "url('" + (img || FALLBACK_IMG) + "')";
+        card.href = '/api/post?slug=' + encodeURIComponent(url.split('/').filter(Boolean).pop() || String(i));
+        card.querySelector('.typing-num').textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
+        card.querySelector('.typing-title').textContent = title ? title.textContent : '';
+        card.querySelector('.typing-date').textContent = date ? _typingFormatDate(date.textContent) : '';
+        card.classList.remove('typing-skeleton');
+        setTimeout(function() { card.classList.add('visible'); }, 100 + i * 80);
+      });
+
+      _typingPage = 1;
+
+      // Hide button if no more posts
+      if (_typingAllItems.length <= TYPING_PER_PAGE) {
+        document.getElementById('typing-more-wrap').style.display = 'none';
+      }
+    })
     .catch(function() {
-      document.querySelectorAll('.typing-skeleton').forEach(function(c) { c.style.opacity = '0.25'; });
+      skeletons.forEach(function(c) { c.style.opacity = '0.25'; });
     });
 })();
 
