@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Square — Marta Rived</title>
+  <style>
+    @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
+
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; mix-blend-mode: difference; }
+    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); text-decoration: none; }
+    .nav-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: gap 0.2s; }
+    .nav-back:hover { gap: 16px; }
+    .nav-back::before { content: '←'; }
+
+    #hero { position: relative; height: 100vh; overflow: hidden; background: var(--ink); }
+    #hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    #hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,10,30,0.92) 0%, rgba(13,10,30,0.25) 50%, transparent 100%); }
+    #hero-content { position: absolute; bottom: 64px; left: 56px; z-index: 2; }
+    .hero-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(64px, 10vw, 140px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.88; color: var(--cream); }
+    .hero-title .dim { color: rgba(242,237,227,0.25); }
+
+    .proj-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-meta-item { padding: 36px 40px; border-right: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-meta-item:last-child { border-right: none; }
+    .proj-meta-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .proj-meta-value { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(16px, 2vw, 24px); text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); }
+
+    .proj-intro { padding: 96px 56px; display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
+    .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
+
+    .proj-quote { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); border-top: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-quote blockquote { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(28px, 4vw, 56px); text-transform: uppercase; letter-spacing: -0.025em; line-height: 1.05; color: var(--ink); max-width: 860px; }
+    .proj-quote cite { display: block; font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sea); margin-top: 24px; font-style: normal; }
+    .proj-quote .dim { color: rgba(13,10,30,0.18); }
+
+    .proj-video-full { padding: 0 56px; border-top: 0.5px solid rgba(13,10,30,0.08); border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-video-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); padding: 40px 0 20px; display: flex; align-items: center; gap: 16px; }
+    .proj-video-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
+    .proj-video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--ink); border-radius: 3px; overflow: hidden; margin-bottom: 40px; }
+    .proj-video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
+
+    .proj-roles { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 32px; }
+    .proj-role-item { padding: 40px 0; border-top: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-role-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 16px; }
+    .proj-role-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(20px, 2.5vw, 32px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 16px; color: var(--ink); }
+    .proj-role-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.85; color: rgba(13,10,30,0.55); }
+
+    .proj-footer { padding: 64px 56px; border-top: 0.5px solid rgba(13,10,30,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .proj-footer-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.2s, gap 0.2s; }
+    .proj-footer-back:hover { color: var(--ink); gap: 16px; }
+    .proj-footer-back::before { content: '←'; }
+    .proj-footer-next { text-decoration: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .proj-footer-next-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .proj-footer-next-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); transition: color 0.2s; display: flex; align-items: center; gap: 12px; }
+    .proj-footer-next-title::after { content: '→'; color: var(--sea); }
+    .proj-footer-next:hover .proj-footer-next-title { color: var(--sea); }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">Marta Rived</a>
+  <a class="nav-back" href="index.html#work">Work</a>
+</nav>
+
+<!-- HERO — foto frame del vídeo -->
+<section id="hero">
+  <img src="https://www.lavanguardia.com/uploads/2023/10/25/65392b1506965.jpeg" alt="Square × Káktos">
+  <div id="hero-overlay"></div>
+  <div id="hero-content">
+    <p class="hero-label">Square · La Vanguardia · 2023</p>
+    <h1 class="hero-title">
+      Para los<br>
+      <span class="dim">que</span><br>
+      hacen
+    </h1>
+  </div>
+</section>
+
+<!-- META -->
+<div class="proj-meta">
+  <div class="proj-meta-item"><p class="proj-meta-label">Cliente</p><p class="proj-meta-value">Square</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Medio</p><p class="proj-meta-value">La Vanguardia</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Año</p><p class="proj-meta-value">2023</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Rol</p><p class="proj-meta-value">Redacción · Dirección de rodaje · Project Manager</p></div>
+</div>
+
+<!-- INTRO -->
+<div class="proj-intro">
+  <p class="proj-intro-label">El proyecto</p>
+  <p class="proj-intro-text">Un branded content para Square en La Vanguardia que contaba la historia de Káktos Botanical Society — un club privado artístico-botánico del Eixample de Barcelona que usa Square para gestionar todo, desde los cócteles vegetales hasta los talleres de flores prensadas. El reto: mostrar la plataforma sin que pareciera un manual de usuario.</p>
+</div>
+
+<!-- VÍDEO HORIZONTAL -->
+<div class="proj-video-full">
+  <p class="proj-video-label">Káktos Botanical Society</p>
+  <div class="proj-video-wrap">
+    <iframe src="https://www.youtube.com/embed/SlLeZu1CySw?autoplay=1&mute=1&loop=1&playlist=SlLeZu1CySw&controls=0&modestbranding=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="proj-quote">
+  <blockquote>
+    "Sabes de qué te llega<br>
+    <span class="dim">cada euro, si es de una</span><br>
+    consumición o un taller"
+    <cite>Marcos Fernández, Káktos Botanical Society</cite>
+  </blockquote>
+</div>
+
+<!-- ROLES -->
+<div class="proj-roles">
+  <div class="proj-role-item">
+    <p class="proj-role-num">01</p>
+    <h3 class="proj-role-title">Redacción</h3>
+    <p class="proj-role-body">Escribí el artículo de branded content publicado en La Vanguardia. El eje narrativo era Káktos — un negocio tan singular que hacía que Square se explicara solo a través de sus necesidades reales: categorizar cócteles y talleres, dividir cuentas entre grupos, cerrar caja sin datáfonos individuales.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">02</p>
+    <h3 class="proj-role-title">Dirección de rodaje</h3>
+    <p class="proj-role-body">Estuve al frente del rodaje como directora: definí qué debía aparecer en cámara, cómo mostrar el espacio, qué momentos capturar de la preparación de los cócteles y cómo integrar la demostración del software de forma natural en la narrativa visual.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">03</p>
+    <h3 class="proj-role-title">Project Manager</h3>
+    <p class="proj-role-body">Coordiné el proyecto de principio a fin: desde la selección del caso de éxito hasta la entrega final, pasando por la organización del rodaje con el equipo de Linkvids y la coordinación entre Square, La Vanguardia y el equipo creativo.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="proj-footer">
+  <a class="proj-footer-back" href="index.html#work">Volver a Work</a>
+  <a class="proj-footer-next" href="ford.html">
+    <span class="proj-footer-next-label">Siguiente proyecto</span>
+    <span class="proj-footer-next-title">Ford</span>
+  </a>
+</div>
+
+</body>
+</html>
