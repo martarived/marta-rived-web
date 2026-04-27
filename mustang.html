@@ -21,9 +21,21 @@
     .nav-back:hover { gap: 16px; }
     .nav-back::before { content: '←'; }
 
-    /* HERO — vídeo a pantalla completa */
-    #hero { position: relative; height: 100vh; overflow: hidden; background: var(--ink); }
-    #hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* HERO — imagen de fondo */
+    #hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--ink);
+    }
+    #hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
     #hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,10,30,0.88) 0%, rgba(13,10,30,0.2) 50%, transparent 100%); }
     #hero-content { position: absolute; bottom: 64px; left: 56px; z-index: 2; }
     .hero-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
@@ -42,6 +54,15 @@
     .proj-intro { padding: 96px 56px; display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
     .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
     .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
+
+    /* VIDEO EN EL CUERPO */
+    .proj-video { border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-video video {
+      display: block;
+      width: 100%;
+      max-height: 80vh;
+      object-fit: cover;
+    }
 
     /* QUOTE */
     .proj-quote { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
@@ -74,11 +95,9 @@
   <a class="nav-back" href="index.html#work">Work</a>
 </nav>
 
-<!-- HERO: vídeo a pantalla completa -->
+<!-- HERO: imagen de fondo -->
 <section id="hero">
-  <video autoplay muted loop playsinline>
-    <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776762608/videoplayback_3_ptu2ug.mp4" type="video/mp4">
-  </video>
+  <img id="hero-bg" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776760908/_Mira_sin_manos__o_el_coche_que_conduce_solo_0-5_screenshot_mf1msy.png" alt="Mustang Mach-E BlueCruise">
   <div id="hero-overlay"></div>
   <div id="hero-content">
     <p class="hero-label">Ford · La Vanguardia · 2024</p>
@@ -114,6 +133,13 @@
 <div class="proj-intro">
   <p class="proj-intro-label">El proyecto</p>
   <p class="proj-intro-text">Un branded content para La Vanguardia con el que presentar el Ford Mustang Mach-E y su tecnología de conducción autónoma BlueCruise — el primer sistema manos libres homologado para circular por autopistas españolas. El reto: explicar algo técnicamente complejo de forma que cualquier lector lo quisiera vivir en primera persona.</p>
+</div>
+
+<!-- VÍDEO EN EL CUERPO -->
+<div class="proj-video">
+  <video autoplay muted loop playsinline>
+    <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1776762608/videoplayback_3_ptu2ug.mp4" type="video/mp4">
+  </video>
 </div>
 
 <!-- QUOTE -->
