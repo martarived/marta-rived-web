@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RCD Espanyol — Marta Rived</title>
+  <style>
+    @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
+
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; mix-blend-mode: difference; }
+    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); text-decoration: none; }
+    .nav-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: gap 0.2s; }
+    .nav-back:hover { gap: 16px; }
+    .nav-back::before { content: '←'; }
+
+    /* HERO — foto */
+    #hero { position: relative; height: 100vh; overflow: hidden; background: var(--ink); }
+    #hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    #hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,10,30,0.92) 0%, rgba(13,10,30,0.3) 50%, rgba(13,10,30,0.1) 100%); }
+    #hero-content { position: absolute; bottom: 64px; left: 56px; z-index: 2; }
+    .hero-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(64px, 10vw, 140px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.88; color: var(--cream); }
+    .hero-title .dim { color: rgba(242,237,227,0.25); }
+
+    /* META */
+    .proj-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-meta-item { padding: 36px 40px; border-right: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-meta-item:last-child { border-right: none; }
+    .proj-meta-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .proj-meta-value { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(16px, 2vw, 24px); text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); }
+
+    /* INTRO */
+    .proj-intro { padding: 96px 56px; display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
+    .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
+
+    /* VÍDEOS — dos columnas respetando aspect ratio original */
+    .proj-videos { padding: 80px 56px 96px; border-bottom: 0.5px solid rgba(13,10,30,0.08); display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+    .proj-video-item { display: flex; flex-direction: column; gap: 20px; }
+    .proj-video-wrap { position: relative; width: 100%; overflow: hidden; background: var(--ink); border-radius: 3px; }
+    .proj-video-wrap.ratio-4-3 { aspect-ratio: 4/3; }
+    .proj-video-wrap.ratio-9-16 { aspect-ratio: 9/16; max-width: 340px; }
+    .proj-video-wrap video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .proj-video-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; color: var(--sea); }
+    .proj-video-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(20px, 2.5vw, 32px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; color: var(--ink); }
+    .proj-video-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.85; color: rgba(13,10,30,0.55); }
+
+    /* QUOTE */
+    .proj-quote { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-quote blockquote { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(32px, 4.5vw, 64px); text-transform: uppercase; letter-spacing: -0.025em; line-height: 1.0; color: var(--ink); max-width: 900px; }
+    .proj-quote .dim { color: rgba(13,10,30,0.18); }
+
+    /* ROLES */
+    .proj-roles { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; }
+    .proj-role-item { padding: 40px 0; border-top: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-role-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 16px; }
+    .proj-role-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(20px, 2.5vw, 32px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 16px; color: var(--ink); }
+    .proj-role-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.85; color: rgba(13,10,30,0.55); }
+
+    /* FOOTER */
+    .proj-footer { padding: 64px 56px; border-top: 0.5px solid rgba(13,10,30,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .proj-footer-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.2s, gap 0.2s; }
+    .proj-footer-back:hover { color: var(--ink); gap: 16px; }
+    .proj-footer-back::before { content: '←'; }
+    .proj-footer-next { text-decoration: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .proj-footer-next-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .proj-footer-next-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); transition: color 0.2s; display: flex; align-items: center; gap: 12px; }
+    .proj-footer-next-title::after { content: '→'; color: var(--sea); }
+    .proj-footer-next:hover .proj-footer-next-title { color: var(--sea); }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">Marta Rived</a>
+  <a class="nav-back" href="index.html#work">Work</a>
+</nav>
+
+<!-- HERO — foto estadio -->
+<section id="hero">
+  <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761079/RCD-STADIUM-09_zcncae.jpg" alt="RCD Espanyol">
+  <div id="hero-overlay"></div>
+  <div id="hero-content">
+    <p class="hero-label">RCD Espanyol · NSN · 2021–2023</p>
+    <h1 class="hero-title">
+      Pericos<br>
+      <span class="dim">a la</span><br>
+      eLaLiga
+    </h1>
+  </div>
+</section>
+
+<!-- META -->
+<div class="proj-meta">
+  <div class="proj-meta-item"><p class="proj-meta-label">Cliente</p><p class="proj-meta-value">RCD Espanyol</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Agencia</p><p class="proj-meta-value">NSN</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Temporadas</p><p class="proj-meta-value">2021/22 · 2022/23</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Rol</p><p class="proj-meta-value">Concepto · Dirección creativa · Post</p></div>
+</div>
+
+<!-- INTRO -->
+<div class="proj-intro">
+  <p class="proj-intro-label">El proyecto</p>
+  <p class="proj-intro-text">La presentación oficial de los representantes del RCD Espanyol en la eLaLiga — el campeonato de fútbol virtual de la liga española — durante dos temporadas consecutivas. Desde NSN, fui responsable del concepto creativo, el desarrollo narrativo de cada pieza y la dirección de postproducción: chyrons, animaciones y efectos.</p>
+</div>
+
+<!-- QUOTE -->
+<div class="proj-quote">
+  <blockquote>
+    El club perico<br>
+    <span class="dim">también juega</span><br>
+    en digital
+  </blockquote>
+</div>
+
+<!-- VÍDEOS -->
+<div class="proj-videos">
+
+  <div class="proj-video-item">
+    <div class="proj-video-wrap ratio-9-16">
+      <video autoplay muted loop playsinline>
+        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1777294413/Hoy_ampliamos_familia_addri_07_se_incorpora_al_roster_del_rcdesports_para_defender_al_rcdesp_jpo0mb.mp4" type="video/mp4">
+      </video>
+    </div>
+    <p class="proj-video-num">01 — Temporada 2022/23</p>
+    <h3 class="proj-video-title">Presentación de Addri07</h3>
+    <p class="proj-video-body">Incorporación del nuevo representante del club al roster de RCD Esports. Concepto, narrativa y dirección de la pieza — desde la estructura del vídeo hasta los efectos de postproducción y los chyrons de presentación.</p>
+  </div>
+
+  <div class="proj-video-item" style="padding-top: 80px;">
+    <div class="proj-video-wrap ratio-4-3">
+      <video autoplay muted loop playsinline>
+        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1777294413/Volvemos_a_elaliga_transformados_con_nuestros_dos_representantes-_gonchu07_y_masi_d10._Bien_svekaf.mp4" type="video/mp4">
+      </video>
+    </div>
+    <p class="proj-video-num">02 — Temporada 2021/22</p>
+    <h3 class="proj-video-title">Gonchu07 y Masi D10 vuelven a la eLaLiga</h3>
+    <p class="proj-video-body">Presentación de los dos representantes del Espanyol para la temporada de eLaLiga. Desarrollé el concepto "transformados" — la idea de que los jugadores digitales son la evolución del club en el terreno virtual — y supervisé toda la postproducción.</p>
+  </div>
+
+</div>
+
+<!-- ROLES -->
+<div class="proj-roles">
+  <div class="proj-role-item">
+    <p class="proj-role-num">01</p>
+    <h3 class="proj-role-title">Concepto creativo</h3>
+    <p class="proj-role-body">Definí el enfoque narrativo de cada presentación: cómo introducir al jugador, qué tono usar y cómo conectar la identidad del club con el universo de los eSports sin perder credibilidad en ninguno de los dos mundos.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">02</p>
+    <h3 class="proj-role-title">Desarrollo narrativo</h3>
+    <p class="proj-role-body">Escribí la bajada de cada pieza — qué sucede en cada momento del vídeo, qué información aparece en pantalla y en qué orden — estableciendo el ritmo y la estructura antes de entrar en producción.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">03</p>
+    <h3 class="proj-role-title">Dirección de post</h3>
+    <p class="proj-role-body">Supervisé y dirigí el afinado final de postproducción: chyrons de presentación, animaciones de marca, efectos visuales y ajuste del ritmo de montaje para garantizar coherencia con la identidad del RCD Espanyol.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="proj-footer">
+  <a class="proj-footer-back" href="index.html#work">Volver a Work</a>
+  <a class="proj-footer-next" href="girona.html">
+    <span class="proj-footer-next-label">Siguiente proyecto</span>
+    <span class="proj-footer-next-title">Girona FC</span>
+  </a>
+</div>
+
+</body>
+</html>
