@@ -17,7 +17,7 @@
     /* WELCOME */
     #welcome-screen { position: fixed; inset: 0; background: var(--ink); z-index: 999; display: flex; flex-direction: column; justify-content: center; padding: 56px; padding-bottom: 56px; overflow: hidden; }
     #welcome-texts { position: relative; z-index: 2; }
-    .wline { font-family: 'Foun','Arial Narrow',sans-serif; font-size: clamp(52px,7.5vw,112px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.9; color: var(--cream); opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .wline { font-family: 'Foun','Arial Narrow',sans-serif; font-size: clamp(28px,7.5vw,112px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.9; color: var(--cream); opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .wline.dim1 { color: rgba(242,237,227,0.45); }
     .wline.dim2 { color: rgba(242,237,227,0.2); }
     .gif-item { position: fixed; opacity: 0; transition: opacity 0.8s ease; border-radius: 2px; overflow: hidden; z-index: 1; pointer-events: none; }
@@ -76,7 +76,7 @@
     .proj:nth-child(1) .proj-img, .proj:nth-child(4) .proj-img, .proj:nth-child(7) .proj-img { aspect-ratio: 16/9; }
     .proj:nth-child(2) .proj-img, .proj:nth-child(8) .proj-img { aspect-ratio: 3/4; }
     .proj:hover .proj-img { transform: scale(1.03); }
-    .proj-cursor-label { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10; font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(28px, 4vw, 56px); text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.9; color: #f2ede3; white-space: nowrap; mix-blend-mode: difference; opacity: 0; transform: translate(-50%, -50%); transition: opacity 0.18s ease; will-change: transform; }
+    .proj-cursor-label { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10; font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(28px, 4vw, 56px); text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.9; color: #f2ede3; mix-blend-mode: difference; opacity: 0; transform: translate(-50%, -50%); transition: opacity 0.18s ease; will-change: transform; }
     .proj:hover .proj-cursor-label { opacity: 1; }
     .proj:nth-child(1) .proj-img { background: #a8a098; } .proj:nth-child(2) .proj-img { background: #b8b0a4; }
     .proj:nth-child(3) .proj-img { background: #a0998e; } .proj:nth-child(4) .proj-img { background: #b0a898; }
