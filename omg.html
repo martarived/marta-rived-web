@@ -42,9 +42,14 @@
     .proj-video-full { padding: 0 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
     .proj-video-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); padding: 40px 0 20px; display: flex; align-items: center; gap: 16px; }
     .proj-video-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
-    .proj-video-wrap-16-9 { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--ink); border-radius: 3px; overflow: hidden; }
-    .proj-video-wrap-16-9 video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .proj-video-wrap-4-3 { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--ink); border-radius: 3px; overflow: hidden; }
+    .proj-video-wrap-4-3 video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
     .proj-video-caption { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.7; color: rgba(13,10,30,0.5); padding: 20px 0 40px; max-width: 640px; }
+
+    /* Split 4:3 */
+    .proj-split { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-split-media { overflow: hidden; background: var(--ink); position: relative; min-height: 480px; }
+    .proj-split-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* Split con reel 9:16 */
     .proj-split-reel { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid rgba(13,10,30,0.08); align-items: center; }
@@ -98,9 +103,9 @@
   <div id="hero-content">
     <p class="hero-label">OMG!LaLiga · Spodeal · 2022–2023</p>
     <h1 class="hero-title">
-      Oh<br>
-      <span class="dim">my</span><br>
-      gol
+      La música<br>
+      <span class="dim">es otra</span><br>
+      liga
     </h1>
   </div>
 </section>
@@ -119,8 +124,8 @@
 
 <!-- EVENT — 16:9 full width -->
 <div class="proj-video-full">
-  <p class="proj-video-label">Segunda edición · Platea Madrid · 16:9</p>
-  <div class="proj-video-wrap-16-9">
+  <p class="proj-video-label">Segunda edición · Platea Madrid</p>
+  <div class="proj-video-wrap-4-3">
     <video autoplay muted loop playsinline>
       <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1777362500/OH_MY_GOL_EVENT-_xbsxtp.mp4" type="video/mp4">
     </video>
@@ -128,26 +133,24 @@
   <p class="proj-video-caption">Evento de presentación de OMG!23 en Platea Madrid. Elaboré el guion completo, coordiné la producción audiovisual de los diferentes filmmakers y ejercí como script de la presentadora Cristina Boscá.</p>
 </div>
 
-<!-- AYER VIVIMOS — reel 9:16 -->
-<div class="proj-split-reel">
-  <div class="proj-split-media-reel">
-    <div class="reel-inner">
-      <video autoplay muted loop playsinline>
-        <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1777362088/Ayer_vivimos_una_noche_muy_especial_Por_segundo_an%CC%83o_nos_pusimos_cara_en_Madrid_para_presenta_1_zpmr1p.mp4" type="video/mp4">
-      </video>
-    </div>
+<!-- AYER VIVIMOS — 4:3 split -->
+<div class="proj-split">
+  <div class="proj-split-media">
+    <video autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1777362088/Ayer_vivimos_una_noche_muy_especial_Por_segundo_an%CC%83o_nos_pusimos_cara_en_Madrid_para_presenta_1_zpmr1p.mp4" type="video/mp4">
+    </video>
   </div>
   <div class="proj-split-text">
     <p class="proj-split-num">01 — Primera edición · Resumen</p>
     <h2 class="proj-split-title">Ayer vivimos una noche muy especial</h2>
-    <p class="proj-split-body">Pieza resumen de la primera edición de OMG!LaLiga. Coordiné la producción audiovisual completa del evento y dirigí la edición de este reel que captura lo mejor de la noche — actuaciones, hosts y momentos entre bastidores.</p>
+    <p class="proj-split-body">Pieza resumen de la primera edición de OMG!LaLiga. Coordiné la producción audiovisual completa del evento y dirigí la edición de esta pieza que captura lo mejor de la noche — actuaciones, hosts y momentos entre bastidores.</p>
   </div>
 </div>
 
 <!-- OMG23 NEPTUNO — 16:9 full width -->
 <div class="proj-video-full">
-  <p class="proj-video-label">02 — Revelación de venue · 16:9</p>
-  <div class="proj-video-wrap-16-9">
+  <p class="proj-video-label">02 — Revelación de venue</p>
+  <div class="proj-video-wrap-4-3">
     <video autoplay muted loop playsinline>
       <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1777362088/OMG_23_es_una_realidad_y_tiene_pinta_de_que_va_a_ser_emocionante._16-06_Ci%CC%81vitas_Metropolitan_dyumql.mp4" type="video/mp4">
     </video>
