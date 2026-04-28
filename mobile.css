@@ -1,0 +1,162 @@
+/* ============================================================
+   MOBILE.CSS — Marta Rived
+   Breakpoints: < 768px (mobile), 768–1024px (tablet)
+   ============================================================ */
+
+@media (max-width: 1024px) {
+
+  /* NAV */
+  #nav { padding: 20px 24px; }
+  .nav-logo { font-size: 10px; }
+  .nav-back { font-size: 10px; }
+
+  /* HERO */
+  #hero-content { left: 24px; bottom: 48px; }
+  .hero-title { font-size: clamp(48px, 12vw, 80px); }
+
+  /* META */
+  .proj-meta { grid-template-columns: repeat(2, 1fr); }
+  .proj-meta-item:nth-child(2) { border-right: none; }
+  .proj-meta-item:nth-child(3) { border-top: 0.5px solid rgba(13,10,30,0.08); }
+  .proj-meta-item:nth-child(4) { border-top: 0.5px solid rgba(13,10,30,0.08); }
+  .proj-meta-item { padding: 24px 28px; }
+
+  /* INTRO */
+  .proj-intro { grid-template-columns: 1fr; gap: 24px; padding: 64px 24px; }
+
+  /* SPLITS */
+  .proj-split { grid-template-columns: 1fr; }
+  .proj-split-media { min-height: unset; }
+  .proj-split-text { padding: 48px 24px; }
+
+  /* ROLES */
+  .proj-roles { grid-template-columns: 1fr; padding: 64px 24px; }
+  .proj-role-item { padding: 28px 0; }
+
+  /* QUOTE */
+  .proj-quote { padding: 64px 24px; }
+
+  /* STATS */
+  .proj-stats { grid-template-columns: 1fr; }
+  .proj-stat { border-right: none; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+  .proj-stat:last-child { border-bottom: none; }
+  .proj-stat { padding: 40px 24px; }
+
+  /* VIDEO FULL */
+  .proj-video-full { padding: 0 24px; }
+  .proj-video-label { padding: 32px 0 16px; }
+
+  /* REELS */
+  .reels-section { padding: 56px 24px; }
+  .reels-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+  /* FOOTER */
+  .proj-footer { padding: 48px 24px; flex-direction: column; align-items: flex-start; gap: 32px; }
+
+}
+
+@media (max-width: 768px) {
+
+  /* NAV */
+  #nav { padding: 20px 20px; }
+
+  /* HERO */
+  #hero-content { left: 20px; bottom: 40px; }
+  .hero-label { font-size: 10px; letter-spacing: 0.18em; }
+  .hero-title { font-size: clamp(42px, 13vw, 64px); }
+
+  /* META */
+  .proj-meta { grid-template-columns: 1fr 1fr; }
+  .proj-meta-item { padding: 20px; }
+  .proj-meta-value { font-size: 16px; }
+
+  /* INTRO */
+  .proj-intro { padding: 48px 20px; gap: 16px; }
+  .proj-intro-text { font-size: 17px; }
+
+  /* SPLITS — vídeo encima, texto debajo siempre */
+  .proj-split { grid-template-columns: 1fr; }
+  .proj-split > .proj-split-text:first-child { order: 2; }
+  .proj-split > .proj-split-media:last-child { order: 1; }
+  .proj-split-text { padding: 36px 20px; }
+  .proj-split-num { margin-bottom: 12px; }
+
+  /* QUOTE */
+  .proj-quote { padding: 48px 20px; }
+
+  /* STATS */
+  .proj-stats { grid-template-columns: 1fr; }
+  .proj-stat { padding: 32px 20px; }
+  .proj-stat-num { font-size: 64px; }
+
+  /* VIDEO */
+  .proj-video-full { padding: 0 20px; }
+  .proj-video-label { padding: 28px 0 14px; }
+
+  /* REELS */
+  .reels-section { padding: 48px 20px; }
+  .reels-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .reels-label { margin-bottom: 32px; }
+
+  /* ROLES */
+  .proj-roles { grid-template-columns: 1fr; padding: 48px 20px; gap: 0; }
+
+  /* FOOTER */
+  .proj-footer { padding: 40px 20px; gap: 28px; }
+  .proj-footer-next-title { font-size: 28px; }
+
+  /* CAROUSEL */
+  .carousel-label { padding: 32px 20px 20px; }
+  .carousel-track { padding: 0 20px; }
+  .carousel-slide { width: calc(85vw); }
+  .carousel-nav { padding: 0 20px 32px; }
+
+  /* ——— INDEX ——— */
+
+  /* Work grid */
+  .work-grid { grid-template-columns: 1fr !important; gap: 40px 0; }
+  .proj:nth-child(n) { grid-column: span 1 !important; }
+  .proj-img { aspect-ratio: 16/9 !important; }
+
+  /* Section labels */
+  .section-label { padding: 32px 20px 32px; }
+  #work { padding: 0 20px 80px; }
+
+  /* Hero index */
+  #hero-content { padding: 0 20px; }
+  .hero-sub { left: 20px; bottom: 32px; }
+
+  /* About */
+  .about-hero { grid-template-columns: 1fr; }
+  .about-photo-col { height: 60vw; max-height: 340px; }
+  .about-right { padding: 32px 20px; gap: 28px; }
+  .about-name .n1, .about-name .n2 { font-size: clamp(36px, 10vw, 64px); }
+
+  /* Exp */
+  .exp-section { padding: 32px 20px 32px; }
+  .exp-company { font-size: clamp(20px, 6vw, 36px); }
+
+  /* Posters */
+  .posters-track { padding: 0 20px; gap: 16px; }
+  .poster-card { width: 160px; height: 220px; }
+
+  /* Typing */
+  .typing-grid { grid-template-columns: 1fr 1fr; gap: 40px 16px; padding: 0 20px; }
+  #typing .section-label { padding: 56px 20px 32px; }
+  #typing-more-wrap { padding: 40px 20px 0 !important; }
+
+  /* Contact */
+  #contact { grid-template-columns: 1fr; }
+  .contact-photo { height: 56vw; max-height: 300px; }
+  .contact-left { padding: 40px 20px; }
+  .contact-big { font-size: clamp(20px, 5vw, 36px); }
+
+  /* UC Popup */
+  #uc-popup { min-width: unset; width: calc(100vw - 40px); padding: 40px 32px; }
+  .uc-title { font-size: clamp(24px, 7vw, 40px); }
+
+  /* Overlay nav */
+  #overlay { padding: 0 20px; }
+  .overlay-links a { font-size: clamp(36px, 10vw, 64px); }
+  .overlay-bottom { left: 20px; right: 20px; }
+}
