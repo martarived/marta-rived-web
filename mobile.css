@@ -1,6 +1,5 @@
 /* ============================================================
    MOBILE.CSS — Marta Rived
-   Breakpoints: < 768px (mobile), 768–1024px (tablet)
    ============================================================ */
 
 @media (max-width: 1024px) {
@@ -57,56 +56,55 @@
 
 @media (max-width: 768px) {
 
-  /* ——— GLOBAL ——— */
+  /* NAV */
   #nav { padding: 20px 20px; }
 
-  /* ——— INDEX: HERO ——— */
-  #hero { height: 100svh; min-height: 600px; }
-  #hero-content { padding: 0 20px; }
-  .hero-label-top { font-size: 10px; margin-bottom: 28px; }
-  .hero-title { font-size: clamp(52px, 14vw, 80px); }
+  /* ——— WELCOME SCREEN ——— */
+  #welcome-screen { padding: 32px 24px; }
+  .wline { white-space: normal; font-size: clamp(36px, 11vw, 64px); line-height: 0.92; }
+  #welcome-bottom { bottom: 36px; right: 24px; }
+  #welcome-btn { font-size: 11px; padding: 14px 36px; }
+
+  /* ——— HERO INDEX ——— */
+  #hero { height: 100svh; min-height: 580px; }
+  #hero-content { padding: 0 20px; max-width: 100%; }
+  .hero-label-top { font-size: 10px; margin-bottom: 24px; }
+  .hero-title { font-size: clamp(52px, 13vw, 80px); }
   .hero-sub { left: 20px; bottom: 28px; }
 
-  /* ——— INDEX: WORK GRID ——— */
+  /* ——— WORK GRID — 1 columna ——— */
   #work { padding: 0 20px 80px; }
   .section-label { padding: 32px 0 32px; }
-  .work-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 24px !important;
-  }
-  .proj:nth-child(n) { grid-column: span 1 !important; }
-  /* Fotos: todas en 4:3 para que se vean bien sin cortar */
-  .proj-img { aspect-ratio: 4/3 !important; object-position: center center; }
-  /* Give more button */
+  .work-grid { display: flex !important; flex-direction: column !important; gap: 40px !important; }
+  .proj:nth-child(n) { grid-column: unset !important; width: 100%; }
+  .proj-img { aspect-ratio: 16/9 !important; }
   #typing-more-wrap { padding: 40px 20px 0 !important; }
 
-  /* ——— INDEX: ABOUT ——— */
+  /* ——— ABOUT ——— */
   .about-hero { grid-template-columns: 1fr; }
   .about-photo-col { height: 70vw; max-height: 400px; }
   .about-right { padding: 32px 20px; gap: 24px; }
   .about-name .n1, .about-name .n2 { font-size: clamp(40px, 11vw, 72px); }
   .about-bio { font-size: 13px; }
 
-  /* ——— INDEX: CV — click en lugar de hover ——— */
-  .exp-section { padding: 28px 20px 28px; }
-  .exp-company { font-size: clamp(22px, 6vw, 36px); }
-  .exp-year { font-size: clamp(18px, 5vw, 28px); }
-  /* Mostrar body siempre en mobile (sin hover) */
-  .exp-item .exp-body { max-height: none !important; padding-bottom: 20px !important; }
-  .exp-item .exp-row { opacity: 1 !important; }
+  /* ——— CV: tap para abrir ——— */
+  .exp-section { padding: 28px 20px; }
+  .exp-company { font-size: clamp(20px, 6vw, 32px); }
+  .exp-year { font-size: clamp(16px, 5vw, 26px); }
+  .exp-row { cursor: pointer; }
+  /* El expand lo maneja el JS del index — aquí solo estilos base */
 
-  /* ——— INDEX: POSTERS ——— */
+  /* ——— POSTERS ——— */
   #posters-section { padding: 48px 0; }
   .posters-track { padding: 0 20px; gap: 14px; }
   .poster-card { width: 140px; height: 192px; }
 
-  /* ——— INDEX: TYPING ——— */
+  /* ——— TYPING ——— */
   #typing .section-label { padding: 56px 20px 32px; }
   .typing-grid { grid-template-columns: 1fr 1fr; gap: 36px 16px; padding: 0 20px; }
   .typing-title { font-size: clamp(14px, 4vw, 20px); }
 
-  /* ——— INDEX: CONTACT ——— */
+  /* ——— CONTACT ——— */
   #contact { grid-template-columns: 1fr; }
   .contact-photo { height: 60vw; max-height: 320px; border-right: none; border-bottom: 0.5px solid rgba(13,10,30,0.06); }
   .contact-left { padding: 36px 20px; }
@@ -117,7 +115,7 @@
   #uc-popup { min-width: unset; width: calc(100vw - 40px); padding: 40px 28px; }
   .uc-title { font-size: clamp(26px, 8vw, 40px); }
 
-  /* ——— OVERLAY NAV ——— */
+  /* ——— OVERLAY ——— */
   #overlay { padding: 0 20px; }
   .overlay-links a { font-size: clamp(40px, 11vw, 72px); }
   .overlay-bottom { left: 20px; right: 20px; bottom: 28px; }
@@ -139,7 +137,6 @@
 
   /* ——— PROYECTOS: SPLITS ——— */
   .proj-split { grid-template-columns: 1fr; }
-  /* Vídeo/media siempre arriba */
   .proj-split > .proj-split-text:first-child { order: 2; }
   .proj-split > .proj-split-media:last-child { order: 1; }
   .proj-split-text { padding: 32px 20px; }
@@ -148,6 +145,7 @@
   /* ——— PROYECTOS: QUOTE ——— */
   .proj-quote { padding: 44px 20px; }
   .proj-quote blockquote { font-size: clamp(26px, 8vw, 48px); }
+  .proj-quote cite { font-size: 10px; }
 
   /* ——— PROYECTOS: STATS ——— */
   .proj-stats { grid-template-columns: 1fr 1fr; }
@@ -169,13 +167,10 @@
   .proj-footer { padding: 36px 20px; gap: 24px; }
   .proj-footer-next-title { font-size: clamp(24px, 7vw, 36px); }
 
-  /* ——— PROYECTOS: REEL SPLIT ——— */
+  /* ——— REEL SPLITS ——— */
   .proj-split-reel { grid-template-columns: 1fr; }
   .proj-split-reel-inv { grid-template-columns: 1fr; }
   .proj-split-media-reel { padding: 32px 20px; }
   .reel-inner { max-width: 220px; }
-
-  /* ——— GIRONA: REELS GRID 3 col ——— */
-  .reels-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
 
 }
