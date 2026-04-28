@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esade — Marta Rived</title>
+  <style>
+    @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
+
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; mix-blend-mode: difference; }
+    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); text-decoration: none; }
+    .nav-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: gap 0.2s; }
+    .nav-back:hover { gap: 16px; }
+    .nav-back::before { content: '←'; }
+
+    /* HERO — foto + vídeo encima */
+    #hero { position: relative; height: 100vh; overflow: hidden; background: var(--ink); }
+    #hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    #hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,10,30,0.92) 0%, rgba(13,10,30,0.4) 50%, rgba(13,10,30,0.2) 100%); }
+    #hero-content { position: absolute; bottom: 64px; left: 56px; z-index: 2; }
+    .hero-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(64px, 10vw, 140px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.88; color: var(--cream); }
+    .hero-title .dim { color: rgba(242,237,227,0.25); }
+
+    /* META */
+    .proj-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-meta-item { padding: 36px 40px; border-right: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-meta-item:last-child { border-right: none; }
+    .proj-meta-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .proj-meta-value { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(16px, 2vw, 24px); text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); }
+
+    /* INTRO */
+    .proj-intro { padding: 96px 56px; display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
+    .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
+
+    /* VÍDEO 16:9 full width */
+    .proj-video-full { padding: 0 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-video-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); padding: 40px 0 20px; display: flex; align-items: center; gap: 16px; }
+    .proj-video-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
+    .proj-video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--ink); border-radius: 3px; overflow: hidden; margin-bottom: 40px; }
+    .proj-video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
+
+    /* QUOTE */
+    .proj-quote { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-quote blockquote { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(28px, 4vw, 56px); text-transform: uppercase; letter-spacing: -0.025em; line-height: 1.05; color: var(--ink); max-width: 860px; }
+    .proj-quote cite { display: block; font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sea); margin-top: 24px; font-style: normal; }
+    .proj-quote .dim { color: rgba(13,10,30,0.18); }
+
+    /* SPLIT */
+    .proj-split { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-split-media { overflow: hidden; background: rgba(13,10,30,0.04); position: relative; min-height: 480px; display: flex; align-items: center; justify-content: center; padding: 64px 56px; }
+    .proj-split-stat { text-align: center; }
+    .proj-split-stat-num { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(56px, 8vw, 112px); letter-spacing: -0.04em; line-height: 0.85; color: var(--ink); display: block; }
+    .proj-split-stat-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.7; color: rgba(13,10,30,0.5); margin-top: 16px; display: block; max-width: 240px; margin-left: auto; margin-right: auto; }
+    .proj-split-text { padding: 80px 56px; display: flex; flex-direction: column; justify-content: center; }
+    .proj-split-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 20px; }
+    .proj-split-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 28px; }
+    .proj-split-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
+
+    /* ROLES */
+    .proj-roles { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; }
+    .proj-role-item { padding: 40px 0; border-top: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-role-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 16px; }
+    .proj-role-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(20px, 2.5vw, 32px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 16px; color: var(--ink); }
+    .proj-role-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.85; color: rgba(13,10,30,0.55); }
+
+    /* FOOTER */
+    .proj-footer { padding: 64px 56px; border-top: 0.5px solid rgba(13,10,30,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .proj-footer-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.2s, gap 0.2s; }
+    .proj-footer-back:hover { color: var(--ink); gap: 16px; }
+    .proj-footer-back::before { content: '←'; }
+    .proj-footer-next { text-decoration: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .proj-footer-next-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .proj-footer-next-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); transition: color 0.2s; display: flex; align-items: center; gap: 12px; }
+    .proj-footer-next-title::after { content: '→'; color: var(--sea); }
+    .proj-footer-next:hover .proj-footer-next-title { color: var(--sea); }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">Marta Rived</a>
+  <a class="nav-back" href="index.html#work">Work</a>
+</nav>
+
+<!-- HERO — foto -->
+<section id="hero">
+  <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761363/65e05573c7cd1_iraqqf.jpg" alt="Esade">
+  <div id="hero-overlay"></div>
+  <div id="hero-content">
+    <p class="hero-label">Esade · La Vanguardia · 2024</p>
+    <h1 class="hero-title">
+      El talento<br>
+      <span class="dim">será sostenible</span><br>
+      o no será
+    </h1>
+  </div>
+</section>
+
+<!-- META -->
+<div class="proj-meta">
+  <div class="proj-meta-item"><p class="proj-meta-label">Cliente</p><p class="proj-meta-value">Esade</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Medio</p><p class="proj-meta-value">La Vanguardia</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Año</p><p class="proj-meta-value">2024</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Rol</p><p class="proj-meta-value">Project Manager · Guion · Redacción</p></div>
+</div>
+
+<!-- INTRO -->
+<div class="proj-intro">
+  <p class="proj-intro-label">El proyecto</p>
+  <p class="proj-intro-text">Un branded content para Esade en La Vanguardia con motivo de su participación en el 4YFN — el espacio emprendedor del Mobile World Congress — donde la escuela lideró por octava vez la vertical GreenTech. El eje: sostenibilidad, talento e inteligencia artificial como palancas del futuro profesional.</p>
+</div>
+
+<!-- VÍDEO -->
+<div class="proj-video-full">
+  <p class="proj-video-label">El vídeo</p>
+  <div class="proj-video-wrap">
+    <iframe src="https://www.youtube.com/embed/xcjK1sNooWU?autoplay=1&mute=1&loop=1&playlist=xcjK1sNooWU&controls=0&modestbranding=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="proj-quote">
+  <blockquote>
+    "El talento será<br>
+    <span class="dim">sostenible</span><br>
+    o no será"
+    <cite>Maja Tampe · Esade · 4YFN 2024</cite>
+  </blockquote>
+</div>
+
+<!-- SPLIT 1: stat + texto -->
+<div class="proj-split">
+  <div class="proj-split-media">
+    <div class="proj-split-stat">
+      <span class="proj-split-stat-num">8ª</span>
+      <span class="proj-split-stat-label">edición consecutiva de Esade como colaborador académico oficial del 4YFN, esta vez liderando la vertical GreenTech</span>
+    </div>
+  </div>
+  <div class="proj-split-text">
+    <p class="proj-split-num">01 — El contexto</p>
+    <h2 class="proj-split-title">Connected Minds.<br>Leaders of Green Futures</h2>
+    <p class="proj-split-body">El Mobile World Congress 2024 cumplió su mayoría de edad. En ese marco, Esade lideró la vertical GreenTech del 4YFN con debates sobre el futuro de la sostenibilidad, el perfil de los profesionales que la industria demanda — resiliencia, flexibilidad, empatía — y la urgencia de integrar la dimensión ambiental desde las aulas hasta los consejos de dirección.</p>
+  </div>
+</div>
+
+<!-- SPLIT 2: texto + stat -->
+<div class="proj-split">
+  <div class="proj-split-text">
+    <p class="proj-split-num">02 — La IA sostenible</p>
+    <h2 class="proj-split-title">¿Puede ser sostenible el aprendizaje automático?</h2>
+    <p class="proj-split-body">Irene Unceta, directora académica del Bachelor en IA para los Negocios de Esade, moderó una mesa sobre los costes medioambientales de la inteligencia artificial. El crecimiento exponencial de la IA — impulsado por capacidad de cómputo, algoritmos y datos ubicuos — obliga a preguntarse si sus beneficios superan su impacto ambiental. Para Unceta, la sostenibilidad es un aspecto innegociable del futuro tecnológico.</p>
+  </div>
+  <div class="proj-split-media">
+    <div class="proj-split-stat">
+      <span class="proj-split-stat-num">55%</span>
+      <span class="proj-split-stat-label">reducción de emisiones que Europa debe alcanzar para 2030 — "Estamos en el día 1", según Borja Segura, alumni de Esade y consultor en descarbonización</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROLES -->
+<div class="proj-roles">
+  <div class="proj-role-item">
+    <p class="proj-role-num">01</p>
+    <h3 class="proj-role-title">Project Manager</h3>
+    <p class="proj-role-body">Coordiné el proyecto de principio a fin: desde la planificación del branded content con Esade y La Vanguardia hasta la entrega final, gestionando la coordinación con la productora y los tiempos de rodaje en el 4YFN.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">02</p>
+    <h3 class="proj-role-title">Redacción</h3>
+    <p class="proj-role-body">Escribí el artículo de branded content publicado en La Vanguardia, estructurando las ideas clave de los paneles — sostenibilidad, talento, IA — en una narrativa accesible y coherente con el posicionamiento de Esade.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">03</p>
+    <h3 class="proj-role-title">Guion en rodaje</h3>
+    <p class="proj-role-body">Exercí como guionista durante el rodaje en el 4YFN — definiendo qué momentos capturar, qué testimonios priorizar y cómo estructurar la narrativa audiovisual para que el vídeo y el artículo contaran la misma historia.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="proj-footer">
+  <a class="proj-footer-back" href="index.html#work">Volver a Work</a>
+  <a class="proj-footer-next" href="square.html">
+    <span class="proj-footer-next-label">Siguiente proyecto</span>
+    <span class="proj-footer-next-title">Square</span>
+  </a>
+</div>
+
+</body>
+</html>
