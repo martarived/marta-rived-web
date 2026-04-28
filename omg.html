@@ -38,34 +38,28 @@
     .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
     .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
 
-    /* 16:9 full width */
-    .proj-video-full { padding: 0 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
-    .proj-video-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); padding: 40px 0 20px; display: flex; align-items: center; gap: 16px; }
-    .proj-video-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
-    .proj-video-wrap-4-3 { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--ink); border-radius: 3px; overflow: hidden; }
-    .proj-video-wrap-4-3 video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-    .proj-video-caption { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.7; color: rgba(13,10,30,0.5); padding: 20px 0 40px; max-width: 640px; }
-
-    /* Split 4:3 */
+    /* SPLIT 4:3 — igual que ford/bayer */
     .proj-split { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid rgba(13,10,30,0.08); }
-    .proj-split-media { overflow: hidden; background: var(--ink); position: relative; min-height: 480px; }
+    .proj-split-media { overflow: hidden; background: var(--ink); position: relative; aspect-ratio: 4/3; }
     .proj-split-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-
-    /* Split con reel 9:16 */
-    .proj-split-reel { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid rgba(13,10,30,0.08); align-items: center; }
-    .proj-split-media-reel { padding: 56px; display: flex; justify-content: center; }
-    .reel-inner { position: relative; width: 100%; max-width: 280px; aspect-ratio: 9/16; border-radius: 3px; overflow: hidden; background: var(--ink); }
-    .reel-inner video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
     .proj-split-text { padding: 80px 56px; display: flex; flex-direction: column; justify-content: center; }
     .proj-split-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 20px; }
     .proj-split-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 28px; }
     .proj-split-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
 
+    /* NEPTUNO — 16:9 full width */
+    .proj-video-full { padding: 0 56px; border-top: 0.5px solid rgba(13,10,30,0.08); border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-video-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); padding: 40px 0 20px; display: flex; align-items: center; gap: 16px; }
+    .proj-video-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
+    .proj-video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--ink); border-radius: 3px; overflow: hidden; margin-bottom: 40px; }
+    .proj-video-wrap video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* QUOTE */
     .proj-quote { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); border-top: 0.5px solid rgba(13,10,30,0.08); }
     .proj-quote blockquote { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(32px, 4.5vw, 64px); text-transform: uppercase; letter-spacing: -0.025em; line-height: 1.0; color: var(--ink); max-width: 900px; }
     .proj-quote .dim { color: rgba(13,10,30,0.18); }
 
-    /* 5 reels 9:16 */
+    /* REELS 9:16 — 5 columnas */
     .reels-section { padding: 80px 56px 96px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
     .reels-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 16px; margin-bottom: 48px; }
     .reels-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
@@ -73,6 +67,7 @@
     .reel-wrap { position: relative; width: 100%; aspect-ratio: 9/16; border-radius: 3px; overflow: hidden; background: var(--ink); }
     .reel-wrap video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
+    /* ROLES */
     .proj-roles { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; }
     .proj-role-item { padding: 40px 0; border-top: 0.5px solid rgba(13,10,30,0.1); }
     .proj-role-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 16px; }
@@ -122,18 +117,21 @@
   <p class="proj-intro-text">OMG!LaLiga es la experiencia de música y fútbol de LaLiga — dos ediciones, dos ciudades, dos eventos. Coordiné todo el contenido audiovisual de ambas ediciones: concepto, guiones, producción y edición de cada pieza. Los hosts fueron el tiktoker Nosoloviernes y el reportero Daniel Ferrer.</p>
 </div>
 
-<!-- EVENT — 16:9 full width -->
-<div class="proj-video-full">
-  <p class="proj-video-label">Segunda edición · Platea Madrid</p>
-  <div class="proj-video-wrap-4-3">
+<!-- SPLIT 1: texto + vídeo EVENT 4:3 -->
+<div class="proj-split">
+  <div class="proj-split-text">
+    <p class="proj-split-num">01 — Segunda edición · Platea Madrid</p>
+    <h2 class="proj-split-title">El evento de presentación de OMG!23</h2>
+    <p class="proj-split-body">Elaboré el guion completo del evento, coordiné la producción audiovisual de los diferentes filmmakers presentes y ejercí como script de la presentadora Cristina Boscá — garantizando coherencia entre lo que ocurría en sala y lo que se estaba grabando.</p>
+  </div>
+  <div class="proj-split-media">
     <video autoplay muted loop playsinline>
       <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1777362500/OH_MY_GOL_EVENT-_xbsxtp.mp4" type="video/mp4">
     </video>
   </div>
-  <p class="proj-video-caption">Evento de presentación de OMG!23 en Platea Madrid. Elaboré el guion completo, coordiné la producción audiovisual de los diferentes filmmakers y ejercí como script de la presentadora Cristina Boscá.</p>
 </div>
 
-<!-- AYER VIVIMOS — 4:3 split -->
+<!-- SPLIT 2: vídeo AYER VIVIMOS 4:3 + texto -->
 <div class="proj-split">
   <div class="proj-split-media">
     <video autoplay muted loop playsinline>
@@ -141,21 +139,20 @@
     </video>
   </div>
   <div class="proj-split-text">
-    <p class="proj-split-num">01 — Primera edición · Resumen</p>
+    <p class="proj-split-num">02 — Primera edición · Resumen</p>
     <h2 class="proj-split-title">Ayer vivimos una noche muy especial</h2>
     <p class="proj-split-body">Pieza resumen de la primera edición de OMG!LaLiga. Coordiné la producción audiovisual completa del evento y dirigí la edición de esta pieza que captura lo mejor de la noche — actuaciones, hosts y momentos entre bastidores.</p>
   </div>
 </div>
 
-<!-- OMG23 NEPTUNO — 16:9 full width -->
+<!-- NEPTUNO — 16:9 full width -->
 <div class="proj-video-full">
-  <p class="proj-video-label">02 — Revelación de venue</p>
-  <div class="proj-video-wrap-4-3">
+  <p class="proj-video-label">03 — Revelación de venue</p>
+  <div class="proj-video-wrap">
     <video autoplay muted loop playsinline>
       <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1777362088/OMG_23_es_una_realidad_y_tiene_pinta_de_que_va_a_ser_emocionante._16-06_Ci%CC%81vitas_Metropolitan_dyumql.mp4" type="video/mp4">
     </video>
   </div>
-  <p class="proj-video-caption">Neptuno viaja al Metropolitano. El reto era encontrar un hilo conductor entre Barcelona y Madrid — lo encontré en Neptuno, que viajaba desde el mar de Barcelona hasta el estadio que lleva su nombre. 16 de junio, Cívitas Metropolitano.</p>
 </div>
 
 <div class="proj-quote">
