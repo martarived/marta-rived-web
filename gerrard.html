@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steven Gerrard — Marta Rived</title>
+  <style>
+    @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
+
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; mix-blend-mode: difference; }
+    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); text-decoration: none; }
+    .nav-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: gap 0.2s; }
+    .nav-back:hover { gap: 16px; }
+    .nav-back::before { content: '←'; }
+
+    /* HERO — foto */
+    #hero { position: relative; height: 100vh; overflow: hidden; background: var(--ink); }
+    #hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    #hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,10,30,0.92) 0%, rgba(13,10,30,0.2) 50%, transparent 100%); }
+    #hero-content { position: absolute; bottom: 64px; left: 56px; z-index: 2; }
+    .hero-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(64px, 10vw, 140px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.88; color: var(--cream); }
+    .hero-title .dim { color: rgba(242,237,227,0.25); }
+
+    /* META */
+    .proj-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-meta-item { padding: 36px 40px; border-right: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-meta-item:last-child { border-right: none; }
+    .proj-meta-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .proj-meta-value { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(16px, 2vw, 24px); text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); }
+
+    /* INTRO */
+    .proj-intro { padding: 96px 56px; display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
+    .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
+
+    /* SPLIT 16:9 vídeo */
+    .proj-split { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-split-media { overflow: hidden; background: var(--ink); position: relative; aspect-ratio: 16/9; }
+    .proj-split-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .proj-split-text { padding: 80px 56px; display: flex; flex-direction: column; justify-content: center; }
+    .proj-split-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 20px; }
+    .proj-split-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 28px; }
+    .proj-split-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
+
+    /* VÍDEO 16:9 full width */
+    .proj-video-full { padding: 0 56px; border-top: 0.5px solid rgba(13,10,30,0.08); border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-video-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); padding: 40px 0 20px; display: flex; align-items: center; gap: 16px; }
+    .proj-video-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
+    .proj-video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--ink); border-radius: 3px; overflow: hidden; margin-bottom: 40px; }
+    .proj-video-wrap video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* CARRUSEL DE FOTOS */
+    .proj-carousel { border-top: 0.5px solid rgba(13,10,30,0.08); border-bottom: 0.5px solid rgba(13,10,30,0.08); padding: 0; overflow: hidden; }
+    .carousel-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); padding: 40px 56px 24px; display: flex; align-items: center; gap: 16px; }
+    .carousel-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
+    .carousel-track-wrap { overflow: hidden; position: relative; padding-bottom: 40px; }
+    .carousel-track { display: flex; gap: 24px; padding: 0 56px; transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .carousel-slide { flex-shrink: 0; width: calc(50% - 68px); aspect-ratio: 4/3; overflow: hidden; border-radius: 3px; background: var(--ink); }
+    .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .carousel-nav { display: flex; align-items: center; justify-content: center; gap: 24px; padding: 0 56px 40px; }
+    .carousel-btn { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); background: none; border: 0.5px solid rgba(13,10,30,0.2); padding: 10px 28px; cursor: pointer; transition: color 0.2s, border-color 0.2s; }
+    .carousel-btn:hover { color: var(--ink); border-color: var(--ink); }
+    .carousel-dots { display: flex; gap: 8px; }
+    .carousel-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(13,10,30,0.15); cursor: pointer; transition: background 0.2s; border: none; padding: 0; }
+    .carousel-dot.active { background: var(--ink); }
+
+    /* QUOTE */
+    .proj-quote { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); border-top: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-quote blockquote { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(32px, 4.5vw, 64px); text-transform: uppercase; letter-spacing: -0.025em; line-height: 1.0; color: var(--ink); max-width: 900px; }
+    .proj-quote .dim { color: rgba(13,10,30,0.18); }
+
+    /* ROLES */
+    .proj-roles { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; }
+    .proj-role-item { padding: 40px 0; border-top: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-role-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 16px; }
+    .proj-role-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(20px, 2.5vw, 32px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 16px; color: var(--ink); }
+    .proj-role-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.85; color: rgba(13,10,30,0.55); }
+
+    /* FOOTER */
+    .proj-footer { padding: 64px 56px; border-top: 0.5px solid rgba(13,10,30,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .proj-footer-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.2s, gap 0.2s; }
+    .proj-footer-back:hover { color: var(--ink); gap: 16px; }
+    .proj-footer-back::before { content: '←'; }
+    .proj-footer-next { text-decoration: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .proj-footer-next-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .proj-footer-next-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); transition: color 0.2s; display: flex; align-items: center; gap: 12px; }
+    .proj-footer-next-title::after { content: '→'; color: var(--sea); }
+    .proj-footer-next:hover .proj-footer-next-title { color: var(--sea); }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">Marta Rived</a>
+  <a class="nav-back" href="index.html#work">Work</a>
+</nav>
+
+<!-- HERO — foto Gerrard -->
+<section id="hero">
+  <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1777368337/IMG_7926_iimenp.jpg" alt="Steven Gerrard">
+  <div id="hero-overlay"></div>
+  <div id="hero-content">
+    <p class="hero-label">78Win · Steven Gerrard · Spodeal · 2024</p>
+    <h1 class="hero-title">
+      A new<br>
+      <span class="dim">beginning</span><br>
+      with Gerrard
+    </h1>
+  </div>
+</section>
+
+<!-- META -->
+<div class="proj-meta">
+  <div class="proj-meta-item"><p class="proj-meta-label">Cliente</p><p class="proj-meta-value">78Win · K9Win</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Agencia</p><p class="proj-meta-value">Spodeal</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Talent</p><p class="proj-meta-value">Gerrard · Sevilla FC · Girona FC</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Rol</p><p class="proj-meta-value">Storyboard · Guion · Dirección · Producción</p></div>
+</div>
+
+<!-- INTRO -->
+<div class="proj-intro">
+  <p class="proj-intro-label">El proyecto</p>
+  <p class="proj-intro-text">78Win necesitaba construir su presencia de marca con el mejor embajador posible: Steven Gerrard. Me desplacé hasta Bahréin para dirigir la producción — un vídeo hero más 10 piezas para los keymoments del año (Año Nuevo, Juegos Asiáticos, San Valentín…). Paralelamente, para K9Win, produje campañas similares con el Sevilla FC y jugadores del Girona FC en nuevos idiomas.</p>
+</div>
+
+<!-- VÍDEO GERRARD — 16:9 full width -->
+<div class="proj-video-full">
+  <p class="proj-video-label">78Win × Steven Gerrard · Bahréin</p>
+  <div class="proj-video-wrap">
+    <video autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1777367458/A_new_beginning_with_78win_where_passion_is_reignited_Hi_everyone_I_m_Steven_Gerrard_and_I_m_pb1rxd.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<!-- CARRUSEL DE FOTOS DEL RODAJE -->
+<div class="proj-carousel">
+  <p class="carousel-label">Rodaje en Bahréin</p>
+  <div class="carousel-track-wrap">
+    <div class="carousel-track" id="carousel-track">
+      <div class="carousel-slide">
+        <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1777368337/IMG_7926_iimenp.jpg" alt="Rodaje con Gerrard">
+      </div>
+      <div class="carousel-slide">
+        <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1777368339/423A3250_dmfxna.jpg" alt="Rodaje con Gerrard">
+      </div>
+      <div class="carousel-slide">
+        <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1777368339/423A3350_dbtag2.jpg" alt="Rodaje con Gerrard">
+      </div>
+    </div>
+  </div>
+  <div class="carousel-nav">
+    <button class="carousel-btn" id="carousel-prev">←</button>
+    <div class="carousel-dots">
+      <button class="carousel-dot active" data-index="0"></button>
+      <button class="carousel-dot" data-index="1"></button>
+      <button class="carousel-dot" data-index="2"></button>
+    </div>
+    <button class="carousel-btn" id="carousel-next">→</button>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="proj-quote">
+  <blockquote>
+    Bahréin,<br>
+    <span class="dim">Gerrard</span><br>
+    y diez piezas más
+  </blockquote>
+</div>
+
+<!-- SPLIT 1: texto + vídeo Sevilla FC -->
+<div class="proj-split">
+  <div class="proj-split-text">
+    <p class="proj-split-num">K9Win × Sevilla FC</p>
+    <h2 class="proj-split-title">El mismo rigor,<br>otro club</h2>
+    <p class="proj-split-body">El enfoque creativo de la campaña con Gerrard se aplicó íntegramente al Sevilla FC para K9Win. Storyboard, guion y dirección de la pieza que posicionó la marca junto a uno de los clubes más reconocidos a nivel internacional — manteniendo coherencia de marca entre ambas campañas.</p>
+  </div>
+  <div class="proj-split-media">
+    <video autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1777367458/linkedin-video_oexaol.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<!-- SPLIT 2: vídeo Girona FC + texto -->
+<div class="proj-split">
+  <div class="proj-split-media">
+    <video autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/doo07efjl/video/upload/v1777368086/Check_out_our_exciting_video_shoot_with_K9Win_gironafc_and_K9Win_a_leader_in_the_online_nv8855.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="proj-split-text">
+    <p class="proj-split-num">K9Win × Girona FC</p>
+    <h2 class="proj-split-title">Nuevos mercados,<br>nuevos idiomas</h2>
+    <p class="proj-split-body">Para ampliar el alcance de K9Win a nuevos mercados, produje piezas junto a jugadores del Girona FC en diferentes idiomas — el mismo rigor creativo de storyboard, guion y dirección en set, adaptado a una estrategia pensada para resonar en audiencias internacionales.</p>
+  </div>
+</div>
+
+<!-- ROLES -->
+<div class="proj-roles">
+  <div class="proj-role-item">
+    <p class="proj-role-num">01</p>
+    <h3 class="proj-role-title">Storyboard & guion</h3>
+    <p class="proj-role-body">Desarrollé el storyboard y el guion completo de todas las piezas — desde el vídeo hero con Gerrard hasta las 10 piezas de keymoments anuales y las campañas con Sevilla FC y Girona FC para K9Win.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">02</p>
+    <h3 class="proj-role-title">Dirección en Bahréin</h3>
+    <p class="proj-role-body">Me desplacé hasta Bahréin para dirigir la producción junto a Steven Gerrard en set — gestionando la dirección del exjugador del Liverpool, resolviendo aspectos de última hora y garantizando que el resultado estuviera a la altura del talent y de 78Win.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">03</p>
+    <h3 class="proj-role-title">Producción integral</h3>
+    <p class="proj-role-body">Coordiné la producción completa de las tres campañas: Gerrard en Bahréin para 78Win, Sevilla FC y Girona FC para K9Win. Desde la preproducción y el briefing creativo hasta el afinado final en todos los mercados y formatos.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="proj-footer">
+  <a class="proj-footer-back" href="index.html#work">Volver a Work</a>
+  <a class="proj-footer-next" href="omg.html">
+    <span class="proj-footer-next-label">Siguiente proyecto</span>
+    <span class="proj-footer-next-title">OMG!LaLiga</span>
+  </a>
+</div>
+
+<script>
+(function() {
+  var track = document.getElementById('carousel-track');
+  var dots = document.querySelectorAll('.carousel-dot');
+  var current = 0;
+  var total = 3;
+
+  function goTo(index) {
+    current = (index + total) % total;
+    var slideWidth = track.parentElement.offsetWidth;
+    var offset = current * (slideWidth / 2 + 12); // 50% width + gap
+    // Actually recalculate based on actual slide widths
+    var slides = track.querySelectorAll('.carousel-slide');
+    var slide = slides[current];
+    var trackPad = 56; // left padding
+    var gap = 24;
+    var targetLeft = trackPad + current * (slide.offsetWidth + gap);
+    // Center the current slide
+    var center = slideWidth / 2 - slide.offsetWidth / 2;
+    track.style.transform = 'translateX(' + (center - targetLeft + trackPad) + 'px)';
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+  }
+
+  document.getElementById('carousel-prev').addEventListener('click', function() { goTo(current - 1); });
+  document.getElementById('carousel-next').addEventListener('click', function() { goTo(current + 1); });
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() { goTo(parseInt(dot.dataset.index)); });
+  });
+})();
+</script>
+
+</body>
+</html>
