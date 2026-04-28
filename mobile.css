@@ -10,36 +10,20 @@
   .proj-meta-item:nth-child(3) { border-top: 0.5px solid rgba(13,10,30,0.08); }
   .proj-meta-item:nth-child(4) { border-top: 0.5px solid rgba(13,10,30,0.08); }
   .proj-meta-item { padding: 24px 28px; }
-
-  /* PROYECTOS: INTRO columna única */
   .proj-intro { grid-template-columns: 1fr; gap: 24px; padding: 64px 24px; }
-
-  /* PROYECTOS: SPLITS apilados */
   .proj-split { grid-template-columns: 1fr; }
   .proj-split-media { min-height: unset; aspect-ratio: 16/9; }
   .proj-split-text { padding: 48px 24px; }
-
-  /* PROYECTOS: ROLES */
   .proj-roles { grid-template-columns: 1fr; padding: 64px 24px; }
   .proj-role-item { padding: 28px 0; }
-
-  /* PROYECTOS: QUOTE */
   .proj-quote { padding: 64px 24px; }
-
-  /* PROYECTOS: STATS */
   .proj-stats { grid-template-columns: 1fr; }
   .proj-stat { border-right: none; border-bottom: 0.5px solid rgba(13,10,30,0.08); padding: 40px 24px; }
   .proj-stat:last-child { border-bottom: none; }
-
-  /* PROYECTOS: VIDEO */
   .proj-video-full { padding: 0 24px; }
   .proj-video-label { padding: 32px 0 16px; }
-
-  /* PROYECTOS: REELS */
   .reels-section { padding: 56px 24px; }
   .reels-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-
-  /* PROYECTOS: FOOTER */
   .proj-footer { padding: 48px 24px; flex-direction: column; align-items: flex-start; gap: 32px; }
 
 }
@@ -50,24 +34,20 @@
   #nav { padding: 20px 20px; }
 
   /* ——— WELCOME SCREEN ——— */
-  #welcome-screen { padding: 24px 20px; justify-content: flex-end; padding-bottom: 100px; }
-  .wline { font-size: clamp(28px, 8vw, 52px) !important; line-height: 1.0; letter-spacing: -0.02em; }
-  #welcome-bottom { bottom: 32px; right: 20px; }
-  #welcome-btn { font-size: 11px; padding: 13px 32px; }
-  /* Ocultar GIFs en mobile — ocupan demasiado espacio */
-  .gif-item { display: none !important; }
+  #welcome-screen { padding: 20px 20px 80px; justify-content: center; }
+  /* Texto más pequeño y que no desborde */
+  .wline { font-size: clamp(26px, 7.5vw, 48px) !important; line-height: 1.0 !important; letter-spacing: -0.02em !important; }
+  #welcome-bottom { bottom: 28px; right: 20px; }
+  #welcome-btn { font-size: 11px; padding: 12px 28px; }
 
   /* ——— HERO INDEX ——— */
-  /* El hero tiene align-items: center — en mobile queremos el texto más abajo */
-  #hero { align-items: flex-end; padding-bottom: 100px; }
-  #hero-content { padding: 0 20px; max-width: 100%; }
+  /* Hero ya tiene padding-bottom:120px desde el HTML, el título queda abajo */
+  #hero-content { padding: 0 20px; max-width: 100%; transform: none !important; }
   .hero-label-top { font-size: 10px; margin-bottom: 20px; }
   .hero-title { font-size: clamp(48px, 13vw, 72px); }
-  .hero-sub { left: 20px; bottom: 28px; }
-  /* Desactivar hero shrink en mobile */
-  #hero-content { transform: none !important; }
+  .hero-sub { left: 20px; bottom: 24px; font-size: 10px; }
 
-  /* ——— WORK GRID ——— */
+  /* ——— WORK GRID — 1 columna ——— */
   #work { padding: 0 20px 80px; }
   .section-label { padding: 32px 0; }
   .work-grid { display: flex !important; flex-direction: column !important; gap: 32px !important; }
@@ -77,13 +57,13 @@
 
   /* ——— ABOUT ——— */
   .about-hero { grid-template-columns: 1fr; min-height: unset; }
-  .about-photo-col { height: 72vw; max-height: 380px; overflow: hidden; }
+  .about-photo-col { height: 72vw; max-height: 380px; }
   .about-photo-col img { object-position: top center; }
   .about-right { padding: 28px 20px; gap: 20px; justify-content: flex-start; }
   .about-name .n1, .about-name .n2 { font-size: clamp(38px, 11vw, 64px); }
   .about-bio { font-size: 13px; }
 
-  /* ——— CV: tap expandible ——— */
+  /* ——— CV ——— */
   .exp-section { padding: 28px 20px; }
   .exp-company { font-size: clamp(20px, 6vw, 32px); }
   .exp-year { font-size: clamp(16px, 5vw, 26px); }
@@ -102,19 +82,10 @@
 
   /* ——— CONTACT ——— */
   #contact { grid-template-columns: 1fr; min-height: unset; }
-  .contact-photo {
-    height: 80vw;
-    max-height: 360px;
-    border-right: none;
-    border-bottom: 0.5px solid rgba(13,10,30,0.06);
-    overflow: hidden;
-  }
-  .contact-photo img { object-position: center 30%; }
-  /* Reposicionar el círculo SVG para mobile */
-  .contact-circle {
-    top: -10%;
-    height: 120%;
-  }
+  .contact-photo { height: 80vw; max-height: 400px; border-right: none; border-bottom: 0.5px solid rgba(13,10,30,0.06); overflow: hidden; position: relative; }
+  .contact-photo img { object-position: center 25%; }
+  /* El círculo SVG ahora usa ellipse centrada — CSS solo controla el contenedor */
+  .contact-circle { position: absolute; inset: 0; }
   .contact-left { padding: 32px 20px; }
   .contact-big { font-size: clamp(18px, 5vw, 32px); }
   .contact-left .section-label { padding: 0 0 32px; }
@@ -147,7 +118,9 @@
   .proj-split { grid-template-columns: 1fr; }
   .proj-split > .proj-split-text:first-child { order: 2; }
   .proj-split > .proj-split-media:last-child { order: 1; }
-  .proj-split-media { aspect-ratio: 16/9; min-height: unset; }
+  .proj-split-media { aspect-ratio: 16/9; min-height: unset; position: relative; }
+  .proj-split-media video,
+  .proj-split-media iframe { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
   .proj-split-text { padding: 32px 20px; }
   .proj-split-title { font-size: clamp(22px, 7vw, 36px); }
 
@@ -175,28 +148,6 @@
   /* ——— PROYECTOS: FOOTER ——— */
   .proj-footer { padding: 32px 20px; gap: 20px; }
   .proj-footer-next-title { font-size: clamp(22px, 7vw, 32px); }
-
-
-  /* ——— VÍDEOS EN SPLITS — forzar visible ——— */
-  .proj-split-media video,
-  .proj-split-media iframe { 
-    position: absolute; 
-    inset: 0; 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    display: block;
-  }
-  /* Hero vídeo en proyectos */
-  #hero video, #hero img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    display: block;
-  }
 
   /* ——— REEL SPLITS ——— */
   .proj-split-reel { grid-template-columns: 1fr; }
