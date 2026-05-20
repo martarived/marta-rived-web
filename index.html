@@ -6,6 +6,8 @@
 <title>Marta Ri · Suite Creativa</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}</script>
 <style>
 :root {
   --bg: #080d14;
@@ -592,7 +594,7 @@ const SOURCES = [
 ];
 let sources=[...SOURCES];
 let briefData=null, preguntasData=null;
-let pdfB64=null;
+let pdfB64=null, pdfText=null;
 
 function renderSources(){
   const l=document.getElementById('source-list');
@@ -627,9 +629,30 @@ function handlePDF(e){
   const f=e.target.files[0]; if(!f)return;
   const z=document.getElementById('upload-zone');
   z.classList.add('has-file');
-  z.innerHTML=`<div class="upload-icon">✓</div><div class="upload-name">${f.name}</div><div class="upload-hint">PDF cargado</div>`;
+  z.innerHTML=`<div class="upload-icon">✓</div><div class="upload-name">${f.name}</div><div class="upload-hint">Leyendo PDF...</div>`;
+
   const r=new FileReader();
-  r.onload=()=>{ pdfB64=r.result.split(',')[1]; };
+  r.onload=async()=>{
+    try{
+      // Extract text from PDF using PDF.js
+      const pdfjsLib=window.pdfjsLib;
+      if(!pdfjsLib){ pdfB64=r.result.split(',')[1]; z.querySelector('.upload-hint').textContent='PDF cargado (modo base64)'; return; }
+      const pdf=await pdfjsLib.getDocument({data:atob(r.result.split(',')[1])}).promise;
+      let text='';
+      for(let i=1;i<=Math.min(pdf.numPages,15);i++){
+        const page=await pdf.getPage(i);
+        const content=await page.getTextContent();
+        text+=content.items.map(item=>item.str).join(' ')+'\n';
+      }
+      pdfB64=null;
+      pdfText=text.trim();
+      z.querySelector('.upload-hint').textContent='PDF leído — '+pdf.numPages+' páginas';
+    } catch(err){
+      pdfB64=r.result.split(',')[1];
+      pdfText=null;
+      z.querySelector('.upload-hint').textContent='PDF cargado';
+    }
+  };
   r.readAsDataURL(f);
 }
 
@@ -659,18 +682,27 @@ async function analizarBriefing(){
   const briefText=document.getElementById('brief-text').value.trim();
   const misIdeas=document.getElementById('mis-ideas').value.trim();
   const numP=document.getElementById('num-p').value;
-  if(!briefText&&!pdfB64){document.getElementById('brief-text').focus();return;}
+  if(!briefText&&!pdfB64&&!pdfText){document.getElementById('brief-text').focus();return;}
   const btn=document.getElementById('brief-btn'); btn.disabled=true;
   const stepEls=showLSteps('brief-results',['Leyendo y analizando el briefing...','Identificando reto real, tensiones y vacíos...','Generando preguntas estratégicas...']);
   try{
     await activateLS(stepEls[0],100);
-    let messages;
-    if(pdfB64){
-      messages=[{role:'user',content:[{type:'document',source:{type:'base64',media_type:'application/pdf',data:pdfB64}},{type:'text',text:`Eres un estratega senior en sports business en Spodeal. Lee este briefing y extrae con precisión: el reto de negocio real, restricciones concretas, objetivos explícitos e implícitos, tensiones o contradicciones. SOLO JSON: {"resumen":"3 frases","reto":"1 frase potente","restricciones":["r1","r2","r3"],"objetivos":["obj1","obj2"],"tensiones":["t1","t2"],"vacios":["info que falta 1","info que falta 2"]}`}]}];
-    } else {
-      messages=[{role:'user',content:`Eres estratega senior en sports business en Spodeal. Analiza este briefing: ${briefText}. SOLO JSON: {"resumen":"3 frases","reto":"1 frase potente","restricciones":["r1"],"objetivos":["obj1"],"tensiones":["t1"],"vacios":["v1"]}`}];
-    }
-    const aText=await callAPI(messages,false);
+
+    // Build content from whatever source we have
+    const contenidoBrief = pdfText
+      ? `CONTENIDO DEL PDF:\n${pdfText.substring(0,4000)}`
+      : briefText
+      ? `BRIEFING:\n${briefText}`
+      : 'Sin briefing proporcionado';
+
+    const promptAnalisis=`Eres un estratega senior en sports business. Analiza este briefing y extrae con precisión el reto de negocio real, restricciones concretas, objetivos explícitos e implícitos, tensiones o contradicciones.
+
+${contenidoBrief}
+
+SOLO JSON sin texto extra ni backticks:
+{"resumen":"resumen en 3 frases","reto":"el reto de negocio real en 1 frase potente","restricciones":["r1","r2","r3"],"objetivos":["obj1","obj2"],"tensiones":["t1","t2"],"vacios":["info que falta 1","info que falta 2"]}`;
+
+    const aText=await callAPI([{role:'user',content:promptAnalisis}],false);
     briefData=JSON.parse(aText.replace(/```json|```/g,'').trim());
     await doneLS(stepEls[0]);
     await activateLS(stepEls[1],200); await doneLS(stepEls[1]);
