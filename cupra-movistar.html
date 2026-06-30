@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CUPRA x Movistar Team — Marta Rived</title>
+  <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+  <style>
+    @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
+
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; mix-blend-mode: difference; }
+    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); text-decoration: none; }
+    .nav-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: gap 0.2s; }
+    .nav-back:hover { gap: 16px; }
+    .nav-back::before { content: '←'; }
+
+    #hero { position: relative; height: 100vh; overflow: hidden; background: var(--ink); }
+    #hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    #hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,10,30,0.92) 0%, rgba(13,10,30,0.25) 50%, transparent 100%); }
+    #hero-content { position: absolute; bottom: 64px; left: 56px; z-index: 2; }
+    .hero-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(64px, 10vw, 140px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.88; color: var(--cream); }
+    .hero-title .dim { color: rgba(242,237,227,0.25); }
+
+    .proj-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-meta-item { padding: 36px 40px; border-right: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-meta-item:last-child { border-right: none; }
+    .proj-meta-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .proj-meta-value { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(16px, 2vw, 24px); text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); }
+
+    .proj-concept { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-concept-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+    .proj-concept-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
+    .proj-concept-line { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(36px, 5.5vw, 80px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 1.02; color: var(--ink); max-width: 920px; }
+
+    .proj-intro { padding: 96px 56px; display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
+    .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
+    .proj-intro-text a { color: var(--sea); text-decoration: none; border-bottom: 0.5px solid var(--sea); transition: opacity 0.2s; }
+    .proj-intro-text a:hover { opacity: 0.6; }
+    .proj-intro-text .exh-dates { display: block; font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sea); margin-bottom: 14px; }
+
+    .proj-video-full { padding: 0 56px; border-top: 0.5px solid rgba(13,10,30,0.08); border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-video-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); padding: 40px 0 20px; display: flex; align-items: center; gap: 16px; }
+    .proj-video-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
+    .proj-video-wrap-vertical { position: relative; width: 320px; max-width: 100%; aspect-ratio: 9/16; background: var(--ink); border-radius: 3px; overflow: hidden; margin: 0 auto 40px; }
+    .proj-video-wrap-vertical video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .proj-gallery { padding: 96px 0; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-gallery-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); padding: 0 56px 40px; display: flex; align-items: center; gap: 16px; }
+    .proj-gallery-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
+    .gallery-track { display: flex; gap: 24px; padding: 0 56px; overflow-x: hidden; }
+    .gallery-item { flex-shrink: 0; width: 280px; aspect-ratio: 3/4; border-radius: 3px; overflow: hidden; background: rgba(13,10,30,0.05); transition: transform 0.35s ease; }
+    .gallery-item:hover { transform: scale(1.02); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+    .gallery-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(13,10,30,0.28); border: 0.5px dashed rgba(13,10,30,0.15); }
+
+    .proj-posters { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .posters-grid { display: flex; justify-content: center; gap: 24px; max-width: 560px; margin: 0 auto; }
+    .poster-item { flex: 1; max-width: 240px; aspect-ratio: 3/4; border-radius: 3px; overflow: hidden; background: rgba(13,10,30,0.05); }
+    .poster-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .proj-roles { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 32px; }
+    .proj-role-item { padding: 40px 0; border-top: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-role-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 16px; }
+    .proj-role-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(20px, 2.5vw, 32px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 16px; color: var(--ink); }
+    .proj-role-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.85; color: rgba(13,10,30,0.55); }
+
+    .proj-footer { padding: 64px 56px; border-top: 0.5px solid rgba(13,10,30,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .proj-footer-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.2s, gap 0.2s; }
+    .proj-footer-back:hover { color: var(--ink); gap: 16px; }
+    .proj-footer-back::before { content: '←'; }
+    .proj-footer-next { text-decoration: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .proj-footer-next-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .proj-footer-next-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); transition: color 0.2s; display: flex; align-items: center; gap: 12px; }
+    .proj-footer-next-title::after { content: '→'; color: var(--sea); }
+    .proj-footer-next:hover .proj-footer-next-title { color: var(--sea); }
+
+    @media (max-width: 900px) {
+      .proj-intro { grid-template-columns: 1fr; gap: 24px; }
+      .proj-roles { grid-template-columns: 1fr; }
+      .posters-grid { max-width: 320px; }
+    }
+  </style>
+  <link rel="stylesheet" href="/mobile.css">
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">Marta Rived</a>
+  <a class="nav-back" href="index.html#work">Work</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816654/05_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_wl4ye5.jpg" alt="CUPRA x Movistar Team">
+  <div id="hero-overlay"></div>
+  <div id="hero-content">
+    <p class="hero-label">CUPRA · Movistar Team · Spodeal · 2025–2026</p>
+    <h1 class="hero-title">
+      Challenge<br>
+      <span class="dim">the way</span><br>
+      of riding
+    </h1>
+  </div>
+</section>
+
+<!-- META -->
+<div class="proj-meta">
+  <div class="proj-meta-item"><p class="proj-meta-label">Cliente</p><p class="proj-meta-value">CUPRA · Movistar Team</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Agencia</p><p class="proj-meta-value">Spodeal</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Año</p><p class="proj-meta-value">2025–2026</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Rol</p><p class="proj-meta-value">Dirección Creativa</p></div>
+</div>
+
+<!-- CONCEPTO -->
+<div class="proj-concept">
+  <p class="proj-concept-label">Concepto</p>
+  <p class="proj-concept-line">Challenge the way of riding</p>
+</div>
+
+<!-- INTRO -->
+<div class="proj-intro">
+  <p class="proj-intro-label">El proyecto</p>
+  <p class="proj-intro-text">Ganamos el pitch para activar el patrocinio de CUPRA x Movistar Team durante dos temporadas, con foco especial en el Gran Départ del Tour de Francia. Más allá del logo en el maillot, construimos un ecosistema de activaciones reales: social rides abiertas a la comunidad ciclista de Barcelona y una fan zone permanente en Casa CUPRA Raval, convertida durante unos días en un pequeño museo dedicado a la historia del equipo.</p>
+</div>
+
+<!-- HISTORIA SOBRE RUEDAS -->
+<div class="proj-intro" style="border-bottom: 0.5px solid rgba(13,10,30,0.08);">
+  <p class="proj-intro-label">Casa CUPRA Raval</p>
+  <p class="proj-intro-text">
+    <span class="exh-dates">26 junio — 4 julio</span>
+    Dentro de la fan zone montamos "Historia sobre ruedas", una pequeña exposición que repasa momentos icónicos del ciclismo reciente a través de piezas reales del Movistar Team: la bicicleta con la que Alejandro Valverde se proclamó campeón del mundo, la que Alex Dowsett usó para batir el récord de la hora, modelos de carretera y contrarreloj del equipo, una selección de maillots y cascos históricos, y la mítica Banesto de Miguel Indurain.
+    <br><br>
+    <a href="https://www.casa.seat/es/agenda/Historia-sobre-ruedas" target="_blank" rel="noopener">Ver la exposición en Casa SEAT →</a>
+  </p>
+</div>
+
+<!-- SOCIAL RIDE — REEL VERTICAL -->
+<div class="proj-video-full">
+  <p class="proj-video-label">1ª Social Ride</p>
+  <div class="proj-video-wrap-vertical">
+    <video src="https://res.cloudinary.com/doo07efjl/video/upload/v1782818724/1st_Social_Ride_Esta_vez_hemos_llenado_de_riders_las_calles_de_Barcelona.Gracias_a_todos_nue_botaom.mp4" controls muted playsinline loop></video>
+  </div>
+</div>
+
+<!-- CARTELES CASA RAVAL -->
+<div class="proj-posters">
+  <p class="proj-gallery-label">Carteles · Casa CUPRA Raval</p>
+  <div class="posters-grid">
+    <div class="poster-item"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782818800/imgi_27_726270076_18322719964280649_5340549359928123249_n_dmxlmj.jpg" alt="Cartel Casa CUPRA Raval — Historia sobre ruedas"></div>
+    <div class="poster-item"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782818801/imgi_30_724397250_18322473418280649_4668920434348426845_n_kvgdez.jpg" alt="Cartel Casa CUPRA Raval — Historia sobre ruedas"></div>
+  </div>
+</div>
+
+<!-- GALERÍA DE FOTOS — CARRUSEL -->
+<div class="proj-gallery">
+  <p class="proj-gallery-label">Galería</p>
+  <div class="gallery-track" id="gallery-track">
+    <div class="gallery-item"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816656/07_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_shbtsg.jpg" alt="CUPRA x Movistar Team — Grand Départ"></div>
+    <div class="gallery-item"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816654/09_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_qoth2i.jpg" alt="CUPRA x Movistar Team — Grand Départ"></div>
+    <div class="gallery-item"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816653/10_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_fnbtpi.jpg" alt="CUPRA x Movistar Team — Grand Départ"></div>
+    <div class="gallery-item"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816631/42_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_eqtvqs.jpg" alt="CUPRA x Movistar Team — Grand Départ"></div>
+    <div class="gallery-item"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816630/47_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_sszshj.jpg" alt="CUPRA x Movistar Team — Grand Départ"></div>
+    <div class="gallery-item"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816626/64_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_qyeo7j.jpg" alt="CUPRA x Movistar Team — Grand Départ"></div>
+    <div class="gallery-item" aria-hidden="true"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816656/07_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_shbtsg.jpg" alt=""></div>
+    <div class="gallery-item" aria-hidden="true"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816654/09_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_qoth2i.jpg" alt=""></div>
+    <div class="gallery-item" aria-hidden="true"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816653/10_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_fnbtpi.jpg" alt=""></div>
+    <div class="gallery-item" aria-hidden="true"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816631/42_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_eqtvqs.jpg" alt=""></div>
+    <div class="gallery-item" aria-hidden="true"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816630/47_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_sszshj.jpg" alt=""></div>
+    <div class="gallery-item" aria-hidden="true"><img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816626/64_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_qyeo7j.jpg" alt=""></div>
+  </div>
+</div>
+
+<!-- ROLES -->
+<div class="proj-roles">
+  <div class="proj-role-item">
+    <p class="proj-role-num">01</p>
+    <h3 class="proj-role-title">Dirección Creativa</h3>
+    <p class="proj-role-body">Lideré el concepto y la estrategia creativa del pitch ganador, y la dirección del despliegue de la activación a lo largo de las dos temporadas de patrocinio, con el Gran Départ del Tour de Francia como gran momento clave.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">02</p>
+    <h3 class="proj-role-title">Social Rides</h3>
+    <p class="proj-role-body">Diseñé el formato de las social rides — salidas en bici abiertas a la comunidad ciclista de Barcelona — como vía para acercar el patrocinio al público real, más allá de la audiencia televisiva del equipo.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">03</p>
+    <h3 class="proj-role-title">Fan Zone · Casa Raval</h3>
+    <p class="proj-role-body">Conceptualicé "Historia sobre ruedas", la exposición que convirtió Casa CUPRA Raval en un pequeño museo del Movistar Team, en colaboración con el equipo para seleccionar y narrar las piezas históricas.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="proj-footer">
+  <a class="proj-footer-back" href="index.html#work">Volver a Work</a>
+  <a class="proj-footer-next" href="bayer.html">
+    <span class="proj-footer-next-label">Siguiente proyecto</span>
+    <span class="proj-footer-next-title">Bayer</span>
+  </a>
+</div>
+
+<script>
+(function() {
+  var track = document.getElementById('gallery-track');
+  if (!track) return;
+  var speed = 0.6; // px por frame
+  var paused = false;
+  var halfWidth = 0;
+
+  function computeHalfWidth() {
+    halfWidth = track.scrollWidth / 2;
+  }
+  computeHalfWidth();
+  window.addEventListener('resize', computeHalfWidth);
+
+  track.addEventListener('mouseenter', function() { paused = true; });
+  track.addEventListener('mouseleave', function() { paused = false; });
+
+  function loop() {
+    if (!paused) {
+      track.scrollLeft += speed;
+      if (track.scrollLeft >= halfWidth) {
+        track.scrollLeft -= halfWidth;
+      }
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+
+</body>
+</html>
