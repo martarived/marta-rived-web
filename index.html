@@ -53,7 +53,6 @@
     #splash-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.6; }
     #hero-content { position: relative; z-index: 10; padding: 0 56px; max-width: 960px; transform-origin: left center; will-change: transform; display: flex; flex-direction: column; }
     .hero-label-top { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); opacity: 0; animation: up 0.6s ease forwards 0.3s; display: flex; align-items: center; gap: 12px; margin-bottom: 48px; }
-    .hero-label-top::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
     .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(88px, 14vw, 160px); line-height: 0.87; letter-spacing: -0.025em; color: var(--ink); text-transform: uppercase; opacity: 0; animation: up 0.9s ease forwards 0.55s; }
     .hero-title .dim { color: rgba(13,10,30,0.14); }
     .hero-sub { position: absolute; bottom: 48px; left: 56px; z-index: 20; display: flex; align-items: center; gap: 20px; opacity: 0; animation: up 0.7s ease forwards 1.05s; }
@@ -100,6 +99,10 @@
     .about-name .n1 { text-align: left; } .about-name .n2 { text-align: right; margin-top: -10px; }
     .about-bio { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
     .exp-section { padding: 48px 56px 40px; }
+    .cv-download-wrap { padding: 0 56px 80px; }
+    .cv-download-btn { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream); background: var(--ink); border: none; padding: 18px 40px; cursor: pointer; display: inline-flex; align-items: center; gap: 14px; text-decoration: none; border-radius: 2px; transition: background 0.2s, transform 0.2s; }
+    .cv-download-btn:hover { background: #1a1638; transform: translateY(-2px); }
+    .cv-download-btn svg { flex-shrink: 0; }
     .exp-cols { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 0.5px solid rgba(13,10,30,0.12); }
     .exp-col-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,10,30,0.28); }
     .exp-item { border-bottom: 0.5px solid rgba(13,10,30,0.1); overflow: hidden; cursor: default; }
@@ -115,9 +118,7 @@
 
     /* POSTERS */
     #posters-section { border-top: 0.5px solid rgba(13,10,30,0.06); border-bottom: 0.5px solid rgba(13,10,30,0.06); padding: 80px 0; background: var(--cream); overflow: hidden; }
-    .posters-track { display: flex; gap: 28px; padding: 0 80px; overflow-x: auto; scrollbar-width: none; cursor: grab; }
-    .posters-track::-webkit-scrollbar { display: none; }
-    .posters-track.grabbing { cursor: grabbing; }
+    .posters-track { display: flex; gap: 28px; padding: 0 80px; overflow-x: hidden; }
     .poster-card { flex-shrink: 0; width: 220px; height: 300px; border-radius: 2px; background-size: cover; background-position: center; transition: transform 0.35s ease; position: relative; box-shadow: 2px 4px 12px rgba(13,10,30,0.18); }
     .poster-card:hover { transform: scale(1.06); }
 
@@ -159,44 +160,10 @@
     .fade-up.visible { opacity: 1; transform: translateY(0); }
     @keyframes up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes draw-circle { to { stroke-dashoffset: 0; } }
-
-    /* UNDER CONSTRUCTION POPUP */
-    #uc-overlay { position: fixed; inset: 0; background: rgba(13,10,30,0.55); z-index: 998; }
-    #uc-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 999; background: var(--cream); border: 0.5px solid rgba(13,10,30,0.15); padding: 56px 64px; display: flex; flex-direction: column; align-items: center; gap: 28px; min-width: 360px; }
-    .uc-icon { animation: uc-pulse 2s ease infinite; }
-    @keyframes uc-pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-    .uc-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(28px, 4vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.95; color: var(--ink); text-align: center; }
-    .uc-title .dim { color: rgba(13,10,30,0.2); }
-    .uc-sub { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); text-align: center; }
-    .uc-btn { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); background: none; border: 0.5px solid rgba(13,10,30,0.2); padding: 14px 48px; cursor: pointer; transition: color 0.2s, border-color 0.2s; margin-top: 8px; display: inline-flex; align-items: center; gap: 14px; }
-    .uc-btn:hover { color: var(--ink); border-color: var(--ink); }
-    .uc-btn:hover .uc-btn-arrow { background: var(--ink); }
-    .uc-btn:hover .uc-btn-arrow::after { border-color: var(--ink); }
-    .uc-btn-arrow { display: block; width: 24px; height: 0.5px; background: rgba(13,10,30,0.3); position: relative; transition: background 0.2s; }
-    .uc-btn-arrow::after { content: ''; position: absolute; right: -1px; top: -3px; width: 5px; height: 5px; border-right: 0.5px solid rgba(13,10,30,0.3); border-bottom: 0.5px solid rgba(13,10,30,0.3); transform: rotate(-45deg); transition: border-color 0.2s; }
   </style>
   <link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
-
-<div id="uc-overlay" onclick="closeUC()"></div>
-<div id="uc-popup">
-  <svg class="uc-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 3L22 21H2L12 3Z" stroke="#0077a8" stroke-width="1" stroke-linejoin="round"/>
-    <line x1="12" y1="10" x2="12" y2="15" stroke="#0077a8" stroke-width="1" stroke-linecap="round"/>
-    <circle cx="12" cy="18" r="0.8" fill="#0077a8"/>
-  </svg>
-  <h2 class="uc-title">Under<br><span class="dim">construction</span><br>always on</h2>
-  <p class="uc-sub">BTW, salid y disfrutad</p>
-  <button class="uc-btn" onclick="closeUC()">OK <span class="uc-btn-arrow"></span></button>
-</div>
-
-<script>
-function closeUC() {
-  document.getElementById('uc-overlay').style.display = 'none';
-  document.getElementById('uc-popup').style.display = 'none';
-}
-</script>
 
 <div id="welcome-screen">
   <div id="welcome-texts">
@@ -299,6 +266,12 @@ function closeUC() {
       <div class="exp-body"><div class="exp-role">Grupo Planeta · SEAT · Heraldo de Aragón</div><div class="exp-desc">Early career internships across media, automotive and editorial industries.</div></div>
     </div>
   </div>
+  <div class="cv-download-wrap">
+    <a class="cv-download-btn" href="marta-rived-cv.pdf" download>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Descargar CV
+    </a>
+  </div>
 </section>
 
 <div id="posters-section">
@@ -310,6 +283,13 @@ function closeUC() {
     <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776683349/IMG_6659_ibwiyl.jpg');"></div>
     <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776696271/imgi_1_2a347f9d4a61e89631bab5f303eb2b72_ooji6m.jpg');"></div>
     <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/q_auto,f_auto/v1776696438/IMG_5725_lc4vkq.heic');"></div>
+    <div class="poster-card" aria-hidden="true" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_42_651671681_17999370065734956_1038806975697912338_n_pnfbqa.jpg');"></div>
+    <div class="poster-card" aria-hidden="true" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_48_662419569_18115643209672886_6517409684614708522_n_potdva.jpg');"></div>
+    <div class="poster-card" aria-hidden="true" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/q_auto,f_auto/v1776683350/IMG_5204_lpyh8p.heic');"></div>
+    <div class="poster-card" aria-hidden="true" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776683349/PHOTO-2026-01-18-22-02-49_qt7b5h.jpg');"></div>
+    <div class="poster-card" aria-hidden="true" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776683349/IMG_6659_ibwiyl.jpg');"></div>
+    <div class="poster-card" aria-hidden="true" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776696271/imgi_1_2a347f9d4a61e89631bab5f303eb2b72_ooji6m.jpg');"></div>
+    <div class="poster-card" aria-hidden="true" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/q_auto,f_auto/v1776696438/IMG_5725_lc4vkq.heic');"></div>
   </div>
 </div>
 
@@ -329,8 +309,13 @@ function closeUC() {
   <div class="contact-photo">
     <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1776436282/imgi_1_c11cc6eb297bb4fbaed18900adcf8374_kq5eke.jpg" alt="">
     <svg class="contact-circle" viewBox="0 0 320 520" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-      <ellipse cx="160" cy="200" rx="90" ry="105" stroke="#0077a8" stroke-width="2.5" opacity="0.9"
-      style="stroke-dasharray: 660; stroke-dashoffset: 660; animation: draw-circle 1.2s ease forwards 0.3s; fill: none;"
+      <path d="M158,92 C208,86 252,116 258,168 C264,220 230,270 178,282 C122,294 70,260 64,206 C58,150 96,104 148,94 C152,93 154,93 158,92 Z"
+      stroke="#0077a8" stroke-width="2.2" opacity="0.85" pathLength="100"
+      style="stroke-dasharray: 100; stroke-dashoffset: 100; animation: draw-circle 1.2s ease forwards 0.3s; fill: none;"
+      />
+      <path d="M150,100 C100,112 66,156 70,204 C74,254 124,290 180,278 C232,267 266,218 260,168 C255,124 216,92 168,96 C162,97 156,98 150,100 Z"
+      stroke="#0077a8" stroke-width="1.6" opacity="0.55" pathLength="100"
+      style="stroke-dasharray: 100; stroke-dashoffset: 100; animation: draw-circle 1.2s ease forwards 0.55s; fill: none;"
       />
     </svg>
   </div>
@@ -468,44 +453,27 @@ document.querySelectorAll('.overlay-link').forEach(function(link) {
   requestAnimationFrame(loop);
 })();
 
-/* POSTERS — scroll con inercia */
+/* POSTERS — auto-scroll infinito, sin pausas */
 (function() {
   var track = document.getElementById('posters-track');
   if (!track) return;
-  var vel = 0, raf;
-  function animate() {
-    if (Math.abs(vel) < 0.5) return;
-    track.scrollLeft += vel;
-    vel *= 0.92;
-    raf = requestAnimationFrame(animate);
+  var speed = 0.5;
+  var halfWidth = 0;
+
+  function computeHalfWidth() {
+    halfWidth = track.scrollWidth / 2;
   }
-  track.addEventListener('wheel', function(e) {
-    e.preventDefault();
-    vel += e.deltaY * 0.8;
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(animate);
-  }, { passive: false });
-  var down = false, startX, scrollLeft, lastX, lastT;
-  track.addEventListener('mousedown', function(e) {
-    down = true; vel = 0;
-    startX = e.pageX; scrollLeft = track.scrollLeft;
-    lastX = e.pageX; lastT = Date.now();
-    track.classList.add('grabbing');
-    cancelAnimationFrame(raf);
-  });
-  window.addEventListener('mouseup', function() {
-    if (!down) return;
-    down = false; track.classList.remove('grabbing');
-    raf = requestAnimationFrame(animate);
-  });
-  window.addEventListener('mousemove', function(e) {
-    if (!down) return;
-    var dx = e.pageX - startX;
-    track.scrollLeft = scrollLeft - dx;
-    var dt = Date.now() - lastT || 1;
-    vel = -(e.pageX - lastX) / dt * 16;
-    lastX = e.pageX; lastT = Date.now();
-  });
+  computeHalfWidth();
+  window.addEventListener('resize', computeHalfWidth);
+
+  function loop() {
+    track.scrollLeft += speed;
+    if (track.scrollLeft >= halfWidth) {
+      track.scrollLeft -= halfWidth;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
 })();
 
 /* TYPING — carga desde /api/feed (proxy propio de Vercel) */
