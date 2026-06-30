@@ -70,12 +70,13 @@
     .proj:nth-child(3)  { grid-column: span 5; } .proj:nth-child(4)  { grid-column: span 4; }
     .proj:nth-child(5)  { grid-column: span 8; } .proj:nth-child(6)  { grid-column: span 6; }
     .proj:nth-child(7)  { grid-column: span 6; } .proj:nth-child(8)  { grid-column: span 8; }
-    .proj:nth-child(9)  { grid-column: span 4; } .proj:nth-child(10) { grid-column: span 5; }
-    .proj:nth-child(11) { grid-column: span 7; } .proj:nth-child(12) { grid-column: span 6; }
+    .proj:nth-child(9)  { grid-column: span 5; } .proj:nth-child(10) { grid-column: span 4; }
+    .proj:nth-child(11) { grid-column: span 5; } .proj:nth-child(12) { grid-column: span 7; }
+    .proj:nth-child(13) { grid-column: span 6; }
     .proj { position: relative; overflow: hidden; border-radius: 3px; cursor: none; text-decoration: none; display: block; }
     .proj-img { width: 100%; aspect-ratio: 4/3; display: block; transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94); object-fit: cover; }
     .proj:nth-child(1) .proj-img, .proj:nth-child(2) .proj-img, .proj:nth-child(5) .proj-img, .proj:nth-child(8) .proj-img { aspect-ratio: 16/9; }
-    .proj:nth-child(3) .proj-img, .proj:nth-child(9) .proj-img { aspect-ratio: 3/4; }
+    .proj:nth-child(3) .proj-img, .proj:nth-child(10) .proj-img { aspect-ratio: 3/4; }
     .proj:hover .proj-img { transform: scale(1.03); }
     .proj-cursor-label { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10; font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(28px, 4vw, 56px); text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.9; color: #f2ede3; mix-blend-mode: difference; opacity: 0; transform: translate(-50%, -50%); transition: opacity 0.18s ease; will-change: transform; }
     .proj:hover .proj-cursor-label { opacity: 1; }
@@ -83,8 +84,9 @@
     .proj:nth-child(3) .proj-img { background: #b8b0a4; } .proj:nth-child(4) .proj-img { background: #a0998e; }
     .proj:nth-child(5) .proj-img { background: #b0a898; } .proj:nth-child(6) .proj-img { background: #bcb4a8; }
     .proj:nth-child(7) .proj-img { background: #a8a099; } .proj:nth-child(8) .proj-img { background: #b0a89c; }
-    .proj:nth-child(9) .proj-img { background: #c0b8ac; } .proj:nth-child(10) .proj-img { background: #b4aea4; }
-    .proj:nth-child(11) .proj-img { background: #aca6a0; } .proj:nth-child(12) .proj-img { background: #b8b2a8; }
+    .proj:nth-child(9) .proj-img { background: #9eb0a0; } .proj:nth-child(10) .proj-img { background: #c0b8ac; }
+    .proj:nth-child(11) .proj-img { background: #b4aea4; } .proj:nth-child(12) .proj-img { background: #aca6a0; }
+    .proj:nth-child(13) .proj-img { background: #b8b2a8; }
 
     /* ABOUT */
     #about { border-top: 0.5px solid rgba(13,10,30,0.08); }
@@ -249,6 +251,7 @@ function closeUC() {
     <a class="proj fade-up" href="square.html"><img class="proj-img" src="https://www.lavanguardia.com/uploads/2023/10/25/65392bcc7c9f3.jpeg" alt="Square" loading="lazy"><div class="proj-cursor-label">Square</div></a>
     <a class="proj fade-up" href="espanyol.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761079/RCD-STADIUM-09_zcncae.jpg" alt="RCD Espanyol" loading="lazy"><div class="proj-cursor-label">RCD Espanyol</div></a>
     <a class="proj fade-up" href="omg.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761703/imgi_17_357005306_17933487365695249_535778624782322737_n_vjriqm.jpg" alt="OMG!LaLiga" loading="lazy"><div class="proj-cursor-label">OMG!LaLiga</div></a>
+    <a class="proj fade-up" href="sevillafc.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1782819822/Captura_de_pantalla_2026-06-30_a_las_1.42.32_p._m._nkhhhp.png" alt="Sevilla FC x K9Win" loading="lazy"><div class="proj-cursor-label">Sevilla FC x K9Win</div></a>
     <a class="proj fade-up" href="girona.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/q_auto/f_auto/v1776423672/A7407434_iay3ew.jpg" alt="Girona FC" loading="lazy"><div class="proj-cursor-label">Girona FC</div></a>
     <a class="proj fade-up" href="gerrard.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776426504/423A2683_f0zkjl.jpg" alt="Steven Gerrard" loading="lazy"><div class="proj-cursor-label">Steven Gerrard</div></a>
     <a class="proj fade-up" href="esade.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761363/65e05573c7cd1_iraqqf.jpg" alt="Esade" loading="lazy"><div class="proj-cursor-label">Esade</div></a>
