@@ -27,8 +27,22 @@
     #welcome-btn { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(242,237,227,0.7); background: none; border: 0.5px solid rgba(242,237,227,0.25); padding: 16px 48px; cursor: pointer; transition: color 0.2s, border-color 0.2s; }
     #welcome-btn:hover { color: var(--cream); border-color: rgba(242,237,227,0.7); }
 
+    /* METEO BAR */
+    .meteo-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 28px; padding: 16px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); }
+    .meteo-left { display: flex; align-items: center; gap: 10px; }
+    .meteo-square { width: 9px; height: 9px; background: var(--sea); flex-shrink: 0; }
+    .meteo-clock, .meteo-weather { display: flex; align-items: center; gap: 7px; color: var(--ink); }
+    .meteo-clock svg, .meteo-weather svg { flex-shrink: 0; opacity: 0.7; }
+    .meteo-tz { color: var(--muted); margin-left: 2px; }
+    .meteo-stats { display: flex; align-items: center; gap: 16px; color: var(--muted); margin-left: auto; }
+    .meteo-stats span { color: var(--ink); }
+    @media (max-width: 900px) {
+      .meteo-bar { padding: 14px 24px; gap: 14px 20px; }
+      .meteo-stats { margin-left: 0; }
+    }
+
     /* NAV */
-    #nav { position: absolute; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; }
+    #nav { position: absolute; top: 56px; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; }
     .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); text-decoration: none; position: relative; z-index: 300; }
     .burger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; z-index: 300; position: relative; background: none; border: none; }
     .burger span { display: block; width: 24px; height: 1px; background: var(--ink); transition: transform 0.35s ease, opacity 0.25s ease, background 0.3s; transform-origin: center; }
@@ -100,8 +114,8 @@
     .about-bio { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
     .exp-section { padding: 48px 56px 40px; }
     .cv-download-wrap { padding: 0 56px 80px; }
-    .cv-download-btn { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream); background: var(--ink); border: none; padding: 18px 40px; cursor: pointer; display: inline-flex; align-items: center; gap: 14px; text-decoration: none; border-radius: 2px; transition: background 0.2s, transform 0.2s; }
-    .cv-download-btn:hover { background: #1a1638; transform: translateY(-2px); }
+    .cv-download-btn { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream); background: #141c4a; border: none; padding: 18px 40px; cursor: pointer; display: inline-flex; align-items: center; gap: 14px; text-decoration: none; border-radius: 2px; transition: background 0.2s, transform 0.2s; }
+    .cv-download-btn:hover { background: #202c6e; transform: translateY(-2px); }
     .cv-download-btn svg { flex-shrink: 0; }
     .exp-cols { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 0.5px solid rgba(13,10,30,0.12); }
     .exp-col-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,10,30,0.28); }
@@ -173,6 +187,26 @@
   </div>
   <div id="welcome-bottom">
     <button id="welcome-btn">Enter</button>
+  </div>
+</div>
+
+<div class="meteo-bar" id="meteo-bar">
+  <div class="meteo-left">
+    <span class="meteo-square"></span>
+    <span>Meteo.Barcelona</span>
+  </div>
+  <div class="meteo-clock">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    <span id="meteo-time">--:--:--</span><span class="meteo-tz">CEST</span>
+  </div>
+  <div class="meteo-weather">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M12 2.5v2.5M12 19v2.5M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2.5 12H5M19 12h2.5M4.2 19.8L6 18M18 6l1.8-1.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    <span id="meteo-temp">--°C</span>
+  </div>
+  <div class="meteo-stats">
+    <div>Precipitación: <span id="meteo-precip">-- mm</span></div>
+    <div>Humedad: <span id="meteo-hum">--%</span></div>
+    <div>Viento: <span id="meteo-wind">-- km/h</span></div>
   </div>
 </div>
 
@@ -566,5 +600,35 @@ document.querySelectorAll('.proj').forEach(function(proj) {
   });
 })();
 </script>
+<script>
+/* METEO BAR — reloj en vivo + tiempo real (Open-Meteo, sin API key) */
+(function() {
+  var timeEl = document.getElementById('meteo-time');
+  function tick() {
+    var now = new Date();
+    var formatted = now.toLocaleTimeString('es-ES', { timeZone: 'Europe/Madrid', hour12: false });
+    if (timeEl) timeEl.textContent = formatted;
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  function loadWeather() {
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=41.3851&longitude=2.1734&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m&timezone=Europe%2FMadrid')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var c = data.current;
+        if (!c) return;
+        document.getElementById('meteo-temp').textContent = Math.round(c.temperature_2m) + '°C';
+        document.getElementById('meteo-precip').textContent = c.precipitation + ' mm';
+        document.getElementById('meteo-hum').textContent = Math.round(c.relative_humidity_2m) + '%';
+        document.getElementById('meteo-wind').textContent = Math.round(c.wind_speed_10m) + ' km/h';
+      })
+      .catch(function() { /* deja los guiones por defecto si falla */ });
+  }
+  loadWeather();
+  setInterval(loadWeather, 10 * 60 * 1000); // refresco cada 10 min
+})();
+</script>
+
 </body>
 </html>
