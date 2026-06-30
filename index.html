@@ -67,8 +67,14 @@
     #splash-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.6; }
     #hero-content { position: relative; z-index: 10; padding: 0 56px; max-width: 960px; transform-origin: left center; will-change: transform; display: flex; flex-direction: column; }
     .hero-label-top { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); opacity: 0; animation: up 0.6s ease forwards 0.3s; display: flex; align-items: center; gap: 12px; margin-bottom: 48px; }
-    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(88px, 14vw, 160px); line-height: 0.87; letter-spacing: -0.025em; color: var(--ink); text-transform: uppercase; opacity: 0; animation: up 0.9s ease forwards 0.55s; }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(88px, 14vw, 160px); line-height: 0.87; letter-spacing: -0.025em; color: var(--ink); text-transform: uppercase; }
     .hero-title .dim { color: rgba(13,10,30,0.14); }
+    .hero-title-wrap { position: relative; width: 100%; height: calc(clamp(88px, 14vw, 160px) * 0.87 * 3); opacity: 0; animation: up 0.9s ease forwards 0.55s; }
+    .hero-title-wrap .hero-title { position: absolute; top: 0; left: 0; }
+    .hero-title-a { animation: hero-fade-a 9s ease-in-out infinite; }
+    .hero-title-b { animation: hero-fade-b 9s ease-in-out infinite; }
+    @keyframes hero-fade-a { 0%, 38% { opacity: 1; } 50%, 88% { opacity: 0; } 100% { opacity: 1; } }
+    @keyframes hero-fade-b { 0%, 38% { opacity: 0; } 50%, 88% { opacity: 1; } 100% { opacity: 0; } }
     .hero-sub { position: absolute; bottom: 48px; left: 56px; z-index: 20; display: flex; align-items: center; gap: 20px; opacity: 0; animation: up 0.7s ease forwards 1.05s; }
     .hero-sub span { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sea); }
     .hero-sub .sep { width: 1px; height: 12px; background: var(--sea); opacity: 0.5; }
@@ -234,7 +240,10 @@
   <canvas id="splash-canvas"></canvas>
   <div id="hero-content">
     <p class="hero-label-top">Creative Director · Barna</p>
-    <h1 class="hero-title">Creative<br><span class="dim">Playmaker</span><br>&amp; Brand<br><span class="dim">Storyteller</span></h1>
+    <div class="hero-title-wrap">
+      <h1 class="hero-title hero-title-a">I'M<br>MARTA<br><span class="dim">RIVED</span></h1>
+      <h1 class="hero-title hero-title-b">Creative<br><span class="dim">Playmaker</span><br>&amp; Brand <span class="dim">Storyteller</span></h1>
+    </div>
   </div>
   <div class="hero-sub">
     <span>Audiovisual</span><div class="sep"></div>
