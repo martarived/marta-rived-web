@@ -63,18 +63,21 @@
     .overlay-home:hover { color: var(--cream); }
 
     /* HERO */
-    #hero { position: relative; width: 100%; height: 100vh; overflow: hidden; background: var(--cream); display: flex; align-items: flex-end; padding-bottom: 120px; }
+    #hero { position: relative; width: 100%; height: 100vh; overflow: hidden; background: var(--cream); display: flex; align-items: flex-start; padding-top: 180px; }
     #splash-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.6; }
-    #hero-content { position: relative; z-index: 10; padding: 0 56px; max-width: 960px; transform-origin: left center; will-change: transform; display: flex; flex-direction: column; }
+    #hero-content { position: relative; z-index: 10; padding: 0 56px; max-width: 1500px; transform-origin: left center; will-change: transform; display: flex; flex-direction: column; }
     .hero-label-top { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); opacity: 0; animation: up 0.6s ease forwards 0.3s; display: flex; align-items: center; gap: 12px; margin-bottom: 48px; }
-    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(88px, 14vw, 160px); line-height: 0.87; letter-spacing: -0.025em; color: var(--ink); text-transform: uppercase; }
-    .hero-title .dim { color: rgba(13,10,30,0.14); }
-    .hero-title-wrap { position: relative; width: 100%; height: calc(clamp(88px, 14vw, 160px) * 0.87 * 3); opacity: 0; animation: up 0.9s ease forwards 0.55s; }
-    .hero-title-wrap .hero-title { position: absolute; top: 0; left: 0; }
-    .hero-title-a { animation: hero-fade-a 9s ease-in-out infinite; }
-    .hero-title-b { animation: hero-fade-b 9s ease-in-out infinite; }
-    @keyframes hero-fade-a { 0%, 38% { opacity: 1; } 50%, 88% { opacity: 0; } 100% { opacity: 1; } }
-    @keyframes hero-fade-b { 0%, 38% { opacity: 0; } 50%, 88% { opacity: 1; } 100% { opacity: 0; } }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(80px, 11.5vw, 140px); line-height: 0.87; letter-spacing: -0.025em; color: var(--ink); text-transform: uppercase; }
+    .hero-title-wrap { position: relative; width: 100%; height: calc(clamp(80px, 11.5vw, 140px) * 0.87 * 2); opacity: 1; }
+    .hero-title-wrap .hero-title { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; opacity: 0; }
+    .hero-title-1 { animation: hero-seq-1 8s ease-in-out infinite; }
+    .hero-title-2 { animation: hero-seq-2 8s ease-in-out infinite; }
+    .hero-title-3 { animation: hero-seq-3 8s ease-in-out infinite; }
+    .hero-title-4 { animation: hero-seq-4 8s ease-in-out infinite; }
+    @keyframes hero-seq-1 { 0% { opacity: 1; } 20% { opacity: 1; } 23% { opacity: 0; } 97% { opacity: 0; } 100% { opacity: 1; } }
+    @keyframes hero-seq-2 { 0% { opacity: 0; } 23% { opacity: 0; } 25% { opacity: 1; } 45% { opacity: 1; } 48% { opacity: 0; } 100% { opacity: 0; } }
+    @keyframes hero-seq-3 { 0% { opacity: 0; } 48% { opacity: 0; } 50% { opacity: 1; } 70% { opacity: 1; } 73% { opacity: 0; } 100% { opacity: 0; } }
+    @keyframes hero-seq-4 { 0% { opacity: 0; } 73% { opacity: 0; } 75% { opacity: 1; } 95% { opacity: 1; } 98% { opacity: 0; } 100% { opacity: 0; } }
     .hero-sub { position: absolute; bottom: 48px; left: 56px; z-index: 20; display: flex; align-items: center; gap: 20px; opacity: 0; animation: up 0.7s ease forwards 1.05s; }
     .hero-sub span { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sea); }
     .hero-sub .sep { width: 1px; height: 12px; background: var(--sea); opacity: 0.5; }
@@ -217,7 +220,7 @@
 </div>
 
 <nav id="nav">
-  <a class="nav-logo" href="#hero">Marta Rived</a>
+  <a class="nav-logo" href="#hero" aria-label="Marta Rived"></a>
   <button class="burger" id="burger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -241,8 +244,10 @@
   <div id="hero-content">
     <p class="hero-label-top">Creative Director · Barna</p>
     <div class="hero-title-wrap">
-      <h1 class="hero-title hero-title-a">I'M<br>MARTA<br><span class="dim">RIVED</span></h1>
-      <h1 class="hero-title hero-title-b">Creative<br><span class="dim">Playmaker</span><br>&amp; Brand <span class="dim">Storyteller</span></h1>
+      <h1 class="hero-title hero-title-1">I'M<br>MARTA RIVED</h1>
+      <h1 class="hero-title hero-title-2">AND<br>CREATIVE</h1>
+      <h1 class="hero-title hero-title-3">AND<br>PLAYMAKER</h1>
+      <h1 class="hero-title hero-title-4">AND<br>STORYTELLER</h1>
     </div>
   </div>
   <div class="hero-sub">
@@ -427,6 +432,7 @@
     ws.style.transition = 'transform 0.85s cubic-bezier(0.76,0,0.24,1)';
     ws.style.transform = 'translateY(-100%)';
     setTimeout(function() { ws.style.display = 'none'; }, 900);
+    if (window.restartHeroSequence) window.restartHeroSequence();
   });
 })();
 
@@ -609,6 +615,29 @@ document.querySelectorAll('.proj').forEach(function(proj) {
   });
 })();
 </script>
+<script>
+/* HERO TITLE — reinicia la secuencia cada vez que el hero vuelve a ser visible */
+(function() {
+  var heroEl = document.getElementById('hero');
+  var titles = document.querySelectorAll('.hero-title-wrap .hero-title');
+  if (!heroEl || !titles.length) return;
+
+  function restartSequence() {
+    titles.forEach(function(el) { el.style.animation = 'none'; });
+    void heroEl.offsetWidth; // fuerza reflow
+    titles.forEach(function(el) { el.style.animation = ''; });
+  }
+  window.restartHeroSequence = restartSequence;
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) restartSequence();
+    });
+  }, { threshold: 0.6 });
+  observer.observe(heroEl);
+})();
+</script>
+
 <script>
 /* METEO BAR — reloj en vivo + tiempo real (Open-Meteo, sin API key) */
 (function() {
