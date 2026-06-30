@@ -1,1098 +1,595 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marta Ri · Suite Creativa</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script>if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}</script>
-<style>
-:root {
-  --bg: #080d14;
-  --bg2: #0d1520;
-  --bg3: #132030;
-  --border: rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.18);
-  --text: #f0f0f0;
-  --text2: #8a9ab0;
-  --text3: #4a5a70;
-  --accent: #e03030;
-  --accent2: #ff4444;
-  --accent-navy: #1a3a6e;
-  --accent-navy2: #1e4080;
-  --danger: #e05555;
-  --success: #55a87a;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; }
-body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marta Rived</title>
+  <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+  <style>
+    @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Bold.ttf') format('truetype'); font-weight: 700; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --blue: #0057FF; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
 
-/* LAYOUT */
-.shell { display: flex; height: 100vh; overflow: hidden; }
-.sidebar { width: 240px; flex-shrink: 0; background: linear-gradient(180deg, #0d1a2e 0%, #0a1220 100%); border-right: 1px solid rgba(26,58,110,0.4); display: flex; flex-direction: column; }
-.main { flex: 1; overflow-y: auto; }
+    /* WELCOME */
+    #welcome-screen { position: fixed; inset: 0; background: var(--ink); z-index: 999; display: flex; flex-direction: column; justify-content: center; padding: 56px; padding-bottom: 56px; overflow: hidden; }
+    #welcome-texts { position: relative; z-index: 2; }
+    .wline { font-family: 'Foun','Arial Narrow',sans-serif; font-size: clamp(28px,7.5vw,112px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.9; color: var(--cream); opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .wline.dim1 { color: rgba(242,237,227,0.45); }
+    .wline.dim2 { color: rgba(242,237,227,0.2); }
+    .gif-item { position: fixed; opacity: 0; transition: opacity 0.8s ease; border-radius: 2px; overflow: hidden; z-index: 1; pointer-events: none; }
+    .gif-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    #welcome-bottom { position: fixed; bottom: 56px; right: 56px; opacity: 0; transition: opacity 0.6s ease; z-index: 2; }
+    #welcome-btn { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(242,237,227,0.7); background: none; border: 0.5px solid rgba(242,237,227,0.25); padding: 16px 48px; cursor: pointer; transition: color 0.2s, border-color 0.2s; }
+    #welcome-btn:hover { color: var(--cream); border-color: rgba(242,237,227,0.7); }
 
-/* SIDEBAR */
-.logo { padding: 28px 24px 20px; border-bottom: 1px solid rgba(26,58,110,0.4); }
-.logo-mark { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
-.logo-mark span { color: var(--accent); }
-.logo-sub { font-size: 10px; color: var(--text3); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 2px; }
-.nav { flex: 1; padding: 16px 0; }
-.nav-section { padding: 6px 24px 4px; font-size: 9px; color: var(--text3); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 8px; }
-.nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 24px; font-size: 13px; color: var(--text2); cursor: pointer; border-left: 2px solid transparent; transition: all 0.15s; }
-.nav-item:hover { color: var(--text); background: rgba(255,255,255,0.03); }
-.nav-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(224,48,48,0.08); }
-.nav-item .icon { font-size: 15px; width: 18px; text-align: center; }
-.sidebar-footer { padding: 16px 24px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text3); }
+    /* NAV */
+    #nav { position: absolute; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; }
+    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); text-decoration: none; position: relative; z-index: 300; }
+    .burger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; z-index: 300; position: relative; background: none; border: none; }
+    .burger span { display: block; width: 24px; height: 1px; background: var(--ink); transition: transform 0.35s ease, opacity 0.25s ease, background 0.3s; transform-origin: center; }
+    .burger.open span { background: var(--cream); }
+    .burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-/* PANELS */
-.panel { display: none; padding: 40px 48px; max-width: 860px; }
-.panel.active { display: block; }
-.panel-header { margin-bottom: 32px; }
-.panel-tag { font-size: 10px; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
-.panel-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--text); line-height: 1.2; }
-.panel-desc { font-size: 14px; color: var(--text2); margin-top: 8px; line-height: 1.6; }
+    /* OVERLAY */
+    #overlay { position: fixed; inset: 0; background: var(--ink); z-index: 250; display: flex; flex-direction: column; justify-content: center; padding: 0 56px; opacity: 0; pointer-events: none; transition: opacity 0.45s ease; }
+    #overlay.open { opacity: 1; pointer-events: all; }
+    .overlay-links { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .overlay-links a { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(48px, 8vw, 96px); font-weight: 400; text-transform: uppercase; color: var(--cream); text-decoration: none; letter-spacing: -0.02em; line-height: 0.95; display: block; transition: color 0.2s ease; opacity: 0.85; }
+    .overlay-links a:hover { color: var(--sea); opacity: 1; }
+    .overlay-bottom { position: absolute; bottom: 36px; left: 56px; right: 56px; display: flex; justify-content: space-between; align-items: center; }
+    .overlay-tagline { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; font-style: italic; letter-spacing: 0.06em; color: rgba(242,237,227,0.22); }
+    .overlay-home { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(242,237,227,0.22); text-decoration: none; transition: color 0.2s; }
+    .overlay-home:hover { color: var(--cream); }
 
-/* FIELDS */
-.field { margin-bottom: 16px; }
-.field label { display: block; font-size: 11px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
-.field input, .field select, .field textarea {
-  width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
-  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 10px 14px;
-  outline: none; transition: border-color 0.15s;
-}
-.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--border2); }
-.field textarea { min-height: 90px; resize: vertical; }
-.field select { cursor: pointer; }
-.field select option { background: var(--bg2); }
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    /* HERO */
+    #hero { position: relative; width: 100%; height: 100vh; overflow: hidden; background: var(--cream); display: flex; align-items: flex-end; padding-bottom: 120px; }
+    #splash-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.6; }
+    #hero-content { position: relative; z-index: 10; padding: 0 56px; max-width: 960px; transform-origin: left center; will-change: transform; display: flex; flex-direction: column; }
+    .hero-label-top { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); opacity: 0; animation: up 0.6s ease forwards 0.3s; display: flex; align-items: center; gap: 12px; margin-bottom: 48px; }
+    .hero-label-top::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(88px, 14vw, 160px); line-height: 0.87; letter-spacing: -0.025em; color: var(--ink); text-transform: uppercase; opacity: 0; animation: up 0.9s ease forwards 0.55s; }
+    .hero-title .dim { color: rgba(13,10,30,0.14); }
+    .hero-sub { position: absolute; bottom: 48px; left: 56px; z-index: 20; display: flex; align-items: center; gap: 20px; opacity: 0; animation: up 0.7s ease forwards 1.05s; }
+    .hero-sub span { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sea); }
+    .hero-sub .sep { width: 1px; height: 12px; background: var(--sea); opacity: 0.5; }
+    #hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 280px; background: linear-gradient(to bottom, transparent 0%, var(--cream) 100%); z-index: 15; pointer-events: none; }
 
-/* CHIPS */
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-.chip { padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; border: 1px solid var(--border); color: var(--text2); background: transparent; transition: all 0.15s; }
-.chip:hover { border-color: var(--border2); color: var(--text); }
-.chip.active { border-color: var(--accent); color: var(--accent); background: rgba(224,48,48,0.08); }
+    /* WORK */
+    #work { padding: 0 56px 120px; background: var(--cream); }
+    .section-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); padding: 40px 0 48px; display: flex; align-items: center; gap: 16px; }
+    .section-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
+    .work-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 96px 32px; }
+    .proj:nth-child(1)  { grid-column: span 7; } .proj:nth-child(2)  { grid-column: span 7; }
+    .proj:nth-child(3)  { grid-column: span 5; } .proj:nth-child(4)  { grid-column: span 4; }
+    .proj:nth-child(5)  { grid-column: span 8; } .proj:nth-child(6)  { grid-column: span 6; }
+    .proj:nth-child(7)  { grid-column: span 6; } .proj:nth-child(8)  { grid-column: span 8; }
+    .proj:nth-child(9)  { grid-column: span 4; } .proj:nth-child(10) { grid-column: span 5; }
+    .proj:nth-child(11) { grid-column: span 7; } .proj:nth-child(12) { grid-column: span 6; }
+    .proj { position: relative; overflow: hidden; border-radius: 3px; cursor: none; text-decoration: none; display: block; }
+    .proj-img { width: 100%; aspect-ratio: 4/3; display: block; transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94); object-fit: cover; }
+    .proj:nth-child(1) .proj-img, .proj:nth-child(2) .proj-img, .proj:nth-child(5) .proj-img, .proj:nth-child(8) .proj-img { aspect-ratio: 16/9; }
+    .proj:nth-child(3) .proj-img, .proj:nth-child(9) .proj-img { aspect-ratio: 3/4; }
+    .proj:hover .proj-img { transform: scale(1.03); }
+    .proj-cursor-label { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10; font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(28px, 4vw, 56px); text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.9; color: #f2ede3; mix-blend-mode: difference; opacity: 0; transform: translate(-50%, -50%); transition: opacity 0.18s ease; will-change: transform; }
+    .proj:hover .proj-cursor-label { opacity: 1; }
+    .proj:nth-child(1) .proj-img { background: #9aa4ac; } .proj:nth-child(2) .proj-img { background: #a8a098; }
+    .proj:nth-child(3) .proj-img { background: #b8b0a4; } .proj:nth-child(4) .proj-img { background: #a0998e; }
+    .proj:nth-child(5) .proj-img { background: #b0a898; } .proj:nth-child(6) .proj-img { background: #bcb4a8; }
+    .proj:nth-child(7) .proj-img { background: #a8a099; } .proj:nth-child(8) .proj-img { background: #b0a89c; }
+    .proj:nth-child(9) .proj-img { background: #c0b8ac; } .proj:nth-child(10) .proj-img { background: #b4aea4; }
+    .proj:nth-child(11) .proj-img { background: #aca6a0; } .proj:nth-child(12) .proj-img { background: #b8b2a8; }
 
-/* BUTTONS */
-.btn-primary { width: 100%; padding: 12px; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; border-radius: 8px; background: var(--accent); color: #fff; border: none; margin-top: 20px; letter-spacing: 0.02em; transition: all 0.15s; }
-.btn-primary:hover { background: var(--accent2); }
-.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-.btn-sec { padding: 8px 16px; font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; border-radius: 8px; background: transparent; color: var(--text2); border: 1px solid var(--border); transition: all 0.15s; }
-.btn-sec:hover { border-color: var(--border2); color: var(--text); }
-.btn-ghost { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; font-size: 11px; color: var(--text3); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
-.btn-ghost:hover { border-color: var(--border2); color: var(--text2); }
+    /* ABOUT */
+    #about { border-top: 0.5px solid rgba(13,10,30,0.08); }
+    .about-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+    .about-photo-col { overflow: hidden; }
+    .about-photo-col img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    .about-right { padding: 48px 56px; display: flex; flex-direction: column; justify-content: flex-end; gap: clamp(20px, 4vw, 48px); }
+    .about-name .n1, .about-name .n2 { display: block; font-family: 'Foun', 'Arial Narrow', sans-serif; font-weight: 400; font-size: clamp(52px, 7.5vw, 96px); text-transform: uppercase; color: var(--ink); line-height: 0.86; letter-spacing: -0.02em; }
+    .about-name .n1 { text-align: left; } .about-name .n2 { text-align: right; margin-top: -10px; }
+    .about-bio { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: rgba(13,10,30,0.6); }
+    .exp-section { padding: 48px 56px 40px; }
+    .exp-cols { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 0.5px solid rgba(13,10,30,0.12); }
+    .exp-col-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,10,30,0.28); }
+    .exp-item { border-bottom: 0.5px solid rgba(13,10,30,0.1); overflow: hidden; cursor: default; }
+    .exp-row { display: flex; align-items: baseline; justify-content: space-between; padding: 20px 0; transition: opacity 0.2s; }
+    .exp-item:hover .exp-row { opacity: 0.45; }
+    .exp-company { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3.8vw, 44px); color: var(--ink); text-transform: uppercase; letter-spacing: -0.01em; line-height: 1; }
+    .exp-year { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(20px, 2.8vw, 36px); color: rgba(13,10,30,0.2); letter-spacing: -0.01em; }
+    .exp-body { max-height: 0; overflow: hidden; transition: max-height 0.45s cubic-bezier(0.25,0.46,0.45,0.94), padding 0.3s ease; }
+    .exp-item:hover .exp-body { max-height: 200px; padding-bottom: 22px; }
+    .exp-role { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+    .exp-desc { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.75; color: rgba(13,10,30,0.5); margin-bottom: 8px; }
+    .exp-brands { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.06em; color: rgba(13,10,30,0.3); line-height: 1.7; }
 
-/* DIVIDER */
-.divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+    /* POSTERS */
+    #posters-section { border-top: 0.5px solid rgba(13,10,30,0.06); border-bottom: 0.5px solid rgba(13,10,30,0.06); padding: 80px 0; background: var(--cream); overflow: hidden; }
+    .posters-track { display: flex; gap: 28px; padding: 0 80px; overflow-x: auto; scrollbar-width: none; cursor: grab; }
+    .posters-track::-webkit-scrollbar { display: none; }
+    .posters-track.grabbing { cursor: grabbing; }
+    .poster-card { flex-shrink: 0; width: 220px; height: 300px; border-radius: 2px; background-size: cover; background-position: center; transition: transform 0.35s ease; position: relative; box-shadow: 2px 4px 12px rgba(13,10,30,0.18); }
+    .poster-card:hover { transform: scale(1.06); }
 
-/* SECTION LABEL */
-.slabel { font-size: 9px; color: var(--text3); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px; }
+    /* TYPING */
+    #typing { border-top: 0.5px solid rgba(13,10,30,0.08); padding-bottom: 120px; }
+    .typing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 64px 32px; padding: 0 56px; }
+    .typing-post { text-decoration: none; display: block; cursor: pointer; }
+    .typing-img { width: 100%; aspect-ratio: 3/2; border-radius: 3px; overflow: hidden; transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); background-size: cover; background-position: center; }
+    .typing-post:hover .typing-img { transform: scale(1.02); }
+    .typing-info { margin-top: 20px; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 14px; }
+    .typing-num { grid-row: 1/3; font-family: 'Foun', sans-serif; font-size: 11px; color: var(--sea); padding-top: 4px; }
+    .typing-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(18px, 2.2vw, 28px); text-transform: uppercase; color: var(--ink); letter-spacing: -0.01em; line-height: 0.95; transition: color 0.2s; }
+    .typing-post:hover .typing-title { color: rgba(13,10,30,0.4); }
+    .typing-date { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 6px; display: block; }
 
-/* STEP INDICATOR */
-.steps { display: flex; align-items: center; gap: 0; margin-bottom: 32px; }
-.step-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text3); flex-shrink: 0; font-family: 'Playfair Display', serif; }
-.step-dot.curr { border-color: var(--accent); color: var(--accent); }
-.step-dot.done { background: rgba(224,48,48,0.15); border-color: var(--accent); color: var(--accent); }
-.step-line { flex: 1; height: 1px; background: var(--border); }
-.step-label { font-size: 10px; color: var(--text3); margin-left: 8px; }
+    /* CONTACT */
+    #contact { border-top: 0.5px solid rgba(13,10,30,0.08); display: grid; grid-template-columns: 320px 1fr; min-height: 520px; }
+    .contact-photo { overflow: hidden; border-right: 0.5px solid rgba(13,10,30,0.06); position: relative; }
+    .contact-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; filter: grayscale(12%); transition: filter 0.5s; }
+    .contact-photo:hover img { filter: grayscale(0%); }
+    .contact-circle { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .contact-left { padding: 64px 56px; display: flex; flex-direction: column; justify-content: space-between; }
+    .contact-left .section-label { padding: 0 0 56px; }
+    .contact-main { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
+    .contact-big { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(36px, 5vw, 68px); text-transform: uppercase; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; line-height: 1.05; transition: color 0.2s; display: block; }
+    .contact-big:hover { color: rgba(13,10,30,0.28); }
+    .contact-socials { display: flex; align-items: center; gap: 12px; margin-top: 32px; }
+    .contact-link { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sea); text-decoration: none; transition: color 0.2s; }
+    .contact-link:hover { color: var(--ink); }
+    .contact-sep { color: rgba(13,10,30,0.2); font-size: 11px; }
+    .contact-footer { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(13,10,30,0.18); margin-top: 16px; }
 
-/* LOADING */
-.loading-steps { padding: 20px 0; }
-.lstep { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text3); padding: 6px 0; opacity: 0.4; transition: opacity 0.3s; }
-.lstep.active { opacity: 1; color: var(--text2); }
-.lstep.done { opacity: 0.5; }
-.lstep-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); flex-shrink: 0; }
-.lstep.active .lstep-dot { background: var(--accent); }
-.lstep.done .lstep-dot { background: var(--success); }
+    /* TYPING SKELETON */
+    .typing-skeleton .typing-img { background: rgba(13,10,30,0.06); animation: shimmer 1.4s ease infinite; }
+    .typing-skeleton .typing-title { background: rgba(13,10,30,0.06); border-radius: 2px; height: 1em; width: 80%; animation: shimmer 1.4s ease infinite; color: transparent; }
+    .typing-skeleton .typing-date { background: rgba(13,10,30,0.04); border-radius: 2px; height: 0.8em; width: 40%; display: block; margin-top: 8px; animation: shimmer 1.4s ease infinite; }
+    @keyframes shimmer { 0%,100%{opacity:0.5} 50%{opacity:1} }
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    @keyframes up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes draw-circle { to { stroke-dashoffset: 0; } }
 
-/* CARDS */
-.card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; }
-.card-title { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--text); margin-bottom: 6px; }
-.card-sub { font-size: 13px; color: var(--text2); line-height: 1.6; }
-.card-copy { font-size: 14px; color: var(--text); font-style: italic; border-left: 2px solid var(--accent); padding-left: 14px; margin: 12px 0; line-height: 1.5; }
-.tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
-.tag { font-size: 10px; padding: 3px 8px; border-radius: 4px; background: rgba(255,255,255,0.05); color: var(--text2); border: 1px solid var(--border); }
-.tag.accent { background: rgba(200,169,110,0.1); color: var(--accent); border-color: rgba(200,169,110,0.2); }
-.insight-box { background: rgba(224,48,48,0.06); border: 1px solid rgba(224,48,48,0.2); border-radius: 8px; padding: 14px 18px; margin: 12px 0; }
-.insight-box p { font-size: 13px; color: #ff7070; line-height: 1.6; font-style: italic; }
-.refs-box { background: rgba(255,255,255,0.03); border-radius: 6px; padding: 10px 14px; margin-top: 10px; }
-.refs-box p { font-size: 11px; color: var(--text3); line-height: 1.6; }
-.refs-title { font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
-
-/* ACTIVACION CARD */
-.act-card { border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; }
-.act-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
-.act-name { font-size: 14px; font-weight: 500; color: var(--text); }
-.act-desc { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 6px; }
-.badge { font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
-.badge-km { background: rgba(26,58,110,0.4); color: #6a9eff; border: 1px solid rgba(26,58,110,0.6); }
-.badge-canal { background: rgba(85,168,122,0.12); color: var(--success); }
-.badge-budget { background: rgba(224,85,85,0.1); color: var(--danger); }
-.badge-target { background: rgba(255,255,255,0.06); color: var(--text2); }
-
-/* Q ITEMS */
-.q-item { border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; }
-.q-num { font-size: 10px; color: var(--text3); letter-spacing: 0.08em; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
-.q-text { font-size: 14px; color: var(--text); font-weight: 500; line-height: 1.5; margin-bottom: 4px; }
-.q-why { font-size: 12px; color: var(--text3); line-height: 1.4; }
-
-/* PROPUESTA SECTION */
-.prop-section { margin-bottom: 18px; }
-.prop-section h3 { font-size: 12px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
-.prop-section p { font-size: 13px; color: var(--text2); line-height: 1.7; }
-.prop-section ul { padding-left: 16px; margin-top: 6px; }
-.prop-section li { font-size: 13px; color: var(--text2); line-height: 1.7; }
-
-/* PILAR */
-.pilar-card { border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; }
-.pilar-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
-.pilar-num { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--accent); opacity: 0.6; }
-.pilar-desc { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 8px; }
-
-/* SOURCE LIST */
-.source-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
-.source-item input[type=checkbox] { width: 14px; height: 14px; accent-color: var(--accent); cursor: pointer; }
-.source-item label { font-size: 13px; color: var(--text); cursor: pointer; flex: 1; }
-.source-url { font-size: 11px; color: var(--text3); }
-.add-source { display: flex; gap: 8px; margin-top: 12px; }
-.add-source input { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 8px 12px; outline: none; }
-
-/* SLIDER */
-.slider-row { display: flex; align-items: center; gap: 12px; }
-.slider-row input[type=range] { flex: 1; accent-color: var(--accent); }
-.slider-val { font-size: 14px; font-weight: 500; color: var(--accent); min-width: 20px; }
-
-/* ERROR */
-.error-msg { font-size: 13px; color: var(--danger); padding: 12px 0; }
-
-/* UPLOAD ZONE */
-.upload-zone { border: 1px dashed var(--border2); border-radius: 12px; padding: 28px; text-align: center; cursor: pointer; transition: all 0.15s; }
-.upload-zone:hover { border-color: var(--accent); background: rgba(200,169,110,0.03); }
-.upload-zone.has-file { border-style: solid; border-color: var(--accent); background: rgba(200,169,110,0.04); }
-.upload-icon { font-size: 32px; margin-bottom: 8px; }
-.upload-text { font-size: 13px; color: var(--text2); }
-.upload-hint { font-size: 11px; color: var(--text3); margin-top: 4px; }
-.upload-name { font-size: 14px; font-weight: 500; color: var(--accent); }
-</style>
+    /* UNDER CONSTRUCTION POPUP */
+    #uc-overlay { position: fixed; inset: 0; background: rgba(13,10,30,0.55); z-index: 998; }
+    #uc-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 999; background: var(--cream); border: 0.5px solid rgba(13,10,30,0.15); padding: 56px 64px; display: flex; flex-direction: column; align-items: center; gap: 28px; min-width: 360px; }
+    .uc-icon { animation: uc-pulse 2s ease infinite; }
+    @keyframes uc-pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .uc-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(28px, 4vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.95; color: var(--ink); text-align: center; }
+    .uc-title .dim { color: rgba(13,10,30,0.2); }
+    .uc-sub { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); text-align: center; }
+    .uc-btn { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); background: none; border: 0.5px solid rgba(13,10,30,0.2); padding: 14px 48px; cursor: pointer; transition: color 0.2s, border-color 0.2s; margin-top: 8px; display: inline-flex; align-items: center; gap: 14px; }
+    .uc-btn:hover { color: var(--ink); border-color: var(--ink); }
+    .uc-btn:hover .uc-btn-arrow { background: var(--ink); }
+    .uc-btn:hover .uc-btn-arrow::after { border-color: var(--ink); }
+    .uc-btn-arrow { display: block; width: 24px; height: 0.5px; background: rgba(13,10,30,0.3); position: relative; transition: background 0.2s; }
+    .uc-btn-arrow::after { content: ''; position: absolute; right: -1px; top: -3px; width: 5px; height: 5px; border-right: 0.5px solid rgba(13,10,30,0.3); border-bottom: 0.5px solid rgba(13,10,30,0.3); transform: rotate(-45deg); transition: border-color 0.2s; }
+  </style>
+  <link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
 
-<div class="shell">
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="logo">
-      <div class="logo-mark">Marta Ri<span>.</span></div>
-      <div class="logo-sub">Suite Creativa</div>
-    </div>
-    <nav class="nav">
-      <div class="nav-section">Flujo principal</div>
-      <div class="nav-item active" onclick="showPanel('briefing', this)">
-        <span class="icon">①</span> Briefing
-      </div>
-      <div class="nav-item" onclick="showPanel('preguntas', this)">
-        <span class="icon">②</span> Preguntas
-      </div>
-      <div class="nav-item" onclick="showPanel('concepto', this)">
-        <span class="icon">③</span> Concepto
-      </div>
-      <div class="nav-section">Herramientas</div>
-      <div class="nav-item" onclick="showPanel('fichas', this)">
-        <span class="icon">▣</span> Fichas
-      </div>
-      <div class="nav-item" onclick="showPanel('propuesta', this)">
-        <span class="icon">◈</span> Propuesta
-      </div>
-      <div class="nav-item" onclick="showPanel('contenido', this)">
-        <span class="icon">◈</span> Contenido
-      </div>
-      <div class="nav-section">Config</div>
-      <div class="nav-item" onclick="showPanel('fuentes', this)">
-        <span class="icon">◎</span> Fuentes
-      </div>
-    </nav>
-    <div class="sidebar-footer">Powered by Claude · Marta Ri © 2025</div>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main">
-
-    <!-- PANEL: BRIEFING -->
-    <div id="panel-briefing" class="panel active">
-      <div class="panel-header">
-        <div class="panel-tag">01 · Flujo principal</div>
-        <div class="panel-title">Análisis de briefing</div>
-        <div class="panel-desc">Sube el PDF del cliente o escribe el contexto. La herramienta extrae el reto real, detecta vacíos y genera las preguntas estratégicas que le harías a la marca.</div>
-      </div>
-
-      <div class="steps">
-        <div class="step-dot curr" id="sd1">1</div>
-        <div class="step-line"></div>
-        <div class="step-dot" id="sd2">2</div>
-        <div class="step-line"></div>
-        <div class="step-dot" id="sd3">3</div>
-        <div class="step-line"></div>
-        <div class="step-dot" id="sd4">4</div>
-      </div>
-
-      <div class="upload-zone" id="upload-zone" onclick="document.getElementById('pdf-input').click()">
-        <div class="upload-icon">⌁</div>
-        <div class="upload-text">Arrastra el PDF del briefing o haz clic para seleccionarlo</div>
-        <div class="upload-hint">Si no tienes PDF, usa el campo de texto</div>
-        <input type="file" id="pdf-input" accept=".pdf" style="display:none;" onchange="handlePDF(event)">
-      </div>
-
-      <div class="field" style="margin-top:16px;">
-        <label>Contexto del briefing (texto libre)</label>
-        <textarea id="brief-text" placeholder="Ej: CaixaBank patrocina 25 clubes de LaLiga y quiere evolucionar de activaciones locales a una estrategia nacional unificada. Buscan un concepto paraguas que les posicione como 'el banco del fútbol'..."></textarea>
-      </div>
-
-      <div class="field">
-        <label>Tus ideas, concepto previo o direcciones creativas <span style="color:var(--text3);font-size:10px;text-transform:none;">(opcional pero enriquece el output)</span></label>
-        <textarea id="mis-ideas" placeholder="Escribe cualquier idea propia, insight que hayas detectado, concepto que tengas rondando, referencias que te gusten, restricciones que has identificado..."></textarea>
-      </div>
-
-      <div class="field-row">
-        <div class="field">
-          <label>Preguntas a generar</label>
-          <div class="slider-row">
-            <input type="range" id="num-p" min="3" max="10" value="6" step="1" oninput="document.getElementById('num-p-out').textContent=this.value">
-            <span class="slider-val" id="num-p-out">6</span>
-          </div>
-        </div>
-        <div class="field">
-          <label>Conceptos finales</label>
-          <div class="slider-row">
-            <input type="range" id="num-c" min="2" max="5" value="3" step="1" oninput="document.getElementById('num-c-out').textContent=this.value">
-            <span class="slider-val" id="num-c-out">3</span>
-          </div>
-        </div>
-      </div>
-
-      <button class="btn-primary" id="brief-btn" onclick="analizarBriefing()">Analizar briefing y generar preguntas →</button>
-      <div id="brief-results"></div>
-    </div>
-
-    <!-- PANEL: PREGUNTAS -->
-    <div id="panel-preguntas" class="panel">
-      <div class="panel-header">
-        <div class="panel-tag">02 · Flujo principal</div>
-        <div class="panel-title">Preguntas estratégicas</div>
-        <div class="panel-desc">Preguntas detectadas como críticas para completar el brief. Úsalas para tu conversación con el cliente — en reunión, por email, como quieras.</div>
-      </div>
-      <div id="preguntas-list"><p style="font-size:13px;color:var(--text3);">Primero analiza el briefing.</p></div>
-      <div id="resp-area" style="display:none;">
-        <hr class="divider">
-        <div class="slabel">Respuestas del cliente</div>
-        <div class="field">
-          <label>Pega aquí las respuestas — email, notas de reunión, lo que tengas</label>
-          <textarea id="resp-cliente" style="min-height:120px;" placeholder="Las respuestas del cliente al Q&A..."></textarea>
-        </div>
-        <button class="btn-primary" id="gen-concepto-btn" onclick="generarConcepto()">Generar concepto y activaciones →</button>
-      </div>
-    </div>
-
-    <!-- PANEL: CONCEPTO -->
-    <div id="panel-concepto" class="panel">
-      <div class="panel-header">
-        <div class="panel-tag">03 · Flujo principal</div>
-        <div class="panel-title">Plataforma creativa</div>
-        <div class="panel-desc">Concepto paraguas con activaciones por key moment — en la estructura real de una propuesta Spodeal.</div>
-      </div>
-      <div id="concepto-results"><p style="font-size:13px;color:var(--text3);">Completa el flujo de briefing primero.</p></div>
-    </div>
-
-    <!-- PANEL: FICHAS -->
-    <div id="panel-fichas" class="panel">
-      <div class="panel-header">
-        <div class="panel-tag">Herramientas</div>
-        <div class="panel-title">Fichas de activación</div>
-        <div class="panel-desc">Genera la ficha visual de cada activación — Key Moment, Location, Objetivo, Insight, La Idea y tags — en el formato de presentación de Spodeal.</div>
-      </div>
-
-      <!-- FORM -->
-      <div id="ficha-form">
-        <div class="field-row">
-          <div class="field">
-            <label>Número de activación</label>
-            <input type="text" id="f-num" placeholder="03." value="01.">
-          </div>
-          <div class="field">
-            <label>Sección</label>
-            <input type="text" id="f-seccion" placeholder="Activación" value="ACTIVACIÓN">
-          </div>
-        </div>
-        <div class="field">
-          <label>Nombre de la activación</label>
-          <input type="text" id="f-nombre" placeholder="CAPTURA AL LIDL">
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Key moment</label>
-            <input type="text" id="f-km" placeholder="Durante las etapas de La Vuelta en Andalucía.">
-          </div>
-          <div class="field">
-            <label>Location</label>
-            <input type="text" id="f-location" placeholder="A lo largo del recorrido.">
-          </div>
-        </div>
-        <div class="field">
-          <label>Objetivo</label>
-          <textarea id="f-objetivo" style="min-height:60px;" placeholder="Atraer miradas hacia el equipo Lidl-Trek, generar leads y contenido UGC a través de una dinámica participativa."></textarea>
-        </div>
-        <div class="field">
-          <label>Insight</label>
-          <textarea id="f-insight" style="min-height:60px;" placeholder="Un ciclista profesional del Lidl-Trek hace lo que hace con exactamente los mismos recursos que tú: producto fresco de Lidl."></textarea>
-        </div>
-        <div class="field">
-          <label>La idea</label>
-          <textarea id="f-idea" style="min-height:60px;" placeholder="Sorteamos una bicicleta Lidl-Trek entre quieres participen en la captura."></textarea>
-        </div>
-        <div class="field">
-          <label>Tags <span style="color:var(--text3);font-size:10px;text-transform:none;font-weight:400;">— se generan automáticamente, puedes editarlos</span></label>
-          <div id="f-tags-chips" style="display:flex;flex-wrap:wrap;gap:6px;min-height:32px;padding:8px 0;" onclick="focusTagInput()"></div>
-          <input type="text" id="f-tags-input" placeholder="Añadir tag manualmente y pulsar Enter..." style="margin-top:4px;" onkeydown="addManualTag(event)">
-          <input type="hidden" id="f-tags">
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Color de fondo (hex)</label>
-            <div style="display:flex;gap:8px;align-items:center;">
-              <input type="text" id="f-color" value="#0057A8" style="flex:1;" oninput="syncColor(this.value)">
-              <input type="color" id="f-colorpicker" value="#0057A8" style="width:40px;height:38px;border:1px solid var(--border);border-radius:6px;background:none;cursor:pointer;padding:2px;" oninput="syncColorPicker(this.value)">
-            </div>
-          </div>
-          <div class="field">
-            <label>Color de etiquetas (hex)</label>
-            <div style="display:flex;gap:8px;align-items:center;">
-              <input type="text" id="f-tagcolor" value="#FFD700" style="flex:1;" oninput="syncTagColor(this.value)">
-              <input type="color" id="f-tagcolorpicker" value="#FFD700" style="width:40px;height:38px;border:1px solid var(--border);border-radius:6px;background:none;cursor:pointer;padding:2px;" oninput="syncTagColorPicker(this.value)">
-            </div>
-          </div>
-        </div>
-        <div class="field">
-          <label>URL de imagen (opcional)</label>
-          <input type="text" id="f-img" placeholder="https://... o deja vacío para fondo sólido">
-        </div>
-        <div style="display:flex;gap:10px;margin-top:8px;">
-          <button class="btn-primary" style="flex:1;margin-top:0;" onclick="generarFicha()">Generar ficha →</button>
-          <button class="btn-sec" onclick="autorellenarFicha()">Autorrellenar con IA ↗</button>
-        </div>
-      </div>
-
-      <!-- PREVIEW -->
-      <div id="ficha-preview" style="display:none;margin-top:32px;">
-        <hr class="divider" style="margin-bottom:24px;">
-        <div class="slabel" style="margin-bottom:16px;">Vista previa</div>
-        <div id="ficha-card"></div>
-        <div style="margin-top:16px;display:flex;gap:8px;">
-          <button class="btn-sec" onclick="document.getElementById('ficha-preview').style.display='none';document.getElementById('ficha-form').style.display='block';">← Editar</button>
-          <button class="btn-sec" onclick="nuevaFicha()">+ Nueva ficha</button>
-          <button class="btn-primary" style="margin-top:0;flex:1;" onclick="generarPrompts()">Generar prompts de imagen ↗</button>
-        </div>
-
-        <!-- PROMPTS OUTPUT -->
-        <div id="prompts-area" style="display:none;margin-top:24px;">
-          <hr class="divider" style="margin-bottom:20px;">
-          <div class="slabel" style="margin-bottom:16px;">Prompts para generación de imagen</div>
-
-          <!-- CHATGPT / DALL-E -->
-          <div class="card" style="margin-bottom:12px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <span style="font-size:16px;">✦</span>
-                <span style="font-size:13px;font-weight:500;color:var(--text);">ChatGPT / DALL-E</span>
-              </div>
-              <button class="btn-ghost" onclick="copyPrompt('prompt-dalle')">Copiar</button>
-            </div>
-            <div id="prompt-dalle" style="font-size:12px;color:var(--text2);line-height:1.7;background:rgba(255,255,255,0.03);border-radius:6px;padding:12px 14px;white-space:pre-wrap;"></div>
-          </div>
-
-          <!-- GEMINI -->
-          <div class="card" style="margin-bottom:12px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <span style="font-size:16px;">◈</span>
-                <span style="font-size:13px;font-weight:500;color:var(--text);">Gemini Imagen</span>
-              </div>
-              <button class="btn-ghost" onclick="copyPrompt('prompt-gemini')">Copiar</button>
-            </div>
-            <div id="prompt-gemini" style="font-size:12px;color:var(--text2);line-height:1.7;background:rgba(255,255,255,0.03);border-radius:6px;padding:12px 14px;white-space:pre-wrap;"></div>
-          </div>
-
-          <!-- MIDJOURNEY -->
-          <div class="card" style="margin-bottom:12px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <span style="font-size:16px;">⬡</span>
-                <span style="font-size:13px;font-weight:500;color:var(--text);">Midjourney</span>
-              </div>
-              <button class="btn-ghost" onclick="copyPrompt('prompt-mj')">Copiar</button>
-            </div>
-            <div id="prompt-mj" style="font-size:12px;color:var(--text2);line-height:1.7;background:rgba(255,255,255,0.03);border-radius:6px;padding:12px 14px;white-space:pre-wrap;"></div>
-          </div>
-
-          <div id="prompts-loading" style="display:none;padding:16px 0;">
-            <div class="loading-steps">
-              <div class="lstep active" id="pl1"><div class="lstep-dot"></div>Analizando la activación...</div>
-              <div class="lstep" id="pl2"><div class="lstep-dot"></div>Generando prompt para ChatGPT / DALL-E...</div>
-              <div class="lstep" id="pl3"><div class="lstep-dot"></div>Adaptando para Gemini Imagen...</div>
-              <div class="lstep" id="pl4"><div class="lstep-dot"></div>Optimizando para Midjourney...</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PANEL: PROPUESTA -->
-    <div id="panel-propuesta" class="panel">
-      <div class="panel-header">
-        <div class="panel-tag">Herramientas</div>
-        <div class="panel-title">Propuesta comercial</div>
-        <div class="panel-desc">Genera la estructura de propuesta con contexto de mercado real, en el formato de Spodeal.</div>
-      </div>
-      <div class="field">
-        <label>Cliente / proyecto</label>
-        <input type="text" id="p-cliente" placeholder="Ej: Sprinter — Propuesta fitness club 2025">
-      </div>
-      <div class="field">
-        <label>Contexto</label>
-        <textarea id="p-contexto" placeholder="Ej: Sprinter quiere crear un fitness club pero solo sabe el target y el presupuesto. Sin concepto claro, sin ciudad definida más allá de las principales..."></textarea>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Tipo de propuesta</label>
-          <select id="p-tipo">
-            <option value="patrocinio">Propuesta de patrocinio</option>
-            <option value="activacion">Propuesta de activación</option>
-            <option value="campana">Propuesta de campaña</option>
-            <option value="contenido">Propuesta de contenido</option>
-            <option value="evento">Propuesta de evento</option>
-            <option value="storydoing">Propuesta de storydoing</option>
-            <option value="agencia">Propuesta de agencia / servicio</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Tono</label>
-          <select id="p-tono">
-            <option value="estrategico">Estratégico y analítico</option>
-            <option value="creativo">Creativo e inspiracional</option>
-            <option value="comercial">Comercial y directo</option>
-            <option value="premium">Premium y aspiracional</option>
-          </select>
-        </div>
-      </div>
-      <div class="field">
-        <label>Secciones</label>
-        <div class="chips" id="p-secciones">
-          <span class="chip active" data-val="sobre_spodeal">Sobre Spodeal</span>
-          <span class="chip active" data-val="contexto">Contexto y enfoque</span>
-          <span class="chip active" data-val="plataforma">Plataforma creativa</span>
-          <span class="chip active" data-val="activaciones">Propuesta activación</span>
-          <span class="chip" data-val="activos">Activos disponibles</span>
-          <span class="chip" data-val="casos">Case studies</span>
-          <span class="chip" data-val="pricing">Pricing</span>
-          <span class="chip" data-val="kpis">KPIs propuestos</span>
-        </div>
-      </div>
-      <button class="btn-primary" id="p-btn" onclick="generarPropuesta()">Generar propuesta →</button>
-      <div id="p-results"></div>
-    </div>
-
-    <!-- PANEL: CONTENIDO -->
-    <div id="panel-contenido" class="panel">
-      <div class="panel-header">
-        <div class="panel-tag">Herramientas</div>
-        <div class="panel-title">Estrategia de contenido</div>
-        <div class="panel-desc">Pilares editoriales con tendencias reales del sector, formatos y ejemplos concretos.</div>
-      </div>
-      <div class="field">
-        <label>Marca o proyecto</label>
-        <input type="text" id="cont-marca" placeholder="Ej: Lidl-Trek — activación Vuelta a España 2025">
-      </div>
-      <div class="field">
-        <label>Contexto y audiencia</label>
-        <textarea id="cont-contexto" placeholder="Ej: Patrocinador del equipo ciclista Lidl-Trek. Carrefour patrocina La Vuelta que pasa por Andalucía. Quieren activar en tienda física pero sin presencia del equipo en esa zona..."></textarea>
-      </div>
-      <div class="field">
-        <label>Canales</label>
-        <div class="chips" id="cont-canales">
-          <span class="chip active" data-val="instagram">Instagram</span>
-          <span class="chip active" data-val="tiktok">TikTok</span>
-          <span class="chip" data-val="twitter">X / Twitter</span>
-          <span class="chip" data-val="youtube">YouTube</span>
-          <span class="chip" data-val="linkedin">LinkedIn</span>
-          <span class="chip" data-val="instore">In-store / físico</span>
-          <span class="chip" data-val="newsletter">Newsletter</span>
-          <span class="chip" data-val="ooh">OOH / exterior</span>
-        </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Horizonte</label>
-          <select id="cont-horizonte">
-            <option value="mes">1 mes</option>
-            <option value="trimestre" selected>Trimestre</option>
-            <option value="temporada">Temporada completa</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Pilares de contenido</label>
-          <div class="slider-row">
-            <input type="range" id="cont-num" min="3" max="6" value="4" step="1" oninput="document.getElementById('cont-num-out').textContent=this.value">
-            <span class="slider-val" id="cont-num-out">4</span>
-          </div>
-        </div>
-      </div>
-      <button class="btn-primary" id="cont-btn" onclick="generarContenido()">Generar estrategia →</button>
-      <div id="cont-results"></div>
-    </div>
-
-    <!-- PANEL: FUENTES -->
-    <div id="panel-fuentes" class="panel">
-      <div class="panel-header">
-        <div class="panel-tag">Configuración</div>
-        <div class="panel-title">Fuentes de referencia</div>
-        <div class="panel-desc">Fuentes fijas activas en todos los módulos + búsqueda dinámica en tiempo real en cada generación.</div>
-      </div>
-      <div class="slabel">Fuentes fijas</div>
-      <div id="source-list"></div>
-      <div class="add-source">
-        <input type="text" id="ns-name" placeholder="Nombre">
-        <input type="text" id="ns-url" placeholder="URL o tema de búsqueda">
-        <button class="btn-sec" onclick="addSource()">+ Añadir</button>
-      </div>
-      <hr class="divider">
-      <div class="slabel">Búsqueda en tiempo real — temas activos</div>
-      <div class="chips" id="live-topics">
-        <span class="chip active" data-val="sports sponsorship activations 2025">Activaciones patrocinio</span>
-        <span class="chip active" data-val="sports marketing campaigns creative 2025">Campañas marketing</span>
-        <span class="chip active" data-val="sports brand partnerships storydoing">Storydoing</span>
-        <span class="chip active" data-val="experiential marketing sports events">Experiential</span>
-        <span class="chip" data-val="athlete ambassador marketing">Athlete marketing</span>
-        <span class="chip" data-val="sports fan engagement digital">Fan engagement</span>
-        <span class="chip" data-val="sports content strategy social media">Content strategy</span>
-      </div>
-    </div>
-
-  </main>
+<div id="uc-overlay" onclick="closeUC()"></div>
+<div id="uc-popup">
+  <svg class="uc-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 3L22 21H2L12 3Z" stroke="#0077a8" stroke-width="1" stroke-linejoin="round"/>
+    <line x1="12" y1="10" x2="12" y2="15" stroke="#0077a8" stroke-width="1" stroke-linecap="round"/>
+    <circle cx="12" cy="18" r="0.8" fill="#0077a8"/>
+  </svg>
+  <h2 class="uc-title">Under<br><span class="dim">construction</span><br>always on</h2>
+  <p class="uc-sub">BTW, salid y disfrutad</p>
+  <button class="uc-btn" onclick="closeUC()">OK <span class="uc-btn-arrow"></span></button>
 </div>
 
 <script>
-const SOURCES = [
-  {name:'Sportico',url:'sportico.com',active:true},
-  {name:'Front Office Sports',url:'frontofficesports.com',active:true},
-  {name:'SportsPro',url:'sportspromedia.com',active:true},
-  {name:'The Athletic',url:'theathletic.com',active:true},
-  {name:'Nielsen Sports',url:'nielsen.com/sports',active:true},
-  {name:'SportBusiness',url:'sportbusiness.com',active:true},
-  {name:'Hashtag Sports',url:'hashtagsports.com',active:true},
-  {name:'Fast Company',url:'fastcompany.com',active:true},
-  {name:'Marca',url:'marca.com',active:false},
-  {name:'AS',url:'as.com',active:false},
-];
-let sources=[...SOURCES];
-let briefData=null, preguntasData=null;
-let pdfB64=null, pdfText=null;
-
-function renderSources(){
-  const l=document.getElementById('source-list');
-  l.innerHTML=sources.map((s,i)=>`<div class="source-item"><input type="checkbox" id="src${i}" ${s.active?'checked':''} onchange="sources[${i}].active=!sources[${i}].active"><label for="src${i}">${s.name}</label><span class="source-url">${s.url}</span></div>`).join('');
+function closeUC() {
+  document.getElementById('uc-overlay').style.display = 'none';
+  document.getElementById('uc-popup').style.display = 'none';
 }
-function addSource(){
-  const n=document.getElementById('ns-name').value.trim(), u=document.getElementById('ns-url').value.trim();
-  if(!n||!u)return;
-  sources.push({name:n,url:u,active:true});
-  renderSources();
-  document.getElementById('ns-name').value='';
-  document.getElementById('ns-url').value='';
-}
-renderSources();
+</script>
 
-document.querySelectorAll('.chips').forEach(c=>{
-  c.addEventListener('click',e=>{if(e.target.classList.contains('chip'))e.target.classList.toggle('active');});
+<div id="welcome-screen">
+  <div id="welcome-texts">
+    <div id="wl0" class="wline">Benvingudes<span class="dim1">Benvinguts</span></div>
+    <div id="wl1" class="wline dim1">Bienvenidas<span class="dim2">Bienvenidos</span></div>
+    <div id="wl2" class="wline dim2">Welcome</div>
+  </div>
+  <div id="welcome-bottom">
+    <button id="welcome-btn">Enter</button>
+  </div>
+</div>
+
+<nav id="nav">
+  <a class="nav-logo" href="#hero">Marta Rived</a>
+  <button class="burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div id="overlay">
+  <ul class="overlay-links">
+    <li><a href="#work" class="overlay-link">Work</a></li>
+    <li><a href="#about" class="overlay-link">About me</a></li>
+    <li><a href="#typing" class="overlay-link">Typing</a></li>
+    <li><a href="#contact" class="overlay-link">Contact</a></li>
+  </ul>
+  <div class="overlay-bottom">
+    <span class="overlay-tagline">Somewhere between WIP and OOO.</span>
+    <a href="#hero" class="overlay-home overlay-link">↑ Inicio</a>
+  </div>
+</div>
+
+<section id="hero">
+  <canvas id="splash-canvas"></canvas>
+  <div id="hero-content">
+    <p class="hero-label-top">Creative Director · Barna</p>
+    <h1 class="hero-title">Creative<br><span class="dim">Playmaker</span><br>&amp; Brand<br><span class="dim">Storyteller</span></h1>
+  </div>
+  <div class="hero-sub">
+    <span>Audiovisual</span><div class="sep"></div>
+    <span>Brand</span><div class="sep"></div>
+    <span>Content</span>
+  </div>
+</section>
+
+<section id="work">
+  <p class="section-label fade-up">Work</p>
+  <div class="work-grid">
+    <a class="proj fade-up" href="cupra-movistar.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816654/05_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_wl4ye5.jpg" alt="CUPRA x Movistar Team" loading="lazy"><div class="proj-cursor-label">CUPRA x Movistar Team</div></a>
+    <a class="proj fade-up" href="bayer.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776425520/Vivir_pese_a_la_enfermedad_gracias_a_la_investigacio%CC%81n__Nos_mantiene_con_vida__1-6_screenshot_czxviq.png" alt="Bayer" loading="lazy"><div class="proj-cursor-label">Bayer</div></a>
+    <a class="proj fade-up" href="ford.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776760775/Captura-de-pantalla-2024-12-17-a-las-10.05.23_df89tr.png" alt="Ford" loading="lazy"><div class="proj-cursor-label">Ford</div></a>
+    <a class="proj fade-up" href="mustang.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776760908/_Mira_sin_manos__o_el_coche_que_conduce_solo_0-5_screenshot_mf1msy.png" alt="Mustang" loading="lazy"><div class="proj-cursor-label">Mustang</div></a>
+    <a class="proj fade-up" href="30-anos.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776426169/imgi_40_662213554_18335354548171084_3076492245538951113_n_puh8xp.jpg" alt="30 años" loading="lazy"><div class="proj-cursor-label">30 años no son nada</div></a>
+    <a class="proj fade-up" href="square.html"><img class="proj-img" src="https://www.lavanguardia.com/uploads/2023/10/25/65392bcc7c9f3.jpeg" alt="Square" loading="lazy"><div class="proj-cursor-label">Square</div></a>
+    <a class="proj fade-up" href="espanyol.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761079/RCD-STADIUM-09_zcncae.jpg" alt="RCD Espanyol" loading="lazy"><div class="proj-cursor-label">RCD Espanyol</div></a>
+    <a class="proj fade-up" href="omg.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761703/imgi_17_357005306_17933487365695249_535778624782322737_n_vjriqm.jpg" alt="OMG!LaLiga" loading="lazy"><div class="proj-cursor-label">OMG!LaLiga</div></a>
+    <a class="proj fade-up" href="girona.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/q_auto/f_auto/v1776423672/A7407434_iay3ew.jpg" alt="Girona FC" loading="lazy"><div class="proj-cursor-label">Girona FC</div></a>
+    <a class="proj fade-up" href="gerrard.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776426504/423A2683_f0zkjl.jpg" alt="Steven Gerrard" loading="lazy"><div class="proj-cursor-label">Steven Gerrard</div></a>
+    <a class="proj fade-up" href="esade.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761363/65e05573c7cd1_iraqqf.jpg" alt="Esade" loading="lazy"><div class="proj-cursor-label">Esade</div></a>
+    <a class="proj fade-up" href="colhogar.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761161/Co%CC%81mo_es_posible_controlar_el_mal_olor_del_ban%CC%83o__1-32_screenshot_lnlupw.png" alt="Colhogar" loading="lazy"><div class="proj-cursor-label">Colhogar</div></a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-hero">
+    <div class="about-photo-col">
+      <img src="https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla" alt="Marta Rived">
+    </div>
+    <div class="about-right">
+      <div class="about-name">
+        <span class="n1">Marta</span>
+        <span class="n2">Rived</span>
+      </div>
+      <p class="about-bio">"Te voy a escribir la canción más bonita del mundo. Voy a capturar nuestra historia tan solo un segundo." Creative, Storyteller and Playmaker. Turning brand values into impactful ideas, campaigns and experiences — from concept and copy to talent direction and production execution.</p>
+    </div>
+  </div>
+  <div class="exp-section">
+    <div class="exp-cols"><span class="exp-col-label">Company</span><span class="exp-col-label">Year</span></div>
+    <div class="exp-item">
+      <div class="exp-row"><span class="exp-company">Spodeal</span><span class="exp-year">2025</span></div>
+      <div class="exp-body"><div class="exp-role">Creative Manager · Barcelona</div><div class="exp-desc">Turning brand values into impactful ideas, campaigns and experiences.</div><div class="exp-brands">Vueling · Girona FC · CUPRA · Sprinter · CaixaBank · Volkswagen · LaLiga · RFEF · Baskonia-Alavés · Sevilla FC · Steven Gerrard</div></div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-row"><span class="exp-company">La Vanguardia</span><span class="exp-year">2023</span></div>
+      <div class="exp-body"><div class="exp-role">Creative Strategist & Brand Storyteller · Barcelona</div><div class="exp-desc">Branded content, social and audiovisual storytelling from concept and copy to talent direction and production execution.</div><div class="exp-brands">Ford · Bayer · Novartis · El Corte Inglés · ESADE · Square · Samsung · Colhogar · Paris 2024 Olympics · Correos · La Vuelta · Puig</div></div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-row"><span class="exp-company">NSN</span><span class="exp-year">2020</span></div>
+      <div class="exp-body"><div class="exp-role">Creative Manager · Barcelona</div><div class="exp-desc">Brand narratives and storytelling across sport and entertainment.</div><div class="exp-brands">Andrés Iniesta · Bojan Krkić · Heura Foods · FC Barcelona · Capitten · LaLiga · Samsung · RCD Espanyol · Joventut de Badalona · Guava Bikes · Iniesta Academy · iFeel · CUPRA</div></div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-row"><span class="exp-company">NTT Data</span><span class="exp-year">2019</span></div>
+      <div class="exp-body"><div class="exp-role">Creative & Content Manager · Barcelona</div><div class="exp-desc">End-to-end creative project delivery, from concept and audiovisual direction to client management.</div><div class="exp-brands">Vueling · Ajuntament de Barcelona · CaixaBank · Tangity / NTT Data</div></div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-row"><span class="exp-company">Internship</span><span class="exp-year">2015</span></div>
+      <div class="exp-body"><div class="exp-role">Grupo Planeta · SEAT · Heraldo de Aragón</div><div class="exp-desc">Early career internships across media, automotive and editorial industries.</div></div>
+    </div>
+  </div>
+</section>
+
+<div id="posters-section">
+  <div class="posters-track" id="posters-track">
+    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_42_651671681_17999370065734956_1038806975697912338_n_pnfbqa.jpg');"></div>
+    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776436597/imgi_48_662419569_18115643209672886_6517409684614708522_n_potdva.jpg');"></div>
+    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/q_auto,f_auto/v1776683350/IMG_5204_lpyh8p.heic');"></div>
+    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776683349/PHOTO-2026-01-18-22-02-49_qt7b5h.jpg');"></div>
+    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776683349/IMG_6659_ibwiyl.jpg');"></div>
+    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/v1776696271/imgi_1_2a347f9d4a61e89631bab5f303eb2b72_ooji6m.jpg');"></div>
+    <div class="poster-card" style="background-image:url('https://res.cloudinary.com/doo07efjl/image/upload/q_auto,f_auto/v1776696438/IMG_5725_lc4vkq.heic');"></div>
+  </div>
+</div>
+
+<section id="typing">
+  <p class="section-label fade-up" style="padding: 80px 56px 48px;">Typing</p>
+  <div class="typing-grid" id="typing-grid">
+    <a class="typing-post fade-up typing-skeleton" href="#"><div class="typing-img"></div><div class="typing-info"><span class="typing-num">—</span><h3 class="typing-title">&nbsp;</h3><span class="typing-date">&nbsp;</span></div></a>
+    <a class="typing-post fade-up typing-skeleton" href="#"><div class="typing-img"></div><div class="typing-info"><span class="typing-num">—</span><h3 class="typing-title">&nbsp;</h3><span class="typing-date">&nbsp;</span></div></a>
+    <a class="typing-post fade-up typing-skeleton" href="#"><div class="typing-img"></div><div class="typing-info"><span class="typing-num">—</span><h3 class="typing-title">&nbsp;</h3><span class="typing-date">&nbsp;</span></div></a>
+    <a class="typing-post fade-up typing-skeleton" href="#"><div class="typing-img"></div><div class="typing-info"><span class="typing-num">—</span><h3 class="typing-title">&nbsp;</h3><span class="typing-date">&nbsp;</span></div></a>
+    <a class="typing-post fade-up typing-skeleton" href="#"><div class="typing-img"></div><div class="typing-info"><span class="typing-num">—</span><h3 class="typing-title">&nbsp;</h3><span class="typing-date">&nbsp;</span></div></a>
+    <a class="typing-post fade-up typing-skeleton" href="#"><div class="typing-img"></div><div class="typing-info"><span class="typing-num">—</span><h3 class="typing-title">&nbsp;</h3><span class="typing-date">&nbsp;</span></div></a>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-photo">
+    <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1776436282/imgi_1_c11cc6eb297bb4fbaed18900adcf8374_kq5eke.jpg" alt="">
+    <svg class="contact-circle" viewBox="0 0 320 520" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <ellipse cx="160" cy="200" rx="90" ry="105" stroke="#0077a8" stroke-width="2.5" opacity="0.9"
+      style="stroke-dasharray: 660; stroke-dashoffset: 660; animation: draw-circle 1.2s ease forwards 0.3s; fill: none;"
+      />
+    </svg>
+  </div>
+  <div class="contact-left fade-up">
+    <p class="section-label">Contact</p>
+    <div class="contact-main">
+      <a href="mailto:rivedmodrego@gmail.com" class="contact-big">rivedmodrego@gmail.com</a>
+      <a href="tel:+34626754785" class="contact-big">+34 626 754 785</a>
+    </div>
+    <div class="contact-socials">
+      <a href="https://linkedin.com/in/martarived" target="_blank" rel="noopener" class="contact-link">LinkedIn</a>
+      <span class="contact-sep">|</span>
+      <a href="https://instagram.com/martarived" target="_blank" rel="noopener" class="contact-link">Instagram</a>
+    </div>
+    <p class="contact-footer">Barcelona · 2025</p>
+  </div>
+</section>
+
+<script>
+/* WELCOME */
+(function() {
+  var gifs = [
+    'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWN0bWd2bm40a3l2cGg4bDRqcXkyMTJtOXN1bzltYTVpeTRnamtwdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/14aa5GbbHT3bHO/giphy.gif',
+    'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTY4Zm4zZXA2cHltM21tejVqeHg3ZnJxMmJ3MG43Mmtkbmk2ZmhxZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT5LMBI7IMIySDxtyE/giphy.gif',
+    'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjYzZWtkd3Znc3FhNjVzZ2RoMTd6aTlocjFlcW51MzN5d2FndTdwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8NZkqvzDfkwo20EZvi/giphy.gif',
+    'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExemwwdmVvb3AwZjRqc283dHZhb24xZG5rZWdkOGJqMjE0OTdpOW1hNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ornk57KwDXf81rjWM/giphy.gif'
+  ];
+  var W = window.innerWidth;
+  var H = window.innerHeight;
+  var w = Math.max(120, Math.round(W * 0.18));
+  var h = Math.round(w * 0.75);
+  var zones = [
+    { x: Math.round(W*0.04),        y: Math.round(H*0.05) },
+    { x: Math.round(W*0.62),        y: Math.round(H*0.04) },
+    { x: Math.round(W*0.04),        y: Math.round(H*0.62) },
+    { x: Math.round(W*0.58),        y: Math.round(H*0.58) }
+  ];
+  var ws = document.getElementById('welcome-screen');
+  gifs.forEach(function(src, i) {
+    var el = document.createElement('div');
+    el.className = 'gif-item';
+    el.style.width = w + 'px';
+    el.style.height = h + 'px';
+    el.style.left = zones[i].x + 'px';
+    el.style.top  = zones[i].y + 'px';
+    el.style.transform = 'rotate(' + ((Math.random() - 0.5) * 12) + 'deg)';
+    var img = document.createElement('img');
+    img.src = src;
+    el.appendChild(img);
+    ws.appendChild(el);
+    setTimeout(function() { el.style.opacity = '1'; }, 600 + i * 180);
+  });
+  var ids = ['wl0','wl1','wl2'];
+  ids.forEach(function(id, i) {
+    setTimeout(function() {
+      var e = document.getElementById(id);
+      e.style.opacity = '1';
+      e.style.transform = 'translateY(0)';
+    }, 150 + i * 160);
+  });
+  setTimeout(function() {
+    document.getElementById('welcome-bottom').style.opacity = '1';
+  }, 1200);
+  document.getElementById('welcome-btn').addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    ws.style.transition = 'transform 0.85s cubic-bezier(0.76,0,0.24,1)';
+    ws.style.transform = 'translateY(-100%)';
+    setTimeout(function() { ws.style.display = 'none'; }, 900);
+  });
+})();
+
+/* HAMBURGUESA */
+var burger = document.getElementById('burger');
+var overlay = document.getElementById('overlay');
+burger.addEventListener('click', function() { burger.classList.toggle('open'); overlay.classList.toggle('open'); });
+document.querySelectorAll('.overlay-link').forEach(function(link) {
+  link.addEventListener('click', function() { burger.classList.remove('open'); overlay.classList.remove('open'); });
 });
 
-// init tag chips once DOM is ready
-document.addEventListener('DOMContentLoaded', ()=>{ if(typeof renderTagChips==='function') renderTagChips(); });
-setTimeout(()=>{ if(typeof renderTagChips==='function') renderTagChips(); }, 100);
+/* HERO SHRINK */
+(function() {
+  var content = document.getElementById('hero-content');
+  var hero = document.getElementById('hero');
+  window.addEventListener('scroll', function() {
+    var p = Math.min(window.scrollY / (hero.offsetHeight * 0.7), 1);
+    content.style.transform = 'scale(' + (1 - p * 0.35) + ')';
+  }, { passive: true });
+})();
 
-function showPanel(id, el){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-  if(el)el.classList.add('active');
-}
-
-function handlePDF(e){
-  const f=e.target.files[0]; if(!f)return;
-  const z=document.getElementById('upload-zone');
-  z.classList.add('has-file');
-  z.innerHTML=`<div class="upload-icon">✓</div><div class="upload-name">${f.name}</div><div class="upload-hint">Leyendo PDF...</div>`;
-
-  const r=new FileReader();
-  r.onload=async()=>{
-    try{
-      // Extract text from PDF using PDF.js
-      const pdfjsLib=window.pdfjsLib;
-      if(!pdfjsLib){ pdfB64=r.result.split(',')[1]; z.querySelector('.upload-hint').textContent='PDF cargado (modo base64)'; return; }
-      const pdf=await pdfjsLib.getDocument({data:atob(r.result.split(',')[1])}).promise;
-      let text='';
-      for(let i=1;i<=Math.min(pdf.numPages,15);i++){
-        const page=await pdf.getPage(i);
-        const content=await page.getTextContent();
-        text+=content.items.map(item=>item.str).join(' ')+'\n';
-      }
-      pdfB64=null;
-      pdfText=text.trim();
-      z.querySelector('.upload-hint').textContent='PDF leído — '+pdf.numPages+' páginas';
-    } catch(err){
-      pdfB64=r.result.split(',')[1];
-      pdfText=null;
-      z.querySelector('.upload-hint').textContent='PDF cargado';
-    }
-  };
-  r.readAsDataURL(f);
-}
-
-function getChips(id){return Array.from(document.querySelectorAll('#'+id+' .chip.active')).map(c=>c.dataset.val);}
-function getActiveSources(){return sources.filter(s=>s.active).map(s=>s.name).join(', ');}
-
-function showLSteps(areaId, steps){
-  document.getElementById(areaId).innerHTML='<div class="loading-steps">'+steps.map((s,i)=>`<div class="lstep" id="ls-${areaId}-${i}"><div class="lstep-dot"></div>${s}</div>`).join('')+'</div>';
-  return steps.map((_,i)=>document.getElementById(`ls-${areaId}-${i}`));
-}
-async function activateLS(el,delay){await new Promise(r=>setTimeout(r,delay));if(el){el.classList.add('active');}}
-async function doneLS(el){if(el){el.classList.remove('active');el.classList.add('done');}}
-
-async function callAPI(messages, useSearch){
-  const body={model:'claude-sonnet-4-20250514',max_tokens:1000,messages};
-  if(useSearch)body.tools=[{type:'web_search_20250305',name:'web_search'}];
-  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  const data=await res.json();
-  return data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
-}
-async function callJSON(prompt){
-  const t=await callAPI([{role:'user',content:prompt}],false);
-  return JSON.parse(t.replace(/```json|```/g,'').trim());
-}
-
-async function analizarBriefing(){
-  const briefText=document.getElementById('brief-text').value.trim();
-  const misIdeas=document.getElementById('mis-ideas').value.trim();
-  const numP=document.getElementById('num-p').value;
-  if(!briefText&&!pdfB64&&!pdfText){document.getElementById('brief-text').focus();return;}
-  const btn=document.getElementById('brief-btn'); btn.disabled=true;
-  const stepEls=showLSteps('brief-results',['Leyendo y analizando el briefing...','Identificando reto real, tensiones y vacíos...','Generando preguntas estratégicas...']);
-  try{
-    await activateLS(stepEls[0],100);
-
-    // Build content from whatever source we have
-    const contenidoBrief = pdfText
-      ? `CONTENIDO DEL PDF:\n${pdfText.substring(0,4000)}`
-      : briefText
-      ? `BRIEFING:\n${briefText}`
-      : 'Sin briefing proporcionado';
-
-    const promptAnalisis=`Eres un estratega senior en sports business. Analiza este briefing y extrae con precisión el reto de negocio real, restricciones concretas, objetivos explícitos e implícitos, tensiones o contradicciones.
-
-${contenidoBrief}
-
-SOLO JSON sin texto extra ni backticks:
-{"resumen":"resumen en 3 frases","reto":"el reto de negocio real en 1 frase potente","restricciones":["r1","r2","r3"],"objetivos":["obj1","obj2"],"tensiones":["t1","t2"],"vacios":["info que falta 1","info que falta 2"]}`;
-
-    const aText=await callAPI([{role:'user',content:promptAnalisis}],false);
-    briefData=JSON.parse(aText.replace(/```json|```/g,'').trim());
-    await doneLS(stepEls[0]);
-    await activateLS(stepEls[1],200); await doneLS(stepEls[1]);
-    await activateLS(stepEls[2],200);
-    const ideasCtx=misIdeas?`\n\nIDEAS PROPIAS DEL ESTRATEGA:\n${misIdeas}`:'';
-    preguntasData=await callJSON(`Estratega senior sports business Spodeal. Brief analizado: ${JSON.stringify(briefData)}${ideasCtx}. Genera exactamente ${numP} preguntas estratégicas críticas para el cliente. SOLO JSON: [{"pregunta":"texto directo","por_que":"por qué es crítica (1 frase)","categoria":"Budget/Estrategia/Audiencia/Competencia/Operativa/KPIs/Territorio"}]`);
-    await doneLS(stepEls[2]);
-
-    let html='<hr class="divider"><div class="slabel">Diagnóstico del briefing</div>';
-    html+=`<div class="card"><div class="card-sub">${briefData.resumen}</div><div class="insight-box"><p>${briefData.reto}</p></div>`;
-    if(briefData.restricciones?.length){html+=`<div style="margin-top:10px;"><div class="slabel" style="margin-bottom:6px;">Restricciones detectadas</div><div class="tags">${briefData.restricciones.map(r=>'<span class="tag">'+r+'</span>').join('')}</div></div>`;}
-    if(briefData.tensiones?.length){html+=`<div style="margin-top:12px;"><div class="slabel" style="margin-bottom:6px;">Tensiones</div>${briefData.tensiones.map(t=>'<div style="font-size:12px;color:var(--text3);padding:3px 0;">⚡ '+t+'</div>').join('')}</div>`;}
-    if(briefData.vacios?.length){html+=`<div style="margin-top:12px;"><div class="slabel" style="margin-bottom:6px;">Vacíos de información</div>${briefData.vacios.map(v=>'<div style="font-size:12px;color:var(--text3);padding:3px 0;">? '+v+'</div>').join('')}</div>`;}
-    html+=`</div><button class="btn-sec" style="margin-top:12px;" onclick="goPreguntas()">Ver preguntas para el cliente →</button>`;
-    document.getElementById('brief-results').innerHTML=html;
-
-    renderPreguntas();
-    document.getElementById('sd1').classList.add('done'); document.getElementById('sd2').classList.add('curr');
-  } catch(e){ document.getElementById('brief-results').innerHTML='<p class="error-msg">Error al analizar. Intenta de nuevo.</p>'; }
-  btn.disabled=false;
-}
-
-function goPreguntas(){showPanel('preguntas', document.querySelectorAll('.nav-item')[1]);}
-
-function renderPreguntas(){
-  if(!preguntasData)return;
-  const l=document.getElementById('preguntas-list');
-  let html='<div class="slabel">Preguntas para el cliente</div>';
-  preguntasData.forEach((q,i)=>{
-    html+=`<div class="q-item"><div class="q-num"><span>P${i+1}</span><span class="badge badge-target">${q.categoria}</span></div><div class="q-text">${q.pregunta}</div><div class="q-why">${q.por_que}</div></div>`;
+/* WEBGL CURSOR */
+(function() {
+  var canvas = document.getElementById('splash-canvas');
+  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+  resize(); window.addEventListener('resize', resize);
+  var vs = 'attribute vec2 a_pos; void main(){gl_Position=vec4(a_pos,0,1);}';
+  var fs = 'precision mediump float; uniform vec2 u_res; uniform float u_time; uniform vec2 u_splats[8]; uniform float u_ages[8]; float blob(vec2 uv,vec2 c,float age){float d=length(uv-c);float r=0.09+age*0.28;return exp(-d*d/(r*r*0.5))*max(0.0,1.0-age*0.65);} void main(){vec2 uv=gl_FragCoord.xy/u_res;float acc=0.0;for(int i=0;i<8;i++)acc+=blob(uv,u_splats[i],u_ages[i]);acc=clamp(acc,0.0,1.0);vec3 deep=vec3(0.0,0.18,0.38);vec3 mid=vec3(0.0,0.48,0.65);vec3 foam=vec3(0.45,0.82,0.88);gl_FragColor=vec4(mix(deep,mix(mid,foam,acc*acc*0.6),acc*0.85),acc*0.75);}';
+  function mkSh(t,s){var sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh;}
+  var prog=gl.createProgram();
+  gl.attachShader(prog,mkSh(gl.VERTEX_SHADER,vs));
+  gl.attachShader(prog,mkSh(gl.FRAGMENT_SHADER,fs));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  var buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  var loc=gl.getAttribLocation(prog,'a_pos');
+  gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+  var uRes=gl.getUniformLocation(prog,'u_res');
+  var uSplats=gl.getUniformLocation(prog,'u_splats');
+  var uAges=gl.getUniformLocation(prog,'u_ages');
+  var uTime=gl.getUniformLocation(prog,'u_time');
+  var N=8,splats=[],ages=[];
+  for(var i=0;i<N;i++){splats.push([0.5,0.5]);ages.push(999);}
+  var head=0,lastSplat=0;
+  document.getElementById('hero').addEventListener('mousemove',function(e){
+    var r=canvas.getBoundingClientRect();
+    var mx=(e.clientX-r.left)/r.width,my=1-(e.clientY-r.top)/r.height;
+    var now=performance.now();
+    if(now-lastSplat>55){splats[head]=[mx,my];ages[head]=0;head=(head+1)%N;lastSplat=now;}
   });
-  l.innerHTML=html;
-  document.getElementById('resp-area').style.display='block';
-  document.getElementById('sd2').classList.remove('curr'); document.getElementById('sd2').classList.add('done'); document.getElementById('sd3').classList.add('curr');
-}
-
-async function generarConcepto(){
-  const resp=document.getElementById('resp-cliente').value.trim();
-  const misIdeas=document.getElementById('mis-ideas').value.trim();
-  const numC=document.getElementById('num-c').value;
-  const btn=document.getElementById('gen-concepto-btn'); btn.disabled=true;
-  showPanel('concepto', document.querySelectorAll('.nav-item')[2]);
-  const stepEls=showLSteps('concepto-results',['Buscando activaciones y referencias reales del sector...','Consultando fuentes: '+getActiveSources().split(',').slice(0,3).join(', ')+'...','Generando plataforma creativa con estructura Spodeal...']);
-  try{
-    await activateLS(stepEls[0],100);
-    const topics=getChips('live-topics');
-    const liveRefs=await callAPI([{role:'user',content:`Search for: ${topics.slice(0,3).join(', ')} related to: ${briefData?.reto||'sports marketing'}. Find the most recent and creative sports marketing activations, storydoing campaigns, and experiential sponsorship activations in 2025. Give specific brand examples with results.`}],true);
-    await doneLS(stepEls[0]);
-    await activateLS(stepEls[1],200);
-    const srcRefs=await callAPI([{role:'user',content:`Search sportspromedia.com OR frontofficesports.com OR hashtagsports.com for: creative sports sponsorship activations storydoing fan experience 2025. Find specific real examples.`}],true);
-    await doneLS(stepEls[1]);
-    await activateLS(stepEls[2],200);
-
-    const respCtx=resp?`\n\nRESPUESTAS DEL CLIENTE:\n${resp}`:'';
-    const ideasCtx=misIdeas?`\n\nIDEAS PROPIAS DEL ESTRATEGA (incorpora o construye sobre ellas):\n${misIdeas}`:'';
-
-    const prompt=`Eres director creativo senior en Spodeal, agencia líder en sports business. Genera ${numC} conceptos creativos distintos para el siguiente proyecto.
-
-BRIEFING ANALIZADO: ${JSON.stringify(briefData)}${respCtx}${ideasCtx}
-
-REFERENCIAS DEL SECTOR EN TIEMPO REAL: ${liveRefs.substring(0,600)}
-FUENTES ADICIONALES: ${srcRefs.substring(0,400)}
-
-ESTRUCTURA OBLIGATORIA (como en las propuestas reales de Spodeal — CaixaBank, Vueling, Allianz):
-
-Para cada concepto:
-- insight: Una verdad humana incómoda o sorprendente que nadie ha articulado así (no un claim de agencia)
-- racional: 3 pilares que conectan emocionalmente el territorio de la marca con el deporte
-- concepto_paraguas: El nombre del concepto + tagline + descripción de por qué es elástico (puede funcionar en múltiples activaciones)
-- copy_hero: La línea de copy que lo resume todo
-- activaciones: Array de 3-4 activaciones concretas, cada una con key_moment (inicio temporada/always on/key date/final temporada), nombre potente, descripcion, mecanica, canal, target, budget_orientativo, tags de impacto
-- referencia: Qué activación real del sector lo inspira
-
-SOLO JSON sin backticks: [{"insight":"...","racional":[{"pilar":"nombre","descripcion":"..."},{"pilar":"...","descripcion":"..."},{"pilar":"...","descripcion":"..."}],"concepto_paraguas":{"nombre":"...","tagline":"...","descripcion":"..."},"copy_hero":"...","activaciones":[{"key_moment":"...","nombre":"...","descripcion":"...","mecanica":"...","canal":"Físico/Digital/Híbrido/In-store/Evento","target":"...","budget":"...","tags":["t1","t2","t3"]}],"referencia":"..."}]`;
-
-    const conceptos=await callJSON(prompt);
-    await doneLS(stepEls[2]);
-
-    let html='<div class="slabel">'+conceptos.length+' plataformas creativas</div>';
-    conceptos.forEach((c,ci)=>{
-      html+=`<div class="card" style="margin-bottom:20px;">
-        <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;">
-          <span style="font-family:'Playfair Display',serif;font-size:28px;color:var(--accent);opacity:0.4;line-height:1;margin-top:-4px;">0${ci+1}</span>
-          <div>
-            <div style="font-family:'Playfair Display',serif;font-size:18px;color:var(--text);margin-bottom:6px;">${c.concepto_paraguas.nombre}</div>
-            <div style="font-size:13px;color:var(--accent);margin-top:2px;">${c.concepto_paraguas.tagline}</div>
-          </div>
-        </div>
-        <div class="insight-box"><p>${c.insight}</p></div>
-        <div style="margin:14px 0;">
-          <div class="slabel" style="margin-bottom:8px;">Racional</div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
-            ${c.racional.map(r=>`<div style="background:rgba(26,58,110,0.15);border:1px solid rgba(26,58,110,0.3);border-radius:6px;padding:10px 12px;"><div style="font-size:11px;font-weight:500;color:#6a9eff;margin-bottom:4px;">${r.pilar}</div><div style="font-size:11px;color:var(--text3);line-height:1.5;">${r.descripcion}</div></div>`).join('')}
-          </div>
-        </div>
-        <div class="card-sub" style="margin-bottom:10px;">${c.concepto_paraguas.descripcion}</div>
-        <div class="card-copy">"${c.copy_hero}"</div>
-        <hr class="divider" style="margin:14px 0;">
-        <div class="slabel" style="margin-bottom:10px;">Activaciones</div>
-        ${c.activaciones.map(a=>`<div class="act-card">
-          <div class="act-header">
-            <span class="badge badge-km">${a.key_moment}</span>
-            <span class="act-name">${a.nombre}</span>
-            <span class="badge badge-canal">${a.canal}</span>
-          </div>
-          <div class="act-desc">${a.descripcion}</div>
-          <div style="font-size:11px;color:var(--text3);margin-bottom:6px;"><strong style="color:var(--text2);">Mecánica:</strong> ${a.mecanica}</div>
-          <div style="font-size:11px;color:var(--text3);margin-bottom:8px;"><strong style="color:var(--text2);">Target:</strong> ${a.target} ${a.budget?'· <strong style="color:var(--text2);">Budget:</strong> '+a.budget:''}</div>
-          <div class="tags">${a.tags.map(t=>'<span class="tag accent">'+t+'</span>').join('')}</div>
-        </div>`).join('')}
-        ${c.referencia?`<div class="refs-box"><div class="refs-title">Inspirado en</div><p>${c.referencia}</p></div>`:''}
-        <button class="btn-ghost" style="margin-top:12px;" onclick="desarrollar('${encodeURIComponent(JSON.stringify(c))}')">Desarrollar para presentación →</button>
-      </div>`;
-    });
-
-    document.getElementById('concepto-results').innerHTML=html;
-    document.getElementById('sd3').classList.remove('curr'); document.getElementById('sd3').classList.add('done'); document.getElementById('sd4').classList.add('curr');
-  } catch(e){ document.getElementById('concepto-results').innerHTML='<p class="error-msg">Error al generar. Intenta de nuevo.</p>'; }
-  btn.disabled=false;
-}
-
-async function generarPropuesta(){
-  const cliente=document.getElementById('p-cliente').value.trim();
-  const contexto=document.getElementById('p-contexto').value.trim();
-  if(!cliente||!contexto)return;
-  const btn=document.getElementById('p-btn'); btn.disabled=true;
-  const tipo=document.getElementById('p-tipo').value;
-  const tono=document.getElementById('p-tono').value;
-  const secciones=getChips('p-secciones');
-  const stepEls=showLSteps('p-results',['Buscando benchmarks del sector...','Generando propuesta con estructura Spodeal...']);
-  try{
-    await activateLS(stepEls[0],100);
-    const refs=await callAPI([{role:'user',content:`Search for: sports ${tipo} proposal examples benchmarks 2025 best practices creative. Find specific cases with data and results relevant to: ${contexto.substring(0,200)}`}],true);
-    await doneLS(stepEls[0]);
-    await activateLS(stepEls[1],200);
-    const data=await callJSON(`Estratega senior Spodeal. Genera propuesta de ${tipo} para "${cliente}". Contexto: ${contexto}. Tono: ${tono}. Secciones requeridas (en orden Spodeal): ${secciones.join(', ')}. Referencias: ${refs.substring(0,500)}. SOLO JSON: {"titulo":"...","subtitulo":"...","referencias_usadas":["r1","r2"],"secciones":[{"id":"id_seccion","nombre":"Nombre en estilo Spodeal","contenido":"3-5 frases con datos concretos y argumentos reales","puntos":["punto1","punto2","punto3"]}]}`);
-    await doneLS(stepEls[1]);
-    let html='<hr class="divider"><div class="slabel">Propuesta generada</div><div class="card">';
-    html+=`<div class="card-title" style="font-size:22px;">${data.titulo}</div><div style="font-size:14px;color:var(--text2);margin-bottom:20px;">${data.subtitulo}</div>`;
-    data.secciones.forEach((s,i)=>{html+=`<div class="prop-section"><h3>0${i+1}. ${s.nombre}</h3><p>${s.contenido}</p>${s.puntos?.length?'<ul>'+s.puntos.map(p=>'<li>'+p+'</li>').join('')+'</ul>':''}</div>`;});
-    if(data.referencias_usadas?.length){html+=`<div class="refs-box"><div class="refs-title">Referencias consultadas</div><p>${data.referencias_usadas.join(' · ')}</p></div>`;}
-    html+=`</div>`;
-    document.getElementById('p-results').innerHTML=html;
-  } catch(e){document.getElementById('p-results').innerHTML='<p class="error-msg">Error. Intenta de nuevo.</p>';}
-  btn.disabled=false;
-}
-
-async function generarContenido(){
-  const marca=document.getElementById('cont-marca').value.trim();
-  const contexto=document.getElementById('cont-contexto').value.trim();
-  if(!marca||!contexto)return;
-  const btn=document.getElementById('cont-btn'); btn.disabled=true;
-  const canales=getChips('cont-canales');
-  const horizonte=document.getElementById('cont-horizonte').value;
-  const num=document.getElementById('cont-num').value;
-  const hMap={mes:'1 mes',trimestre:'un trimestre',temporada:'una temporada completa'};
-  const stepEls=showLSteps('cont-results',['Buscando tendencias de contenido deportivo...','Generando estrategia editorial...']);
-  try{
-    await activateLS(stepEls[0],100);
-    const refs=await callAPI([{role:'user',content:`Search: sports content strategy ${canales.join(' ')} 2025 trends best performing formats engagement. Give specific examples of what's working now for sports brands.`}],true);
-    await doneLS(stepEls[0]);
-    await activateLS(stepEls[1],200);
-    const data=await callJSON(`Estratega contenido sports business. Estrategia ${hMap[horizonte]} para "${marca}". Contexto: ${contexto}. Canales: ${canales.join(', ')}. ${num} pilares. Referencias: ${refs.substring(0,500)}. SOLO JSON: {"vision":"...","pilares":[{"nombre":"...","descripcion":"...","formatos":["f1","f2","f3"],"frecuencia":"...","ejemplos":["e1","e2"],"canales":["c1"],"tendencia":"..."}],"hitos":["h1","h2","h3"],"referencias_usadas":["r1"]}`);
-    await doneLS(stepEls[1]);
-    let html='<hr class="divider"><div class="slabel">Estrategia de contenido</div>';
-    html+=`<div class="card" style="margin-bottom:12px;"><div class="card-copy" style="margin:0;">"${data.vision}"</div></div>`;
-    data.pilares.forEach((p,i)=>{
-      html+=`<div class="pilar-card"><div class="pilar-name"><span class="pilar-num">0${i+1}</span>${p.nombre}</div><div class="pilar-desc">${p.descripcion}</div><div class="tags" style="margin-bottom:8px;">${p.formatos.map(f=>'<span class="tag">'+f+'</span>').join('')}</div><div style="font-size:11px;color:var(--text3);margin-bottom:4px;"><strong style="color:var(--text2);">Frecuencia:</strong> ${p.frecuencia} · <strong style="color:var(--text2);">Canales:</strong> ${p.canales.join(', ')}</div><div style="font-size:11px;color:var(--text3);margin-bottom:8px;"><strong style="color:var(--text2);">Ejemplos:</strong> ${p.ejemplos.join(' · ')}</div>${p.tendencia?`<div class="refs-box"><div class="refs-title">Tendencia actual</div><p>${p.tendencia}</p></div>`:''}</div>`;
-    });
-    if(data.hitos?.length){html+=`<div class="card" style="margin-top:12px;"><div class="slabel" style="margin-bottom:8px;">Hitos del calendario</div>${data.hitos.map(h=>'<div style="font-size:13px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);">'+h+'</div>').join('')}</div>`;}
-    document.getElementById('cont-results').innerHTML=html;
-  } catch(e){document.getElementById('cont-results').innerHTML='<p class="error-msg">Error. Intenta de nuevo.</p>';}
-  btn.disabled=false;
-}
-
-function syncColor(v){ document.getElementById('f-colorpicker').value=v.length===7?v:'#0057A8'; }
-function syncColorPicker(v){ document.getElementById('f-color').value=v; }
-function syncTagColor(v){ document.getElementById('f-tagcolorpicker').value=v.length===7?v:'#FFD700'; }
-function syncTagColorPicker(v){ document.getElementById('f-tagcolor').value=v; }
-
-function generarFicha(){
-  const num=document.getElementById('f-num').value.trim()||'01.';
-  const seccion=document.getElementById('f-seccion').value.trim()||'ACTIVACIÓN';
-  const nombre=document.getElementById('f-nombre').value.trim()||'NOMBRE DE LA ACTIVACIÓN';
-  const km=document.getElementById('f-km').value.trim();
-  const loc=document.getElementById('f-location').value.trim();
-  const obj=document.getElementById('f-objetivo').value.trim();
-  const ins=document.getElementById('f-insight').value.trim();
-  const idea=document.getElementById('f-idea').value.trim();
-  const tagsRaw=document.getElementById('f-tags').value.trim();
-  const tags=fichaTagsArr.length?fichaTagsArr:(tagsRaw?tagsRaw.split(',').map(t=>t.trim()).filter(Boolean):[]);
-  const bg=document.getElementById('f-color').value||'#0057A8';
-  const tagColor=document.getElementById('f-tagcolor').value||'#FFD700';
-  const imgUrl=document.getElementById('f-img').value.trim();
-
-  // luminance check for text color
-  const r=parseInt(bg.slice(1,3),16), g=parseInt(bg.slice(3,5),16), b=parseInt(bg.slice(5,7),16);
-  const lum=(0.299*r+0.587*g+0.114*b)/255;
-  const textCol=lum>0.55?'#111111':'#ffffff';
-  const tagTextCol=(()=>{const tr=parseInt(tagColor.slice(1,3),16),tg=parseInt(tagColor.slice(3,5),16),tb=parseInt(tagColor.slice(5,7),16),tl=(0.299*tr+0.587*tg+0.114*tb)/255;return tl>0.55?'#111111':'#ffffff';})();
-
-  const imgSection=imgUrl
-    ?`<div style="flex:0 0 48%;background:url('${imgUrl}') center/cover no-repeat;min-height:380px;border-radius:0;"></div>`
-    :`<div style="flex:0 0 48%;background:linear-gradient(135deg,${bg}dd,${bg}88);display:flex;align-items:center;justify-content:center;min-height:380px;"><span style="font-size:64px;opacity:0.15;">▣</span></div>`;
-
-  const tagsHtml=tags.length?`<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:20px;">${tags.map(t=>`<span style="border:1.5px solid ${tagColor};color:${tagColor};font-size:10px;font-weight:700;padding:4px 10px;letter-spacing:0.08em;">${t}</span>`).join('')}</div>`:'';
-
-  const fieldStyle=`margin-bottom:14px;`;
-  const labelStyle=`font-size:11px;font-weight:700;color:${tagColor};letter-spacing:0.1em;display:block;margin-bottom:3px;`;
-  const valStyle=`font-size:13px;color:${textCol};line-height:1.5;`;
-
-  const fields=[
-    km?`<div style="${fieldStyle}"><span style="${labelStyle}">KEY MOMENT</span><span style="${valStyle}">${km}</span></div>`:'',
-    loc?`<div style="${fieldStyle}"><span style="${labelStyle}">LOCATION</span><span style="${valStyle}">${loc}</span></div>`:'',
-    obj?`<div style="${fieldStyle}"><span style="${labelStyle}">OBJETIVO</span><span style="${valStyle}">${obj}</span></div>`:'',
-    ins?`<div style="${fieldStyle}"><span style="${labelStyle}">INSIGHT</span><span style="${valStyle}">${ins}</span></div>`:'',
-    idea?`<div style="${fieldStyle}"><span style="${labelStyle}">LA IDEA</span><span style="${valStyle}">${idea}</span></div>`:'',
-  ].filter(Boolean).join('');
-
-  const html=`
-  <div style="display:flex;background:${bg};border-radius:4px;overflow:hidden;font-family:'DM Sans',sans-serif;box-shadow:0 8px 40px rgba(0,0,0,0.4);">
-    ${imgSection}
-    <div style="flex:1;padding:36px 40px;display:flex;flex-direction:column;justify-content:space-between;min-height:380px;">
-      <div>
-        <div style="font-size:11px;font-weight:700;color:${tagColor};letter-spacing:0.12em;margin-bottom:10px;">${num} ${seccion}</div>
-        <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:${textCol};line-height:1.05;margin-bottom:24px;letter-spacing:-0.5px;">${nombre}</div>
-        ${fields}
-      </div>
-      ${tagsHtml}
-    </div>
-  </div>`;
-
-  document.getElementById('ficha-card').innerHTML=html;
-  document.getElementById('ficha-form').style.display='none';
-  document.getElementById('ficha-preview').style.display='block';
-}
-
-// TAG MANAGEMENT
-let fichaTagsArr = [];
-
-function renderTagChips(){
-  const container = document.getElementById('f-tags-chips');
-  if(!container) return;
-  container.innerHTML = fichaTagsArr.length
-    ? fichaTagsArr.map((t,i) =>
-        `<span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid var(--border2);border-radius:20px;font-size:11px;font-weight:600;color:var(--accent);letter-spacing:0.06em;">
-          ${t}<span onclick="removeTag(${i})" style="cursor:pointer;color:var(--text3);font-size:14px;line-height:1;">×</span>
-        </span>`).join('')
-    : `<span style="font-size:12px;color:var(--text3);padding:6px 0;">Pulsa "Autorrellenar con IA" para generarlos automáticamente</span>`;
-  document.getElementById('f-tags').value = fichaTagsArr.join(', ');
-}
-
-function removeTag(i){ fichaTagsArr.splice(i,1); renderTagChips(); }
-
-function addManualTag(e){
-  if(e.key!=='Enter')return;
-  e.preventDefault();
-  const val=document.getElementById('f-tags-input').value.trim().toUpperCase();
-  if(val&&!fichaTagsArr.includes(val)){ fichaTagsArr.push(val); renderTagChips(); }
-  document.getElementById('f-tags-input').value='';
-}
-
-function setTags(arr){
-  fichaTagsArr=arr.map(t=>t.toUpperCase().trim()).filter(Boolean);
-  renderTagChips();
-}
-
-function nuevaFicha(){
-  document.getElementById('ficha-preview').style.display='none';
-  document.getElementById('ficha-form').style.display='block';
-  document.getElementById('prompts-area').style.display='none';
-  ['f-nombre','f-km','f-location','f-objetivo','f-insight','f-idea','f-tags-input','f-img'].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.value='';
-  });
-  document.getElementById('f-num').value='01.';
-  document.getElementById('f-seccion').value='ACTIVACIÓN';
-  fichaTagsArr=[];
-  renderTagChips();
-}
-
-async function autorellenarFicha(){
-  const nombre=document.getElementById('f-nombre').value.trim();
-  const briefCtx=document.getElementById('brief-text')?.value?.trim()||'';
-  const misIdeas=document.getElementById('mis-ideas')?.value?.trim()||'';
-  const contexto=[briefCtx,misIdeas].filter(Boolean).join(' | ')||'proyecto sports business';
-  if(!nombre){alert('Escribe primero el nombre de la activación.');return;}
-  const btn=document.querySelector('[onclick="autorellenarFicha()"]');
-  btn.disabled=true; btn.textContent='Generando...';
-  try{
-    const data=await callJSON(`Eres estratega creativo senior en Spodeal, agencia de sports business. Para la activación "${nombre}" en el contexto: ${contexto.substring(0,400)}, genera todos los campos de la ficha incluyendo los tags más relevantes.
-
-Los tags deben extraerse del contexto real del brief — no son genéricos. Pueden ser: objetivos de negocio (AWARENESS, LEADS, CONVERSIÓN, NUEVAS CUENTAS, RETENCIÓN), tipo de activo (IP RIGHTS, TEAM BENEFITS, BRANDED CONTENT, VISIBILIDAD TARJETA, MERCHANDISING, PRODUCTO), alcance (IMPACTO LOCAL, IMPACTO NACIONAL, STORYTELLING DIGITAL), o targets (FANS JUNIOR, FANS SENIOR, ABONADOS, TODOS LOS FANS). Elige solo los que aplican a esta activación concreta. Entre 4 y 7 tags.
-
-SOLO JSON sin backticks: {"key_moment":"cuándo y dónde (1 frase)","location":"dónde exactamente (1 frase corta)","objetivo":"qué se busca (1-2 frases)","insight":"verdad humana sorprendente, no un claim (1 frase potente)","idea":"mecánica central en 1-2 frases directas","tags":["TAG1","TAG2","TAG3","TAG4"]}`);
-    document.getElementById('f-km').value=data.key_moment||'';
-    document.getElementById('f-location').value=data.location||'';
-    document.getElementById('f-objetivo').value=data.objetivo||'';
-    document.getElementById('f-insight').value=data.insight||'';
-    document.getElementById('f-idea').value=data.idea||'';
-    setTags(data.tags||[]);
-  } catch(e){ alert('Error al autorrellenar. Intenta de nuevo.'); }
-  btn.disabled=false; btn.textContent='Autorrellenar con IA ↗';
-}
-
-function copyPrompt(id){
-  const el=document.getElementById(id);
-  if(!el)return;
-  navigator.clipboard.writeText(el.textContent).then(()=>{
-    const btn=el.previousElementSibling?.querySelector?.('.btn-ghost')||el.parentElement?.querySelector?.('.btn-ghost');
-    const allBtns=document.querySelectorAll('.btn-ghost');
-    allBtns.forEach(b=>{ if(b.onclick?.toString().includes(id)||b.getAttribute('onclick')?.includes(id)){ b.textContent='✓ Copiado'; setTimeout(()=>b.textContent='Copiar',1800); } });
-  });
-}
-
-async function generarPrompts(){
-  const nombre=document.getElementById('f-nombre')?.value?.trim()||'activación deportiva';
-  const km=document.getElementById('f-km')?.value?.trim()||'';
-  const loc=document.getElementById('f-location')?.value?.trim()||'';
-  const obj=document.getElementById('f-objetivo')?.value?.trim()||'';
-  const ins=document.getElementById('f-insight')?.value?.trim()||'';
-  const idea=document.getElementById('f-idea')?.value?.trim()||'';
-  const bg=document.getElementById('f-color')?.value||'#0057A8';
-
-  const area=document.getElementById('prompts-area');
-  const loading=document.getElementById('prompts-loading');
-  const pl1=document.getElementById('pl1');
-  const pl2=document.getElementById('pl2');
-  const pl3=document.getElementById('pl3');
-  const pl4=document.getElementById('pl4');
-
-  area.style.display='block';
-  loading.style.display='block';
-  document.getElementById('prompt-dalle').textContent='';
-  document.getElementById('prompt-gemini').textContent='';
-  document.getElementById('prompt-mj').textContent='';
-
-  pl1.classList.add('active');
-
-  const contexto=`Activación deportiva: "${nombre}". Key moment: ${km}. Location: ${loc}. Objetivo: ${obj}. Insight: ${ins}. La idea: ${idea}. Color de marca dominante: ${bg}.`;
-
-  const systemPrompt=`Eres un experto en prompts para generación de imágenes con IA, especializado en fotografía publicitaria y creatividad deportiva. Tu tarea es generar prompts fotorrealistas que transmitan la esencia emocional y visual de una activación de sports business.
-
-Los prompts deben:
-- Describir una escena fotorrealista concreta (no ilustración, no arte conceptual)
-- Capturar el momento emocional clave de la activación
-- Incluir detalles de ambiente, iluminación, encuadre y atmósfera
-- Ser específicos con el deporte, el entorno y los personajes
-- Transmitir la energía y el storytelling de la activación
-
-Contexto de la activación: ${contexto}
-
-Genera los tres prompts. SOLO JSON sin backticks:
-{
-  "dalle": "Prompt completo para ChatGPT/DALL-E en inglés, estilo descripción fotográfica detallada, máximo 4 líneas. Especifica: composición, iluminación, encuadre, atmósfera, detalles visuales clave. Termina con: photorealistic, professional sports photography, 8k, cinematic lighting",
-  "gemini": "Prompt completo para Gemini Imagen en inglés, más descriptivo y narrativo. Incluye contexto emocional, detalles del entorno, expresiones, calidad de imagen. Termina con: photorealistic image, high resolution, professional photography",
-  "midjourney": "Prompt para Midjourney en inglés, estilo MJ con parámetros al final. Formato: descripción visual potente y concisa + --ar 16:9 --style raw --v 6.1 --q 2"
-}`;
-
-  try{
-    await new Promise(r=>setTimeout(r,400));
-    pl1.classList.remove('active'); pl1.classList.add('done');
-    pl2.classList.add('active');
-
-    const data=await callJSON(systemPrompt);
-
-    pl2.classList.remove('active'); pl2.classList.add('done');
-    pl3.classList.add('active');
-    await new Promise(r=>setTimeout(r,300));
-    pl3.classList.remove('active'); pl3.classList.add('done');
-    pl4.classList.add('active');
-    await new Promise(r=>setTimeout(r,300));
-    pl4.classList.remove('active'); pl4.classList.add('done');
-
-    document.getElementById('prompt-dalle').textContent=data.dalle||'Error al generar.';
-    document.getElementById('prompt-gemini').textContent=data.gemini||'Error al generar.';
-    document.getElementById('prompt-mj').textContent=data.midjourney||'Error al generar.';
-
-    loading.style.display='none';
-    [pl1,pl2,pl3,pl4].forEach(p=>{p.classList.remove('active','done');});
-    pl1.classList.add('active');
-  } catch(e){
-    loading.style.display='none';
-    document.getElementById('prompt-dalle').textContent='Error al generar. Intenta de nuevo.';
+  var last=0;
+  function loop(ts){
+    var dt=(ts-last)/1000;last=ts;
+    for(var i=0;i<N;i++)ages[i]+=dt*0.55;
+    gl.viewport(0,0,canvas.width,canvas.height);
+    gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform2f(uRes,canvas.width,canvas.height);
+    gl.uniform1f(uTime,ts/1000);
+    gl.uniform2fv(uSplats,splats.reduce(function(a,b){return a.concat(b);}));
+    gl.uniform1fv(uAges,ages);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    requestAnimationFrame(loop);
   }
-}
+  requestAnimationFrame(loop);
+})();
 
-function desarrollar(cEnc){
-  const c=JSON.parse(decodeURIComponent(cEnc));
-  alert('Concepto "' + c.concepto_paraguas.nombre + '" listo para desarrollar. Cópialo al chat de Claude y pide el desarrollo completo con estructura de presentación, argumentario y documento Word.');
-}
+/* POSTERS — scroll con inercia */
+(function() {
+  var track = document.getElementById('posters-track');
+  if (!track) return;
+  var vel = 0, raf;
+  function animate() {
+    if (Math.abs(vel) < 0.5) return;
+    track.scrollLeft += vel;
+    vel *= 0.92;
+    raf = requestAnimationFrame(animate);
+  }
+  track.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    vel += e.deltaY * 0.8;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(animate);
+  }, { passive: false });
+  var down = false, startX, scrollLeft, lastX, lastT;
+  track.addEventListener('mousedown', function(e) {
+    down = true; vel = 0;
+    startX = e.pageX; scrollLeft = track.scrollLeft;
+    lastX = e.pageX; lastT = Date.now();
+    track.classList.add('grabbing');
+    cancelAnimationFrame(raf);
+  });
+  window.addEventListener('mouseup', function() {
+    if (!down) return;
+    down = false; track.classList.remove('grabbing');
+    raf = requestAnimationFrame(animate);
+  });
+  window.addEventListener('mousemove', function(e) {
+    if (!down) return;
+    var dx = e.pageX - startX;
+    track.scrollLeft = scrollLeft - dx;
+    var dt = Date.now() - lastT || 1;
+    vel = -(e.pageX - lastX) / dt * 16;
+    lastX = e.pageX; lastT = Date.now();
+  });
+})();
+
+/* TYPING — carga desde /api/feed (proxy propio de Vercel) */
+(function() {
+  var PROXY = '/api/feed';
+  var FALLBACK_IMG = 'https://res.cloudinary.com/doo07efjl/image/upload/f_auto,q_auto/25-03-26_Spodeal_Corporate_Marta_Rived-0273_1_2_vlyyla';
+  var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+  function formatDate(str) {
+    var d = new Date(str);
+    return months[d.getMonth()] + ' ' + d.getFullYear();
+  }
+
+  function parseAndRender(xmlText) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(xmlText, 'text/xml');
+    var items = doc.querySelectorAll('item');
+    var grid = document.getElementById('typing-grid');
+    var cards = Array.from(grid.querySelectorAll('.typing-post'));
+    Array.from(items).slice(0, 6).forEach(function(item, i) {
+      var card = cards[i];
+      if (!card) return;
+      var title = item.querySelector('title');
+      var link  = item.querySelector('link');
+      var date  = item.querySelector('pubDate');
+      var enclosure = item.querySelector('enclosure');
+      var img = enclosure && enclosure.getAttribute('url') ? enclosure.getAttribute('url') : null;
+      if (!img) {
+        var encoded = item.getElementsByTagNameNS('*','encoded')[0];
+        var html = encoded ? encoded.textContent : '';
+        var match = html.match(/src=["'](https:\/\/[^"']+)/i);
+        if (match) img = match[1].split('"')[0].split("'")[0];
+      }
+      var url = link ? (link.nextSibling ? link.nextSibling.textContent.trim() : link.textContent.trim()) : '';
+      var imgEl = card.querySelector('.typing-img');
+      imgEl.style.backgroundImage = "url('" + (img || FALLBACK_IMG) + "')";
+      card.href = '/api/post?slug=' + encodeURIComponent(url.split('/').filter(Boolean).pop() || String(i));
+      card.querySelector('.typing-num').textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
+      card.querySelector('.typing-title').textContent = title ? title.textContent : '';
+      card.querySelector('.typing-date').textContent = date ? formatDate(date.textContent) : '';
+      card.classList.remove('typing-skeleton');
+      setTimeout(function() { card.classList.add('visible'); }, 100 + i * 80);
+    });
+  }
+
+  fetch(PROXY)
+    .then(function(r) { return r.text(); })
+    .then(function(xmlText) { parseAndRender(xmlText); })
+    .catch(function() {
+      document.querySelectorAll('.typing-skeleton').forEach(function(c) { c.style.opacity = '0.25'; });
+    });
+})();
+
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(function(el) { observer.observe(el); });
+
+/* CURSOR FOLLOW */
+document.querySelectorAll('.proj').forEach(function(proj) {
+  var label = proj.querySelector('.proj-cursor-label');
+  var cx=0,cy=0,tx=0,ty=0,raf;
+  proj.addEventListener('mouseenter',function(e){var r=proj.getBoundingClientRect();cx=tx=e.clientX-r.left;cy=ty=e.clientY-r.top;label.style.opacity='1';raf=requestAnimationFrame(loop);});
+  proj.addEventListener('mouseleave',function(){label.style.opacity='0';cancelAnimationFrame(raf);});
+  proj.addEventListener('mousemove',function(e){var r=proj.getBoundingClientRect();tx=e.clientX-r.left;ty=e.clientY-r.top;});
+  function loop(){cx+=(tx-cx)*0.1;cy+=(ty-cy)*0.1;label.style.transform='translate(calc('+cx+'px - 50%), calc('+cy+'px - 50%))';raf=requestAnimationFrame(loop);}
+});
+
+
+/* CV TAP en mobile */
+(function() {
+  if (window.innerWidth > 768) return;
+  document.querySelectorAll('.exp-item').forEach(function(item) {
+    var row = item.querySelector('.exp-row');
+    var body = item.querySelector('.exp-body');
+    if (!row || !body) return;
+    body.style.maxHeight = '0';
+    body.style.paddingBottom = '0';
+    row.addEventListener('click', function() {
+      var isOpen = body.style.maxHeight !== '0px' && body.style.maxHeight !== '0';
+      document.querySelectorAll('.exp-item .exp-body').forEach(function(b) {
+        b.style.maxHeight = '0';
+        b.style.paddingBottom = '0';
+      });
+      if (!isOpen) {
+        body.style.maxHeight = '200px';
+        body.style.paddingBottom = '22px';
+      }
+    });
+  });
+})();
 </script>
 </body>
 </html>
