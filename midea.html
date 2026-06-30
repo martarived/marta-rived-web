@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Midea Comfort Zone — Marta Rived</title>
+  <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+  <style>
+    @font-face { font-family: 'Foun'; src: url('Foun.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'Kross'; src: url('KrossNeueGrotesk-Regular.ttf') format('truetype'); font-weight: 400; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --cream: #f2ede3; --ink: #0d0a1e; --sea: #0077a8; --muted: rgba(13,10,30,0.35); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); font-family: 'Kross', 'Helvetica Neue', sans-serif; font-weight: 400; color: var(--ink); }
+
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; mix-blend-mode: difference; }
+    .nav-logo { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); text-decoration: none; }
+    .nav-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: gap 0.2s; }
+    .nav-back:hover { gap: 16px; }
+    .nav-back::before { content: '←'; }
+
+    #hero { position: relative; height: 100vh; overflow: hidden; background: var(--ink); }
+    #hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    #hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,10,30,0.92) 0%, rgba(13,10,30,0.25) 50%, transparent 100%); }
+    #hero-content { position: absolute; bottom: 64px; left: 56px; z-index: 2; }
+    .hero-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-label::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--sea); }
+    .hero-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(64px, 10vw, 140px); font-weight: 400; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.88; color: var(--cream); }
+    .hero-title .dim { color: rgba(242,237,227,0.25); }
+
+    .proj-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-meta-item { padding: 36px 40px; border-right: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-meta-item:last-child { border-right: none; }
+    .proj-meta-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .proj-meta-value { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(16px, 2vw, 24px); text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); }
+
+    .proj-intro { padding: 96px 56px; display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-intro-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--sea); padding-top: 6px; }
+    .proj-intro-text { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.65; color: rgba(13,10,30,0.75); }
+    .proj-intro-text + .proj-intro-text { margin-top: 18px; }
+
+    .proj-quote { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-quote blockquote { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(28px, 4vw, 56px); text-transform: uppercase; letter-spacing: -0.025em; line-height: 1.05; color: var(--ink); max-width: 860px; }
+    .proj-quote .dim { color: rgba(13,10,30,0.18); }
+    .proj-quote cite { display: block; font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sea); margin-top: 24px; font-style: normal; }
+
+    .proj-stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-stat-item { padding: 56px 40px; border-right: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-stat-item:last-child { border-right: none; }
+    .proj-stat-num { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(40px, 5vw, 64px); color: var(--ink); letter-spacing: -0.02em; line-height: 1; margin-bottom: 12px; }
+    .proj-stat-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); line-height: 1.5; }
+
+    .proj-video-full { padding: 0 56px; border-top: 0.5px solid rgba(13,10,30,0.08); border-bottom: 0.5px solid rgba(13,10,30,0.08); }
+    .proj-video-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); padding: 40px 0 20px; display: flex; align-items: center; gap: 16px; }
+    .proj-video-label::after { content: ''; width: 28px; height: 0.5px; background: var(--muted); display: block; }
+    .proj-video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--ink); border-radius: 3px; overflow: hidden; margin-bottom: 40px; }
+    .proj-video-wrap video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .proj-roles { padding: 96px 56px; border-bottom: 0.5px solid rgba(13,10,30,0.08); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 32px; }
+    .proj-role-item { padding: 40px 0; border-top: 0.5px solid rgba(13,10,30,0.1); }
+    .proj-role-num { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.18em; color: var(--sea); margin-bottom: 16px; }
+    .proj-role-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(20px, 2.5vw, 32px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.92; margin-bottom: 16px; color: var(--ink); }
+    .proj-role-body { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.85; color: rgba(13,10,30,0.55); }
+
+    .proj-footer { padding: 64px 56px; border-top: 0.5px solid rgba(13,10,30,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .proj-footer-back { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.2s, gap 0.2s; }
+    .proj-footer-back:hover { color: var(--ink); gap: 16px; }
+    .proj-footer-back::before { content: '←'; }
+    .proj-footer-next { text-decoration: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .proj-footer-next-label { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .proj-footer-next-title { font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(24px, 3vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); transition: color 0.2s; display: flex; align-items: center; gap: 12px; }
+    .proj-footer-next-title::after { content: '→'; color: var(--sea); }
+    .proj-footer-next:hover .proj-footer-next-title { color: var(--sea); }
+
+    @media (max-width: 900px) {
+      .proj-intro { grid-template-columns: 1fr; gap: 24px; }
+      .proj-roles { grid-template-columns: 1fr; }
+      .proj-stats { grid-template-columns: repeat(2, 1fr); }
+      .proj-stat-item:nth-child(2) { border-right: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="/mobile.css">
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">Marta Rived</a>
+  <a class="nav-back" href="index.html#work">Work</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <img src="https://res.cloudinary.com/doo07efjl/image/upload/v1782825015/midea-comfort-zone-1_uhaulp.webp" alt="Midea Comfort Zone">
+  <div id="hero-overlay"></div>
+  <div id="hero-content">
+    <p class="hero-label">Midea · Spodeal · 2026</p>
+    <h1 class="hero-title">
+      Comfort<br>
+      <span class="dim">Zone</span>
+    </h1>
+  </div>
+</section>
+
+<!-- META -->
+<div class="proj-meta">
+  <div class="proj-meta-item"><p class="proj-meta-label">Cliente</p><p class="proj-meta-value">Midea</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Agencia</p><p class="proj-meta-value">Spodeal</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Año</p><p class="proj-meta-value">2026</p></div>
+  <div class="proj-meta-item"><p class="proj-meta-label">Rol</p><p class="proj-meta-value">Dirección Creativa</p></div>
+</div>
+
+<!-- INTRO -->
+<div class="proj-intro">
+  <p class="proj-intro-label">El proyecto</p>
+  <div>
+    <p class="proj-intro-text">Ganamos el pitch de Midea con un concepto que nació de un insight muy sencillo: cuando un aire acondicionado funciona perfectamente, no se nota — simplemente te sientes en tu zona de confort. De ahí "Comfort Zone", la plataforma creativa sobre la que construí un evento profesional para distribuidores, instaladores e ingenierías del sector HVAC, celebrado el 6 de junio en Bastian Beach Club, Barcelona.</p>
+    <p class="proj-intro-text">El programa se desplegó en tres espacios: el hospitality en el Meliá Torre Melina, una charla técnica en el Hotel W, y la gran celebración final en Bastian Beach Club, con hasta cuatro pases de un espectáculo en vivo a lo largo de la jornada. Allí también se presentó Midea Club, el nuevo programa de fidelización de la marca para instaladores.</p>
+    <p class="proj-intro-text">La acogida del concepto fue tan buena que "Comfort Zone" ha trascendido este evento: la marca lo ha extrapolado a otras activaciones, consolidándolo como plataforma creativa más allá de esta única jornada.</p>
+  </div>
+</div>
+
+<!-- CONCEPTO -->
+<div class="proj-quote">
+  <blockquote>
+    Cuando el aire<br>
+    <span class="dim">acondicionado es</span><br>
+    perfecto, no se nota
+    <cite>Insight creativo — Comfort Zone</cite>
+  </blockquote>
+</div>
+
+<!-- DATOS -->
+<div class="proj-stats">
+  <div class="proj-stat-item"><div class="proj-stat-num">500+</div><div class="proj-stat-label">Asistentes</div></div>
+  <div class="proj-stat-item"><div class="proj-stat-num">4</div><div class="proj-stat-label">Pases de espectáculo en vivo</div></div>
+  <div class="proj-stat-item"><div class="proj-stat-num">16</div><div class="proj-stat-label">Personas de equipo (8 Spodeal + 8 hostess)</div></div>
+  <div class="proj-stat-item"><div class="proj-stat-num">3</div><div class="proj-stat-label">Espacios: Meliá Torre Melina, Hotel W, Bastian Beach Club</div></div>
+</div>
+
+<!-- VÍDEO -->
+<div class="proj-video-full">
+  <p class="proj-video-label">Comfort Zone — Aftermovie</p>
+  <div class="proj-video-wrap">
+    <video src="https://res.cloudinary.com/doo07efjl/video/upload/v1782824490/%EF%B8%8FUn_di%CC%81a_para_conectar_compartir_y_mirar_al_futuro_de_la_climatizacio%CC%81n.En_COMFORT_ZONE_reunimo_ltwagf.mp4" controls muted playsinline></video>
+  </div>
+</div>
+
+<!-- ROLES -->
+<div class="proj-roles">
+  <div class="proj-role-item">
+    <p class="proj-role-num">01</p>
+    <h3 class="proj-role-title">Dirección Creativa</h3>
+    <p class="proj-role-body">Desarrollé el concepto "Comfort Zone" a partir del pitch ganador y dirigí su despliegue completo: desde la idea hasta la experiencia en vivo, pasando por el hospitality y la charla técnica previa al evento principal.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">02</p>
+    <h3 class="proj-role-title">Diseño del evento</h3>
+    <p class="proj-role-body">Construí el evento sobre la premisa del insight: una experiencia que se sintiera, más que se explicara, con cuatro pases de espectáculo en vivo repartidos a lo largo de la jornada para más de 500 asistentes.</p>
+  </div>
+  <div class="proj-role-item">
+    <p class="proj-role-num">03</p>
+    <h3 class="proj-role-title">Coherencia de marca in situ</h3>
+    <p class="proj-role-body">Estuve presente el día del evento apoyando al líder de coordinación del equipo de 16 personas (8 de Spodeal + 8 hostess), velando por que cada detalle respondiera fielmente al concepto y a la marca.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="proj-footer">
+  <a class="proj-footer-back" href="index.html#work">Volver a Work</a>
+  <a class="proj-footer-next" href="esade.html">
+    <span class="proj-footer-next-label">Siguiente proyecto</span>
+    <span class="proj-footer-next-title">Esade</span>
+  </a>
+</div>
+
+</body>
+</html>
