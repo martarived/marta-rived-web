@@ -95,17 +95,13 @@
     .proj:nth-child(11) { grid-column: span 6; } .proj:nth-child(12) { grid-column: span 6; }
     .proj:nth-child(13) { grid-column: span 5; } .proj:nth-child(14) { grid-column: span 7; }
     .proj:nth-child(15) { grid-column: span 6; }
-    .proj { position: relative; text-decoration: none; display: block; }
-    .proj-media { position: relative; overflow: hidden; border-radius: 3px; cursor: none; }
+    .proj { position: relative; overflow: hidden; border-radius: 3px; cursor: none; text-decoration: none; display: block; }
     .proj-img { width: 100%; aspect-ratio: 4/3; display: block; transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94); object-fit: cover; }
     .proj:nth-child(1) .proj-img, .proj:nth-child(2) .proj-img, .proj:nth-child(4) .proj-img, .proj:nth-child(7) .proj-img, .proj:nth-child(9) .proj-img { aspect-ratio: 16/9; }
     .proj:nth-child(8) .proj-img, .proj:nth-child(10) .proj-img { aspect-ratio: 3/4; }
     .proj:hover .proj-img { transform: scale(1.03); }
     .proj-cursor-label { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10; font-family: 'Foun', 'Arial Narrow', sans-serif; font-size: clamp(28px, 4vw, 56px); text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.9; color: #f2ede3; mix-blend-mode: difference; opacity: 0; transform: translate(-50%, -50%); transition: opacity 0.18s ease; will-change: transform; }
     .proj:hover .proj-cursor-label { opacity: 1; }
-    .proj-caption { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 14px; }
-    .proj-caption-name { font-family: 'Kross', sans-serif; font-weight: 400; font-size: 13px; letter-spacing: 0.01em; color: var(--ink); }
-    .proj-caption-company { font-family: 'Kross', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
     .proj:nth-child(1) .proj-img { background: #9aa4ac; } .proj:nth-child(2) .proj-img { background: #a8a098; }
     .proj:nth-child(3) .proj-img { background: #b8b0a4; } .proj:nth-child(4) .proj-img { background: #a0998e; }
     .proj:nth-child(5) .proj-img { background: #b0a898; } .proj:nth-child(6) .proj-img { background: #bcb4a8; }
@@ -242,7 +238,7 @@
   </div>
 </div>
 
-<section id="hero" class="home-hero">
+<section id="hero">
   <canvas id="splash-canvas"></canvas>
   <div id="hero-content">
     <p class="hero-label-top">Creative Director · Barna</p>
@@ -263,21 +259,21 @@
 <section id="work">
   <p class="section-label fade-up">Work</p>
   <div class="work-grid">
-    <a class="proj fade-up" href="cupra-movistar.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816654/05_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_wl4ye5.jpg" alt="CUPRA x Movistar Team" loading="lazy"><div class="proj-cursor-label">CUPRA x Movistar Team</div></div><div class="proj-caption"><span class="proj-caption-name">CUPRA x Movistar Team</span><span class="proj-caption-company">CUPRA · Movistar Team</span></div></a>
-    <a class="proj fade-up" href="bayer.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776425520/Vivir_pese_a_la_enfermedad_gracias_a_la_investigacio%CC%81n__Nos_mantiene_con_vida__1-6_screenshot_czxviq.png" alt="Bayer" loading="lazy"><div class="proj-cursor-label">Bayer</div></div><div class="proj-caption"><span class="proj-caption-name">Vivir pese a la enfermedad, gracias a la investigación</span><span class="proj-caption-company">Bayer</span></div></a>
-    <a class="proj fade-up" href="ford.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776760775/Captura-de-pantalla-2024-12-17-a-las-10.05.23_df89tr.png" alt="Ford" loading="lazy"><div class="proj-cursor-label">Ford</div></div><div class="proj-caption"><span class="proj-caption-name">Ford</span><span class="proj-caption-company">Confirmar cliente</span></div></a>
-    <a class="proj fade-up" href="mustang.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776760908/_Mira_sin_manos__o_el_coche_que_conduce_solo_0-5_screenshot_mf1msy.png" alt="Mustang" loading="lazy"><div class="proj-cursor-label">Mustang</div></div><div class="proj-caption"><span class="proj-caption-name">Mira sin manos, o el coche que conduce solo</span><span class="proj-caption-company">Ford</span></div></a>
-    <a class="proj fade-up" href="30-anos.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776426169/imgi_40_662213554_18335354548171084_3076492245538951113_n_puh8xp.jpg" alt="30 años" loading="lazy"><div class="proj-cursor-label">30 años no son nada</div></div><div class="proj-caption"><span class="proj-caption-name">30 años no son nada</span><span class="proj-caption-company">Confirmar cliente</span></div></a>
-    <a class="proj fade-up" href="square.html"><div class="proj-media"><img class="proj-img" src="https://www.lavanguardia.com/uploads/2023/10/25/65392bcc7c9f3.jpeg" alt="Square" loading="lazy"><div class="proj-cursor-label">Square</div></div><div class="proj-caption"><span class="proj-caption-name">Square</span><span class="proj-caption-company">Confirmar cliente</span></div></a>
-    <a class="proj fade-up" href="espanyol.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761079/RCD-STADIUM-09_zcncae.jpg" alt="RCD Espanyol" loading="lazy"><div class="proj-cursor-label">RCD Espanyol</div></div><div class="proj-caption"><span class="proj-caption-name">RCD Stadium</span><span class="proj-caption-company">RCD Espanyol</span></div></a>
-    <a class="proj fade-up" href="omg.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761703/imgi_17_357005306_17933487365695249_535778624782322737_n_vjriqm.jpg" alt="OMG!LaLiga" loading="lazy"><div class="proj-cursor-label">OMG!LaLiga</div></div><div class="proj-caption"><span class="proj-caption-name">OMG! LaLiga</span><span class="proj-caption-company">LaLiga</span></div></a>
-    <a class="proj fade-up" href="sevillafc.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1782819822/Captura_de_pantalla_2026-06-30_a_las_1.42.32_p._m._nkhhhp.png" alt="Sevilla FC x K9Win" loading="lazy"><div class="proj-cursor-label">Sevilla FC x K9Win</div></div><div class="proj-caption"><span class="proj-caption-name">Sevilla FC x K9Win</span><span class="proj-caption-company">Sevilla FC · K9Win</span></div></a>
-    <a class="proj fade-up" href="girona.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/q_auto/f_auto/v1776423672/A7407434_iay3ew.jpg" alt="Girona FC" loading="lazy"><div class="proj-cursor-label">Girona FC</div></div><div class="proj-caption"><span class="proj-caption-name">Girona FC</span><span class="proj-caption-company">Girona FC</span></div></a>
-    <a class="proj fade-up" href="gerrard.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776426504/423A2683_f0zkjl.jpg" alt="Steven Gerrard" loading="lazy"><div class="proj-cursor-label">Steven Gerrard</div></div><div class="proj-caption"><span class="proj-caption-name">Steven Gerrard</span><span class="proj-caption-company">Confirmar cliente</span></div></a>
-    <a class="proj fade-up" href="midea.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1782825015/midea-comfort-zone-1_uhaulp.webp" alt="Midea Comfort Zone" loading="lazy"><div class="proj-cursor-label">Midea Comfort Zone</div></div><div class="proj-caption"><span class="proj-caption-name">Midea Comfort Zone</span><span class="proj-caption-company">Midea</span></div></a>
-    <a class="proj fade-up" href="sprinter-reebok.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1782825971/DSC00127_x0mtsa.jpg" alt="The Squad by Reebok" loading="lazy"><div class="proj-cursor-label">The Squad by Reebok</div></div><div class="proj-caption"><span class="proj-caption-name">The Squad by Reebok</span><span class="proj-caption-company">Sprinter · Reebok</span></div></a>
-    <a class="proj fade-up" href="esade.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761363/65e05573c7cd1_iraqqf.jpg" alt="Esade" loading="lazy"><div class="proj-cursor-label">Esade</div></div><div class="proj-caption"><span class="proj-caption-name">Esade</span><span class="proj-caption-company">Esade</span></div></a>
-    <a class="proj fade-up" href="colhogar.html"><div class="proj-media"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761161/Co%CC%81mo_es_posible_controlar_el_mal_olor_del_ban%CC%83o__1-32_screenshot_lnlupw.png" alt="Colhogar" loading="lazy"><div class="proj-cursor-label">Colhogar</div></div><div class="proj-caption"><span class="proj-caption-name">Cómo es posible controlar el mal olor del baño</span><span class="proj-caption-company">Colhogar</span></div></a>
+    <a class="proj fade-up" href="cupra-movistar.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1782816654/05_2026_cupra_x_grand_de%CC%81part_tdf__alexandregazquez_wl4ye5.jpg" alt="CUPRA x Movistar Team" loading="lazy"><div class="proj-cursor-label">CUPRA x Movistar Team</div></a>
+    <a class="proj fade-up" href="bayer.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776425520/Vivir_pese_a_la_enfermedad_gracias_a_la_investigacio%CC%81n__Nos_mantiene_con_vida__1-6_screenshot_czxviq.png" alt="Bayer" loading="lazy"><div class="proj-cursor-label">Bayer</div></a>
+    <a class="proj fade-up" href="ford.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776760775/Captura-de-pantalla-2024-12-17-a-las-10.05.23_df89tr.png" alt="Ford" loading="lazy"><div class="proj-cursor-label">Ford</div></a>
+    <a class="proj fade-up" href="mustang.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776760908/_Mira_sin_manos__o_el_coche_que_conduce_solo_0-5_screenshot_mf1msy.png" alt="Mustang" loading="lazy"><div class="proj-cursor-label">Mustang</div></a>
+    <a class="proj fade-up" href="30-anos.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776426169/imgi_40_662213554_18335354548171084_3076492245538951113_n_puh8xp.jpg" alt="30 años" loading="lazy"><div class="proj-cursor-label">30 años no son nada</div></a>
+    <a class="proj fade-up" href="square.html"><img class="proj-img" src="https://www.lavanguardia.com/uploads/2023/10/25/65392bcc7c9f3.jpeg" alt="Square" loading="lazy"><div class="proj-cursor-label">Square</div></a>
+    <a class="proj fade-up" href="espanyol.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761079/RCD-STADIUM-09_zcncae.jpg" alt="RCD Espanyol" loading="lazy"><div class="proj-cursor-label">RCD Espanyol</div></a>
+    <a class="proj fade-up" href="omg.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761703/imgi_17_357005306_17933487365695249_535778624782322737_n_vjriqm.jpg" alt="OMG!LaLiga" loading="lazy"><div class="proj-cursor-label">OMG!LaLiga</div></a>
+    <a class="proj fade-up" href="sevillafc.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1782819822/Captura_de_pantalla_2026-06-30_a_las_1.42.32_p._m._nkhhhp.png" alt="Sevilla FC x K9Win" loading="lazy"><div class="proj-cursor-label">Sevilla FC x K9Win</div></a>
+    <a class="proj fade-up" href="girona.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/q_auto/f_auto/v1776423672/A7407434_iay3ew.jpg" alt="Girona FC" loading="lazy"><div class="proj-cursor-label">Girona FC</div></a>
+    <a class="proj fade-up" href="gerrard.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776426504/423A2683_f0zkjl.jpg" alt="Steven Gerrard" loading="lazy"><div class="proj-cursor-label">Steven Gerrard</div></a>
+    <a class="proj fade-up" href="midea.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1782825015/midea-comfort-zone-1_uhaulp.webp" alt="Midea Comfort Zone" loading="lazy"><div class="proj-cursor-label">Midea Comfort Zone</div></a>
+    <a class="proj fade-up" href="sprinter-reebok.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1782825971/DSC00127_x0mtsa.jpg" alt="The Squad by Reebok" loading="lazy"><div class="proj-cursor-label">The Squad by Reebok</div></a>
+    <a class="proj fade-up" href="esade.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761363/65e05573c7cd1_iraqqf.jpg" alt="Esade" loading="lazy"><div class="proj-cursor-label">Esade</div></a>
+    <a class="proj fade-up" href="colhogar.html"><img class="proj-img" src="https://res.cloudinary.com/doo07efjl/image/upload/v1776761161/Co%CC%81mo_es_posible_controlar_el_mal_olor_del_ban%CC%83o__1-32_screenshot_lnlupw.png" alt="Colhogar" loading="lazy"><div class="proj-cursor-label">Colhogar</div></a>
   </div>
 </section>
 
@@ -318,7 +314,7 @@
     </div>
   </div>
   <div class="cv-download-wrap">
-    <a class="cv-download-btn" href="https://res.cloudinary.com/doo07efjl/image/upload/fl_attachment/marta_rived_cv_zrawu8.pdf" download="Marta-Rived-CV.pdf">
+    <a class="cv-download-btn" href="marta-rived-cv.pdf" download>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Descargar CV
     </a>
