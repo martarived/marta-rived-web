@@ -40,19 +40,15 @@
   #welcome-bottom { bottom: 28px; right: 20px; }
   #welcome-btn { font-size: 11px; padding: 12px 28px; }
 
-  /* ——— HERO INDEX ——— */
-  /* Hero ya tiene padding-bottom:120px desde el HTML, el título queda abajo */
-  #hero-content { padding: 0 20px; max-width: 100%; transform: none !important; }
-  .hero-label-top { font-size: 10px; margin-bottom: 20px; }
-  .hero-title { font-size: clamp(48px, 13vw, 72px); }
-  .hero-sub { left: 20px; bottom: 24px; font-size: 10px; }
-
   /* ——— WORK GRID — 1 columna ——— */
   #work { padding: 0 20px 80px; }
   .section-label { padding: 32px 0; }
-  .work-grid { display: flex !important; flex-direction: column !important; gap: 32px !important; }
+  .work-grid { display: flex !important; flex-direction: column !important; gap: 40px !important; }
   .proj:nth-child(n) { grid-column: unset !important; width: 100%; }
   .proj-img { aspect-ratio: 16/9 !important; }
+  .proj-caption { padding: 0 2px; }
+  .proj-caption-name { font-size: 13px; }
+  .proj-caption-company { font-size: 10px; }
   #typing-more-wrap { padding: 40px 20px 0 !important; }
 
   /* ——— ABOUT ——— */
@@ -99,7 +95,14 @@
   .overlay-links a { font-size: clamp(36px, 10vw, 64px); }
   .overlay-bottom { left: 20px; right: 20px; bottom: 28px; }
 
-  /* ——— PROYECTOS: HERO ——— */
+  /* ——— HERO DEL INDEX (aislado con .home-hero, no toca las páginas de proyecto) ——— */
+  .home-hero #hero-content { padding: 0 20px; max-width: 100%; transform: none !important; }
+  .home-hero .hero-label-top { font-size: 10px; margin-bottom: 16px; }
+  .home-hero .hero-title { font-size: clamp(48px, 13vw, 72px); white-space: nowrap; }
+  .home-hero .hero-title-wrap { height: calc(clamp(48px, 13vw, 72px) * 0.87 * 2); }
+  .home-hero .hero-sub { font-size: 10px; margin-top: 18px; }
+
+  /* ——— PROYECTOS: HERO (páginas individuales de cada proyecto) ——— */
   #hero-content { left: 20px; bottom: 36px; }
   .hero-label { font-size: 10px; letter-spacing: 0.14em; }
   .hero-title { font-size: clamp(40px, 12vw, 64px); }
