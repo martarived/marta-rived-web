@@ -33,6 +33,11 @@
   /* ——— NAV ——— */
   #nav { padding: 20px 20px; }
 
+  /* ——— METEO BAR — una sola línea ——— */
+  .meteo-bar { flex-wrap: nowrap; gap: 12px; font-size: 10px; letter-spacing: 0.06em; }
+  .meteo-stats { display: none; }
+  .meteo-weather { display: none; }
+
   /* ——— WELCOME SCREEN ——— */
   #welcome-screen { padding: 20px 20px 80px; justify-content: center; }
   /* Texto más pequeño y que no desborde */
