@@ -1,0 +1,13 @@
+{
+  "name": "marta-rived-web",
+  "version": "1.0.0",
+  "description": "Marta Rived portfolio website",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Static site - no build needed'",
+    "test": "echo 'No tests configured'"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.1.1"
+  }
+}
